@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
+import '../../password_configuration/forgot_password.dart';
 import '../../signup/signup.dart';
 
 class TLoginForm extends StatelessWidget {
@@ -44,7 +45,7 @@ class TLoginForm extends StatelessWidget {
                   const Text(TTexts.rememberMe),
                 ],
               ),
-              TextButton(onPressed: () {}, child: const Text(TTexts.forgetPassword)),
+              TextButton(onPressed: () => Get.to(() => const ForgotPassword()), child: const Text(TTexts.forgetPassword)),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwSections),

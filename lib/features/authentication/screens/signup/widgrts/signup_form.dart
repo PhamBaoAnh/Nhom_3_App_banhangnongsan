@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/features/authentication/screens/signup/widgrts/term_condition_textbox.dart';
 
@@ -7,6 +9,7 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
+import '../verify_email.dart';
 
 class TSignupForm extends StatelessWidget {
   const TSignupForm({
@@ -78,11 +81,11 @@ class TSignupForm extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
 
-        TTermAndConditionTextBox(),
+         const TTermAndConditionTextBox(),
         const SizedBox(height: TSizes.spaceBtwSections),
         SizedBox(width: double.infinity,
           child: ElevatedButton(
-              onPressed: (){},
+              onPressed: () => Get.to(() => const VerifyEmailScreen()),
               child: const Text(
                 TTexts.createAccount,
               )
