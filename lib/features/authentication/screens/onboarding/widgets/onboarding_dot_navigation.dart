@@ -18,19 +18,24 @@ class OnBoardingDotNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = OnBoardingController.instance;
     final dark = THelperFunctions.isDarkMode(context);
 
     return Positioned(
       bottom: TDeviceUtils.getBottomNavigationBarHeight() + 20,
-      left: TSizes.defaultSpace,
-
-      child: SmoothPageIndicator(
-        controller: controller.pageController,
-        count: 3,
-        onDotClicked: controller.doNavigationClick,
-        effect: ExpandingDotsEffect(activeDotColor: dark ? TColors.light : TColors.dark, dotHeight: 6),
+      left: 0,  // Không cần thiết nữa vì đã sử dụng Align
+      right: 0, // Để nó căn giữa theo chiều ngang
+      child: Align(
+        alignment: Alignment.center, // Căn giữa SmoothPageIndicator
+        child: SmoothPageIndicator(
+          controller: controller.pageController,
+          count: 3,
+          onDotClicked: controller.doNavigationClick,
+          effect: ExpandingDotsEffect(
+            activeDotColor: dark ? TColors.light : TColors.dark,
+            dotHeight: 6,
+          ),
+        ),
       ),
     );
   }

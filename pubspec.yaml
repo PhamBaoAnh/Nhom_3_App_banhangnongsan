@@ -38,6 +38,9 @@ dependencies:
   flutter_native_splash: ^2.3.2
   smooth_page_indicator: ^1.1.0
   iconsax: ^0.0.8
+  carousel_slider: ^5.0.0
+  cached_network_image: ^3.2.0
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -75,6 +78,8 @@ flutter:
     - assets/images/animations/
     - assets/icons/payment_methods/
     - assets/images/on_boarding_images/
+    - assets/images/banners/
+    - assets/images/products/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

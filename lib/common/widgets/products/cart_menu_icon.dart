@@ -5,10 +5,11 @@ import '../../../utils/constants/colors.dart';
 
 class TCartCounterIcon extends StatelessWidget {
   const TCartCounterIcon({
-    super.key, required this.iconColor , required this.opPressed,
+    super.key, required this.iconColor , required this.onPressed, required this.iconColor2,
   });
   final Color iconColor;
-  final VoidCallback opPressed ;
+  final Color iconColor2;
+  final VoidCallback onPressed ;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +22,11 @@ class TCartCounterIcon extends StatelessWidget {
             width: 18,
             height: 18,
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: iconColor,
               borderRadius: BorderRadius.circular(100),
             ),
             child: Center(
-              child: Text('2', style: Theme.of(context).textTheme.labelLarge!.apply(color: TColors.white,fontSizeFactor: 0.8 ),),
+              child: Text('2', style: Theme.of(context).textTheme.labelLarge!.apply(color: iconColor2,fontSizeFactor: 0.8 ),),
             ),
           ),
 
