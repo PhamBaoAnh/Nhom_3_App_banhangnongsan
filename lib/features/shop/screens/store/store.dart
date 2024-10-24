@@ -7,6 +7,7 @@ import 'package:project/utils/constants/enums.dart';
 import 'package:project/utils/constants/image_strings.dart';
 import 'package:project/utils/constants/sizes.dart';
 import '../../../../common/widgets/appbar/tabbar.dart';
+import '../../../../common/widgets/brand/brand_show_case.dart';
 import '../../../../common/widgets/brand/brandcard.dart';
 import '../../../../common/widgets/containers/rounded_container.dart';
 import '../../../../common/widgets/containers/search_container.dart';
@@ -84,51 +85,91 @@ class StoreScreen extends StatelessWidget {
       
               bottom: const TTabBar(
                   tabs: [
-                Tab(child: Text('Việt Nam'),),
-                Tab(child: Text('Nhật Bản'),),
-                Tab(child: Text('Hàn Quốc'),),
-                Tab(child: Text('Trung Quốc'),),
-                Tab(child: Text('Mỹ'),)
+                Tab(child: Text('Việt Nam')),
+                Tab(child: Text('Nhật Bản')),
+                Tab(child: Text('Hàn Quốc')),
+                Tab(child: Text('Trung Quốc')),
+                Tab(child: Text('Mỹ'))
       
               ]
               ),
               ),
             ];
           },
-          body: const TabBarView(
+          body:const TabBarView(
               children: [
                 Padding(
                     padding: EdgeInsets.all(TSizes.defaultSpace),
                     child: Column(
                       children: [
                         //note
-                        TRoundedContainer(
-                          showBorder: true,
-                          borderColor: TColors.darkGrey,
-                          backgroundColor: Colors.transparent,
-                          margin: EdgeInsets.only(bottom: TSizes.spaceBtwItems),
-                          child: Column(
-                            children: [
-                              //
-                              TBrandCard(showBorder: false),
-
-                              Row(
-                                children: [
-                                  TRoundedContainer(
-                                    height: 100,
-                                  )
-                                ],
-                              )
-
-                            ],
-                          ),
-                        )
+                        TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
 
 
                       ],
                     ),
                 
-                )
+                ),
+                Padding(
+                  padding: EdgeInsets.all(TSizes.defaultSpace),
+                  child: Column(
+                    children: [
+                      //note
+                      TBrandShowcase(images: [TImages.google,TImages.productImage2,TImages.productImage2],)
+
+
+                    ],
+                  ),
+
+                ),
+                Padding(
+                  padding: EdgeInsets.all(TSizes.defaultSpace),
+                  child: Column(
+                    children: [
+                      //note
+                      TBrandShowcase(images: [TImages.productImage2,TImages.google,TImages.productImage2],)
+
+
+                    ],
+                  ),
+
+                ),
+                Padding(
+                  padding: EdgeInsets.all(TSizes.defaultSpace),
+                  child: Column(
+                    children: [
+                      //note
+                      TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
+
+
+                    ],
+                  ),
+
+                ),
+                Padding(
+                  padding: EdgeInsets.all(TSizes.defaultSpace),
+                  child: Column(
+                    children: [
+                      //note
+                      TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
+
+
+                    ],
+                  ),
+
+                ),
+                Padding(
+                  padding: EdgeInsets.all(TSizes.defaultSpace),
+                  child: Column(
+                    children: [
+                      //note
+                      TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
+
+
+                    ],
+                  ),
+
+                ),
               ]
           
           ),
@@ -137,3 +178,4 @@ class StoreScreen extends StatelessWidget {
     );
   }
 }
+
