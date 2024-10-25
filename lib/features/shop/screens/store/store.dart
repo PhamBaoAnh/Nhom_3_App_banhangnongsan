@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/common/widgets/appbar/appbar.dart';
 import 'package:project/common/widgets/icons/t_circular_icon.dart';
 import 'package:project/common/widgets/layouts/grid_layout.dart';
+import 'package:project/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:project/utils/constants/enums.dart';
 import 'package:project/utils/constants/image_strings.dart';
 import 'package:project/utils/constants/sizes.dart';
@@ -84,92 +85,28 @@ class StoreScreen extends StatelessWidget {
       
       
               bottom: const TTabBar(
+
                   tabs: [
-                Tab(child: Text('Việt Nam')),
                 Tab(child: Text('Nhật Bản')),
+                Tab(child: Text('Viêt Nam')),
                 Tab(child: Text('Hàn Quốc')),
                 Tab(child: Text('Trung Quốc')),
                 Tab(child: Text('Mỹ'))
       
               ]
+
               ),
               ),
             ];
           },
           body:const TabBarView(
               children: [
-                Padding(
-                    padding: EdgeInsets.all(TSizes.defaultSpace),
-                    child: Column(
-                      children: [
-                        //note
-                        TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
+                TCategoryTab(),
+                TCategoryTab(),
+                TCategoryTab(),
+                TCategoryTab(),
+                TCategoryTab(),
 
-
-                      ],
-                    ),
-                
-                ),
-                Padding(
-                  padding: EdgeInsets.all(TSizes.defaultSpace),
-                  child: Column(
-                    children: [
-                      //note
-                      TBrandShowcase(images: [TImages.google,TImages.productImage2,TImages.productImage2],)
-
-
-                    ],
-                  ),
-
-                ),
-                Padding(
-                  padding: EdgeInsets.all(TSizes.defaultSpace),
-                  child: Column(
-                    children: [
-                      //note
-                      TBrandShowcase(images: [TImages.productImage2,TImages.google,TImages.productImage2],)
-
-
-                    ],
-                  ),
-
-                ),
-                Padding(
-                  padding: EdgeInsets.all(TSizes.defaultSpace),
-                  child: Column(
-                    children: [
-                      //note
-                      TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
-
-
-                    ],
-                  ),
-
-                ),
-                Padding(
-                  padding: EdgeInsets.all(TSizes.defaultSpace),
-                  child: Column(
-                    children: [
-                      //note
-                      TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
-
-
-                    ],
-                  ),
-
-                ),
-                Padding(
-                  padding: EdgeInsets.all(TSizes.defaultSpace),
-                  child: Column(
-                    children: [
-                      //note
-                      TBrandShowcase(images: [TImages.productImage2,TImages.productImage2,TImages.productImage2],)
-
-
-                    ],
-                  ),
-
-                ),
               ]
           
           ),
