@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 // Import các file utils chứa các hằng số và hàm trợ giúp
 import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 
