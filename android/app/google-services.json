@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "672263626078",
+    "project_id": "fir-login-588d4",
+    "storage_bucket": "fir-login-588d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672263626078:android:f75408f3866ccc7cc303cf",
+        "android_client_info": {
+          "package_name": "com.biolife.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaC0dGJ1BvFfTAKUBtcyu02QaakIL-lP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672263626078:android:2dd6ac60e16f8b37c303cf",
+        "android_client_info": {
+          "package_name": "com.biolife.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaC0dGJ1BvFfTAKUBtcyu02QaakIL-lP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
