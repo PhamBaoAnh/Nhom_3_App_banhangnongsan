@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:project/utils/constants/colors.dart';
-import 'package:project/utils/theme/theme.dart';
+import 'package:get/get.dart';
+import 'package:project/app.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:project/firebase_options.dart';
+import 'package:project/repository/AuthenticationRepository.dart';
 
-import 'app.dart';
 
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value)=> Get.put(AuthenticationRepository()));
   runApp(const App());
 }
 

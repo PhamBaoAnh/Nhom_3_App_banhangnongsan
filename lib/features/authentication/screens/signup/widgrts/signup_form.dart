@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:project/features/authentication/controllers.onboarding/signup_controller.dart';
 import 'package:project/features/authentication/screens/signup/widgrts/term_condition_textbox.dart';
 
 import '../../../../../utils/constants/colors.dart';
@@ -18,13 +19,17 @@ class TSignupForm extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-
-    return Form(child: Column(
+    final controller = Get.put(SignupController());
+    final _formKey = GlobalKey<FormState>();
+    return Form(
+        key: _formKey,
+        child: Column(
       children: [
         Row(
           children: [
             Expanded(
               child: TextFormField(
+                controller: controller.firstName,
                 decoration: const InputDecoration(
                   labelText: TTexts.firstName,
                   prefixIcon: Icon(Iconsax.user),
@@ -33,7 +38,9 @@ class TSignupForm extends StatelessWidget {
             ),
             const SizedBox(width: TSizes.spaceBtwInputFields),
             Expanded(
+
               child: TextFormField(
+                controller: controller.lastName,
                 decoration: const InputDecoration(
                   labelText: TTexts.lastName,
                   prefixIcon: Icon(Iconsax.user),
@@ -44,6 +51,7 @@ class TSignupForm extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
         TextFormField(
+          controller: controller.username,
           expands: false,
           decoration: const InputDecoration(
             labelText: TTexts.username,
@@ -53,6 +61,7 @@ class TSignupForm extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
         TextFormField(
+          controller: controller.email,
           expands: false,
           decoration: const InputDecoration(
             labelText: TTexts.email,
@@ -62,6 +71,7 @@ class TSignupForm extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
         TextFormField(
+          controller: controller.phoneNo,
           expands: false,
           decoration: const InputDecoration(
             labelText: TTexts.phoneNo,
@@ -71,6 +81,7 @@ class TSignupForm extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
         TextFormField(
+          controller: controller.password,
           obscureText: true,
           decoration: const InputDecoration(
             labelText: TTexts.password,
@@ -85,7 +96,14 @@ class TSignupForm extends StatelessWidget {
         const SizedBox(height: TSizes.spaceBtwSections),
         SizedBox(width: double.infinity,
           child: ElevatedButton(
-              onPressed: () => Get.to(() => const VerifyEmailScreen()),
+              onPressed:
+                  // () => Get.to(() => const VerifyEmailScreen()),
+              (){
+                 if(_formKey.currentState!.validate()){
+                   SignupController.instance.registerUser(controller.email.text, controller.password.text);
+                 }
+
+              },
               child: const Text(
                 TTexts.createAccount,
               )
