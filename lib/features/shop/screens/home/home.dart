@@ -51,7 +51,8 @@ class HomeScreen extends StatelessWidget {
                          TSectionHeading(title: 'Danh mục phổ biến', textColor: TColors.white,),
                          SizedBox(height: TSizes.spaceBtwItems,),
 
-                         THomeCategories()
+                         THomeCategories(),
+                        SizedBox(height: TSizes.spaceBtwSections,),
                       ],
                     ),
 
