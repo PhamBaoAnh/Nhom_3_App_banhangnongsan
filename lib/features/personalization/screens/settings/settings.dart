@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/common/widgets/images/t_circular_image.dart';
 
@@ -10,6 +12,7 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../profile/profile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -27,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
                  TAppBar(title: Text('Account', style: Theme.of(context).textTheme.headlineMedium!.apply(color: TColors.white),),),
 
 
-                  const TUserProfileTitle(),
+                  TUserProfileTitle(onPressed: () => Get.to(() => const ProfileScreen()),),
                   const SizedBox(height: TSizes.spaceBtwSections,),
               ],
             ),
