@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/features/authentication/controllers.onboarding/signup_controller.dart';
+import 'package:project/features/authentication/models/user_model.dart';
+import 'package:project/features/authentication/screens/password_configuration/otp_screen.dart';
 import 'package:project/features/authentication/screens/signup/widgrts/term_condition_textbox.dart';
+import 'package:project/repository/user_repo/user_repo.dart';
 
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -100,10 +103,14 @@ class TSignupForm extends StatelessWidget {
                   // () => Get.to(() => const VerifyEmailScreen()),
               (){
                  if(_formKey.currentState!.validate()){
-                   SignupController.instance.registerUser(controller.email.text, controller.password.text);
-                 }
 
-              },
+                // SignupController.instance.phoneAuthentiocation(controller.phoneNo.text);
+                // Get.to(()=> const OTPScreen());
+                 }
+                 final userModel = UserModel(firstName: controller.firstName.text.trim(), lastName:controller.lastName.text.trim(), username:controller.username.text.trim(), email: controller.email.text.trim(), password:controller.password.text.trim(), phoneNo: controller.phoneNo.text.trim());
+
+                 SignupController.instance.createUser(userModel);
+                 },
               child: const Text(
                 TTexts.createAccount,
               )

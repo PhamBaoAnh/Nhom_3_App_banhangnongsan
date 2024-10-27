@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:project/features/authentication/models/user_model.dart';
+import 'package:project/repository/auth_repo/AuthenticationRepository.dart';
+import 'package:project/repository/user_repo/user_repo.dart';
 
-import '../../../repository/AuthenticationRepository.dart';
 
 
 class SignupController extends GetxController {
@@ -14,9 +16,20 @@ class SignupController extends GetxController {
   final username = TextEditingController();
   final password = TextEditingController();
   final phoneNo = TextEditingController();
+
+  final userRepo0 = Get.put(userRepo());
   void registerUser(String email, String password) {
     AuthenticationRepository.instance
         .createUserWithEmailAndPassword(email, password);
+  }
+
+  void phoneAuthentiocation(String phoneNo){
+    AuthenticationRepository.instance.phoneAuthenticaton(phoneNo);
+
+  }
+  Future<void> createUser(UserModel user) async {
+    await userRepo0.createUser(user);
+
   }
 }
 

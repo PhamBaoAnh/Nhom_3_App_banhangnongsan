@@ -49,6 +49,11 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.1.1
   firebase_auth: ^5.3.1
+  cloud_firestore: ^5.4.4
+  flutter_otp_text_field: ^1.2.0
+  firebase_app_check: ^0.3.1+4
+  app_integrity_checker: ^1.0.5
+
 
 dev_dependencies:
   flutter_test:
