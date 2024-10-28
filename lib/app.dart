@@ -15,7 +15,7 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme, // Use the correct reference
       darkTheme: TAppTheme.darkTheme, // You can define your dark theme here
-      home: const VerifyEmailScreen(email: "email"),
+      home: const OnBoardingScreen(),
     );
   }
 }
