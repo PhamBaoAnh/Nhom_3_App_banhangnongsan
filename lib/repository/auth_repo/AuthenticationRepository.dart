@@ -110,7 +110,7 @@ class AuthenticationRepository extends GetxController {
           errorMessage = 'The email format is invalid.';
           break;
         default:
-          errorMessage = 'An unexpected error occurred. Please try again.';
+          errorMessage = 'User or password is incorrect.';
 
       }
       Get.snackbar('Login Failed', errorMessage, backgroundColor: Colors.red);
