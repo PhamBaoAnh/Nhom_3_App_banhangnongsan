@@ -1,27 +1,57 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/features/authentication/models/user_model.dart';
 import 'package:project/features/authentication/screens/login/login.dart';
-
+import 'package:project/repository/auth_repo/AuthenticationRepository.dart';
 
 import '../../../repository/user_repo/user_repo.dart';
 import '../../../utils/navigation_menu.dart';
 
-class LoginController extends GetxController{
+class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   final userRepo0 = Get.put(userRepo());
+  var isLoading = false.obs;
+  var isGoogleLoading = false.obs;
+  var isFacebookLoading = false.obs;
 
   Future<void> login(String email, String password) async {
-    UserModel user0 = await userRepo.instance.getUserDetail(email);
-    password == user0.password ? Get.offAll(() => const NavigationMenu()) : Get
-        .offAll(() => const LoginScreen());
+    try {
+      isLoading.value = true;
+      final auth = AuthenticationRepository.instance;
+          await auth.loginUserWithEmailAndPassword(email, password);
+
+    } catch (e) {
+      Get.snackbar('Error', e.toString()); // Display error message
+    } finally {
+      isLoading.value = false;
+    }
   }
 
+  Future<void> loginWithGoogle() async {
+    try {
+      isGoogleLoading.value = true;
+      final auth = AuthenticationRepository.instance;
+      await auth.signInWithGoogle();
+      auth.setInitScreen(auth.firebaseUser);
+    } catch (e) {
+      Get.snackbar('Error', e.toString()); // Display error message
+    } finally {
+      isGoogleLoading.value = false;
+    }
+  }
 
-
-
+  Future<void> loginWithFacebook() async {
+    try {
+      isFacebookLoading.value = true;
+      final auth = AuthenticationRepository.instance;
+      auth.signInWithFacebook();
+      auth.setInitScreen(auth.firebaseUser);
+    } catch (e) {
+      Get.snackbar('Error', e.toString()); // Display error message
+    } finally {
+      isFacebookLoading.value = false;
+    }
+    ;
+  }
 }

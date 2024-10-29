@@ -19,11 +19,19 @@ class userRepo extends GetxController {
   getUserDetail(String email) async {
     final snapshot =
         await _db.collection('user').where('Email', isEqualTo: email).get();
-    return snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
+    final userData=snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
+  return userData;
   }
 
   getAllUser() async {
     final snapshot = await _db.collection('user').get();
-    return snapshot.docs.map((e) => UserModel.fromSnapshot).toList();
+
+     final userData= snapshot.docs.map((e) => UserModel.fromSnapshot).toList();
+    return userData;
+  }
+
+  getUpdateUser(UserModel user) async{
+    final snapshot = await _db.collection('user').doc(user.email).update(user.toJson());
+
   }
 }

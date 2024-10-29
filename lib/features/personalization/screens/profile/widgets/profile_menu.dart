@@ -11,9 +11,9 @@ class TProfileMenu extends StatelessWidget {
     required this.title,
     required this.value,
   });
-   final IconData icon ;
-   final VoidCallback onPressed;
-   final String title,value;
+  final IconData icon ;
+  final VoidCallback onPressed;
+  final String title,value;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -19,10 +19,10 @@ class TLoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
-    final _formKey = GlobalKey<FormState>();
+    final _loginformKey = GlobalKey<FormState>();
     final loginController = Get.find<LoginController>();
     return Form(
-      key: _formKey,
+      key: _loginformKey,
       child: Column(
         children: [
           TextFormField(

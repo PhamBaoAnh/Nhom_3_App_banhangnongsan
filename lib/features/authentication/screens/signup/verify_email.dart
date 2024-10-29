@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/features/authentication/controllers.onboarding/mail_vertification_controller.dart';
+import 'package:project/repository/auth_repo/AuthenticationRepository.dart';
+import 'package:project/utils/navigation_menu.dart';
 import '../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -77,8 +79,8 @@ class VerifyEmailScreen extends StatelessWidget {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    // Implement resend email logic
                     Get.snackbar('Email Sent', 'A new verification email has been sent.');
+
                   },
                   child: const Text(
                     TTexts.resendEmail,

@@ -9,9 +9,11 @@ class UserModel {
   final String email;
   final String password;
   final String phoneNo;
+  final String? gender;
 
   UserModel(
       {this.id,
+        this.gender,
       required this.firstName,
       required this.lastName,
       required this.username,
@@ -27,6 +29,7 @@ class UserModel {
       'Email': email,
       'Password': password,
       'PhoneNo': phoneNo,
+      'Gender' :gender
     };
   }
   factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -38,6 +41,7 @@ class UserModel {
       email: data['Email'],
       password: data['Password'],
       phoneNo: data['PhoneNo'] ?? '',
+      gender: data['Gender']??''
     );
   }
 

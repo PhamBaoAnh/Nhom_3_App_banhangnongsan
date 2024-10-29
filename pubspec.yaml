@@ -53,6 +53,8 @@ dependencies:
   flutter_otp_text_field: ^1.2.0
   firebase_app_check: ^0.3.1+4
   app_integrity_checker: ^1.0.5
+  google_sign_in: ^6.2.1
+  flutter_facebook_auth: ^7.1.1
 
 
 dev_dependencies:

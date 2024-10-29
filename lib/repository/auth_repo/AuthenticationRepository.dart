@@ -1,75 +1,81 @@
 import 'dart:async';
-import 'dart:io';
-
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:project/features/authentication/screens/login/login.dart';
 import 'package:project/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:project/features/authentication/screens/signup/verify_email.dart';
-import 'package:project/features/shop/screens/home/home.dart';
-import 'package:project/features/shop/screens/home/widgets/home_appbar.dart';
+
+import '../../utils/navigation_menu.dart';
 import '../exception/SignupWithEmailAndPasswordFailure.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
-  final _auth = FirebaseAuth.instance;
-  late final Rx<User?> firebaseUser;
-  var vetificationId = ''.obs;
 
+  final _auth = FirebaseAuth.instance;
+  late final Rx<User?> _firebaseUser;
+
+  User? get firebaseUser => _firebaseUser.value;
+  String get getUserId => firebaseUser?.uid ?? '';
+  String get getUserEmail => firebaseUser?.email ??'';
+  bool isLogin =true;
   @override
   void onReady() {
-    firebaseUser = Rx<User?>(_auth.currentUser);
-    firebaseUser.bindStream(_auth.userChanges());
-    ever(firebaseUser, _setInitScreen);
+    _firebaseUser = Rx<User?>(_auth.currentUser);
+    _firebaseUser.bindStream(_auth.userChanges());
+    FlutterNativeSplash.remove();
+    setInitScreen(_firebaseUser.value);
   }
 
-  _setInitScreen(User? user) {
-    user == null
-        ? Get.offAll(() => const OnBoardingScreen())
-        : user.emailVerified
-            ? Get.offAll(() => const HomeScreen())
-            : Get.offAll(() => const VerifyEmailScreen(email: 'sondoan',));
+  setInitScreen(User? user) {
+    user ==null?
+      Get.offAll(() => const OnBoardingScreen()):
+    firebaseUser!.emailVerified?Get.offAll(() => const NavigationMenu()): Get.offAll(() => VerifyEmailScreen(email:getUserEmail)) ;
+
   }
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  Future<void> phoneAuthenticaton(String phoneNo) async {
-    await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNo,
-        verificationCompleted: (PhoneAuthCredential  credentials) async {
-          await _auth.signInWithCredential(credentials);
-        },
+      if (googleUser == null) {
+        Get.offAll(() => const LoginScreen());
+        return;
+      }
 
-        verificationFailed: (FirebaseAuthException e) {
-          if (e.code == 'invalid-phone-number') {
-            print('The provided phone number is not valid.');
-          }
+      // Lấy thông tin xác thực từ yêu cầu
+      final GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
 
-          // Handle other errors
-        },
-        codeSent: (verificationId,  resendToken) {
-          this.vetificationId.value = verificationId;
-        },
-        codeAutoRetrievalTimeout: (verificationId) {
-          vetificationId.value = verificationId;
-        });
+      // Tạo một chứng chỉ mới
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Đăng nhập vào Firebase
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      setInitScreen(firebaseUser); // Điều hướng sau khi đăng nhập thành công
+    } catch (e) {
+      Get.snackbar('Error', "Failed to sign in with Google: ${e.toString()}");
+    }
   }
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login(permissions:['email'] );
 
-  Future<bool> verifyOTP(String OTP) async {
-    var credentials = await _auth.signInWithCredential(
-        PhoneAuthProvider.credential(
-            verificationId: vetificationId.value, smsCode: OTP));
-    return credentials.user != null ? true : false;
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
-
   Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      firebaseUser.value == null
-          ? Get.offAll(() => const OnBoardingScreen())
-          : Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       final ex = SignupWithEmailAndPasswordFailure.code(e.code);
       throw ex;
@@ -84,12 +90,12 @@ class AuthenticationRepository extends GetxController {
     } catch (_) {}
   }
 
-  Future<bool> loginUserWithEmailAndPassword(String email, String password) async {
+  Future<void> loginUserWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+      setInitScreen(firebaseUser);
+      Get.snackbar('Login Successful', 'You are now logged in');
 
-      Get.snackbar('Login Successful', 'You are now logged in.');
-      return true;
     } on FirebaseAuthException catch (e) {
 
       String errorMessage;
@@ -108,13 +114,18 @@ class AuthenticationRepository extends GetxController {
 
       }
       Get.snackbar('Login Failed', errorMessage, backgroundColor: Colors.red);
-      return false;
+
     } catch (e) {
-      // Log any unexpected errors
       print('An unexpected error occurred: $e');
       Get.snackbar('Error', 'Something went wrong. Please try again later.', backgroundColor: Colors.red);
-      return false;
     }
   }
-  Future<void> logOut() async => await _auth.signOut();
+  Future<void> logOut() async {
+    try {
+      await GoogleSignIn().signOut();
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch(e){
+      Get.snackbar('Error logout', e.message as String);
+    }
+  }
 }
