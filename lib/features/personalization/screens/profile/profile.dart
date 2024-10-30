@@ -144,7 +144,7 @@ class ProfileScreen extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 await controller.logOut();
-                Get.offAll( const LoginScreen());
+
                 }
               ,
               child: const Text(
