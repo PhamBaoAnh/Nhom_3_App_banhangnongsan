@@ -19,8 +19,7 @@ class LoginController extends GetxController {
     try {
       isLoading.value = true;
       final auth = AuthenticationRepository.instance;
-          await auth.loginUserWithEmailAndPassword(email, password);
-
+      await auth.loginUserWithEmailAndPassword(email, password);
     } catch (e) {
       Get.snackbar('Error', e.toString()); // Display error message
     } finally {
@@ -33,7 +32,23 @@ class LoginController extends GetxController {
       isGoogleLoading.value = true;
       final auth = AuthenticationRepository.instance;
       await auth.signInWithGoogle();
-      auth.setInitScreen(auth.firebaseUser);
+
+      UserModel userGoogle = UserModel(
+          firstName: '',
+          lastName: '',
+          username: '',
+          email: auth.getUserEmail,
+          password: '123456789',
+          phoneNo: '');
+
+      var isLoginGoogle  =await userRepo0.getUserDetail(auth.getUserEmail);
+      if(isLoginGoogle == null){
+        userRepo0.createUser(userGoogle);
+
+      }
+
+      await  auth.setInitScreen(auth.firebaseUser);
+
     } catch (e) {
       Get.snackbar('Error', e.toString()); // Display error message
     } finally {

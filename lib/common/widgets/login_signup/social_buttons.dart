@@ -80,10 +80,10 @@ class TSocialButtons extends StatelessWidget {
                   controller.loginWithGoogle();
                 },
                 icon: controller.isGoogleLoading.value
-                    ? SizedBox(
+                    ? const SizedBox(
                   width: TSizes.iconMd,
                   height: TSizes.iconMd,
-                  child: const CircularProgressIndicator(),
+                  child: CircularProgressIndicator(),
                 )
                     : const Image(
                   width: TSizes.iconMd,

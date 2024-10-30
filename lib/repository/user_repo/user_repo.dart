@@ -19,8 +19,14 @@ class userRepo extends GetxController {
   getUserDetail(String email) async {
     final snapshot =
         await _db.collection('user').where('Email', isEqualTo: email).get();
+if(snapshot.docs.isNotEmpty){
     final userData=snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
-  return userData;
+  return userData;}
+else {
+  return null;
+
+
+}
   }
 
   getAllUser() async {

@@ -4,8 +4,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/features/authentication/controllers.onboarding/profile_controller.dart';
 import 'package:project/features/authentication/models/user_model.dart';
 import 'package:project/features/authentication/screens/login/login.dart';
+
 import 'package:project/features/personalization/screens/profile/widgets/profile_menu.dart';
-import 'package:project/repository/auth_repo/AuthenticationRepository.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/images/t_circular_image.dart';
@@ -37,12 +37,25 @@ class ProfileScreen extends StatelessWidget {
               }
 
               // Check if there was an error
-              if (snapshot.hasError) {
-                return Center(child: Text(snapshot.error.toString()));
+              else if (snapshot.hasError) {
+                return Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      const Text('An error occurred. Please try again later.'),
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.logOut();
+                          Get.offAll(() => const LoginScreen());
+                        },
+                        child: const Text("Go to Login"),
+                      ),
+                    ]));
+                //logout
               }
 
               // Check if we received data
-              if (snapshot.hasData) {
+              else if (snapshot.hasData) {
                 UserModel userdata = snapshot.data!;
                 return _buildProfileContent(userdata);
               }
@@ -59,6 +72,7 @@ class ProfileScreen extends StatelessWidget {
   // A helper method to build profile content
   Widget _buildProfileContent(UserModel userdata) {
     final controller = Get.put(ProfileController());
+
     return Column(
       children: [
         SizedBox(
@@ -144,9 +158,7 @@ class ProfileScreen extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 await controller.logOut();
-
-                }
-              ,
+              },
               child: const Text(
                 "Close Account",
                 style: TextStyle(color: Colors.red),

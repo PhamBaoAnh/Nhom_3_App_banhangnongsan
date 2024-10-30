@@ -4,12 +4,14 @@ import 'package:project/features/authentication/models/user_model.dart';
 import 'package:project/repository/auth_repo/AuthenticationRepository.dart';
 import 'package:project/repository/user_repo/user_repo.dart';
 
+import '../screens/login/login.dart';
+
 class ProfileController extends GetxController {
   static ProfileController get instance => Get.find();
   final _authRepo = Get.put(AuthenticationRepository());
   final _userRepo = Get.put(userRepo());
 
-  getUserData() async {
+  Future<UserModel?> getUserData() async {
     final email = _authRepo.firebaseUser?.email;
     if (email != null) {
       UserModel userData = await _userRepo.getUserDetail(email);
@@ -26,6 +28,7 @@ class ProfileController extends GetxController {
   }
   logOut() async {
      await _authRepo.logOut();
+     Get.offAll(() => const LoginScreen());
   }
 
 }
