@@ -38,7 +38,7 @@ class TBrandShowcase extends StatelessWidget {
     return Expanded(
       child: TRoundedContainer(
           height: 100,
-          backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.light,
+          backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
           margin: const EdgeInsets.only(right: TSizes.sm),
           padding: const EdgeInsets.all(TSizes.xsm),
           child:  Image(fit: BoxFit.contain, image: AssetImage(image),)

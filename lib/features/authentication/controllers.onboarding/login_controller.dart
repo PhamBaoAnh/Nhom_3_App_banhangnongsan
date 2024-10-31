@@ -67,6 +67,6 @@ class LoginController extends GetxController {
     } finally {
       isFacebookLoading.value = false;
     }
-    ;
+
   }
 }

@@ -34,6 +34,8 @@ class TLoginForm extends StatelessWidget {
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
           TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            obscureText: true,
             controller: controller.password,
             decoration: const InputDecoration(
               prefixIcon: Icon(Iconsax.password_check),

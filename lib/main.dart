@@ -10,6 +10,7 @@ import 'package:project/repository/auth_repo/AuthenticationRepository.dart';
 
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value)=> Get.put(AuthenticationRepository()));

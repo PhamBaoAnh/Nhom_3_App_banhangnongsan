@@ -106,7 +106,6 @@ class StoreScreen extends StatelessWidget {
                 TCategoryTab(),
                 TCategoryTab(),
                 TCategoryTab(),
-
               ]
           
           ),
