@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/common/widgets/texts/t_brand_title_text.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
-import '../../../../../common/widgets/products/cart_menu_icon.dart';
+import '../products/cart/cart_menu_icon.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/text_strings.dart';
 import '../../../utils/constants/enums.dart';
