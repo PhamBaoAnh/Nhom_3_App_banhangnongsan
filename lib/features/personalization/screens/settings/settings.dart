@@ -12,12 +12,13 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../../authentication/controllers.onboarding/profile_controller.dart';
 import '../address/address.dart';
 import '../profile/profile.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
+   SettingsScreen({super.key});
+  final controller = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,9 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections,),
                    SizedBox(
                      width: double.infinity,
-                     child: OutlinedButton(onPressed: (){}, child: const Text('Đăng Xuất' )),
+                     child: OutlinedButton(onPressed: () async {
+                       await controller.logOut();
+                     }, child: const Text('Đăng Xuất' )),
                    ),
                   const SizedBox(height: TSizes.spaceBtwSections * 2,),
 
