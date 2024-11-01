@@ -50,7 +50,6 @@ class TSignupForm extends StatelessWidget {
                       return (value == null || value.isEmpty)
                           ? 'Please enter your last name.'
                           : null;
-                      return null;
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
