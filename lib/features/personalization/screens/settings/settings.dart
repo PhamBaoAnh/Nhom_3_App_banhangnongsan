@@ -12,6 +12,7 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../address/address.dart';
 import '../profile/profile.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -41,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
                   const TSectionHeading(title: 'Account Settings', textColor: TColors.black,showActionButton: false,),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
-                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Set shopping delivery address', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Set shopping delivery address', onTap: () => Get.to(() => const UserAddressScreen())),
                   TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Set shopping delivery address', onTap: (){},),
                   TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Set shopping delivery address', onTap: (){},),
                   TSettingsMenuTitle(icon: Iconsax.bank, title: 'Bank Account', subTitle: 'Set shopping delivery address', onTap: (){},),
@@ -65,7 +66,6 @@ class SettingsScreen extends StatelessWidget {
                    ),
                   const SizedBox(height: TSizes.spaceBtwSections * 2,),
 
-
                 ],
               ),
 
@@ -78,4 +78,5 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 }
+
 
