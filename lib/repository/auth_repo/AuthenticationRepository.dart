@@ -19,9 +19,12 @@ class AuthenticationRepository extends GetxController {
   late final Rx<User?> _firebaseUser;
 
   User? get firebaseUser => _firebaseUser.value;
+
   String get getUserId => firebaseUser?.uid ?? '';
-  String get getUserEmail => firebaseUser?.email ??'';
-  bool isLogin =true;
+
+  String get getUserEmail => firebaseUser?.email ?? '';
+  bool isLogin = true;
+
   @override
   void onReady() {
     _firebaseUser = Rx<User?>(_auth.currentUser);
@@ -31,11 +34,13 @@ class AuthenticationRepository extends GetxController {
   }
 
   setInitScreen(User? user) {
-    user ==null?
-      Get.offAll(() => const OnBoardingScreen()):
-    firebaseUser!.emailVerified?Get.offAll(() => const NavigationMenu()): Get.offAll(() => VerifyEmailScreen(email:getUserEmail)) ;
-
+    user == null
+        ? Get.offAll(() => const OnBoardingScreen())
+        : firebaseUser!.emailVerified
+            ? Get.offAll(() => const NavigationMenu())
+            : Get.offAll(() => VerifyEmailScreen(email: getUserEmail));
   }
+
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -46,7 +51,8 @@ class AuthenticationRepository extends GetxController {
       }
 
       // Lấy thông tin xác thực từ yêu cầu
-      final GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser.authentication;
 
       // Tạo một chứng chỉ mới
       final credential = GoogleAuthProvider.credential(
@@ -61,16 +67,20 @@ class AuthenticationRepository extends GetxController {
       Get.snackbar('Error', "Failed to sign in with Google: ${e.toString()}");
     }
   }
+
   Future<UserCredential> signInWithFacebook() async {
     // Trigger the sign-in flow
-    final LoginResult loginResult = await FacebookAuth.instance.login(permissions:['email'] );
+    final LoginResult loginResult =
+        await FacebookAuth.instance.login(permissions: ['email']);
 
     // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
+
   Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -82,22 +92,30 @@ class AuthenticationRepository extends GetxController {
     } catch (_) {}
   }
 
+  Future<void> sendPasswordResetEmail(String email1) async {
+    try {
+      await _auth.sendPasswordResetEmail( email: email1);
+
+    } on FirebaseException catch (e) {
+      Get.snackbar('Error', e.message ?? 'An unknown error occurred');
+    }
+  }
+
   Future<void> sendEmailVerification() async {
     try {
       await _auth.currentUser?.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
-       throw e;
+      throw e;
     } catch (_) {}
   }
 
-  Future<void> loginUserWithEmailAndPassword(String email, String password) async {
+  Future<void> loginUserWithEmailAndPassword(
+      String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       setInitScreen(firebaseUser);
       Get.snackbar('Login Successful', 'You are now logged in');
-
     } on FirebaseAuthException catch (e) {
-
       String errorMessage;
       switch (e.code) {
         case 'user-not-found':
@@ -111,20 +129,20 @@ class AuthenticationRepository extends GetxController {
           break;
         default:
           errorMessage = 'User or password is incorrect.';
-
       }
       Get.snackbar('Login Failed', errorMessage, backgroundColor: Colors.red);
-
     } catch (e) {
       print('An unexpected error occurred: $e');
-      Get.snackbar('Error', 'Something went wrong. Please try again later.', backgroundColor: Colors.red);
+      Get.snackbar('Error', 'Something went wrong. Please try again later.',
+          backgroundColor: Colors.red);
     }
   }
+
   Future<void> logOut() async {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       Get.snackbar('Error logout', e.message as String);
     }
   }

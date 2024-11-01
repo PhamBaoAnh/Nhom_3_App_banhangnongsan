@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/repository/user_repo/user_repo.dart';
 
@@ -21,6 +22,12 @@ class TLoginForm extends StatelessWidget {
     final controller = Get.put(LoginController());
     final _loginformKey = GlobalKey<FormState>();
     final loginController = Get.find<LoginController>();
+    final storage= GetStorage();
+    final showPassword =false.obs;
+    final remember =false.obs;
+    loginController.email.text = storage.read('email') ?? '';
+    loginController.password.text = storage.read('password') ?? '';
+    remember.value = storage.read('remember') ?? false;
     return Form(
       key: _loginformKey,
       child: Column(
@@ -33,16 +40,19 @@ class TLoginForm extends StatelessWidget {
             ),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
-          TextFormField(
+          Obx(()=>TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            obscureText: true,
+            obscureText: !showPassword.value,
             controller: controller.password,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Iconsax.password_check),
-              labelText: TTexts.password,
-              suffixIcon: Icon(Iconsax.eye_slash),
+            decoration: InputDecoration(
+                prefixIcon: const Icon(Iconsax.password_check),
+                labelText: TTexts.password,
+                suffixIcon:
+                IconButton(onPressed: (){
+                  showPassword.value=! showPassword.value;
+                }, icon: Icon(showPassword.value ? Iconsax.eye :Iconsax.eye_slash))
             ),
-          ),
+          ),),
           const SizedBox(height: TSizes.spaceBtwInputFields / 2),
 
           // Remember Me and Forgot Password
@@ -51,7 +61,10 @@ class TLoginForm extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Checkbox(value: true, onChanged: (value) {}),
+                 Obx(()=> Checkbox(value: remember.value, onChanged: (value) {
+                   remember.value= !remember.value;
+
+                 }),),
                   const Text(TTexts.rememberMe),
                 ],
               ),
@@ -67,11 +80,21 @@ class TLoginForm extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: ()
-                  // => Get.to(() =>  const NavigationMenu()),
-
                   {
+                    if (remember.value) {
+                      storage.write('email', loginController.email.text);
+                      storage.write('password', loginController.password.text);
+                      storage.write('rememberMe', true);
+                    } else {
+                      storage.remove('email');
+                      storage.remove('password');
+                      storage.write('rememberMe', false);
+                    }
+
                     String email = controller.email.text.trim();
                     String password = controller.password.text.trim();
+                    print( controller.email.text.trim());
+                    print( controller.password.text.trim());
                     loginController.login(email, password);
                   },
               child: const Text(TTexts.signIn),
