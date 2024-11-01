@@ -13,7 +13,7 @@ import '../../../../common/widgets/curved_edges/curved_edges.dart';
 import '../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
 import '../../../../common/widgets/images/t_rounded_image.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
-import '../../../../common/widgets/products/cart_menu_icon.dart';
+import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
 import '../../../../common/widgets/products/product_cards/product_card_vertical.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/colors.dart';
