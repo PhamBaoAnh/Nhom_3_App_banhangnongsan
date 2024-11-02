@@ -19,8 +19,8 @@ class TCartItem extends StatelessWidget {
       children: [
         TRoundedImage(
           imageUrl: TImages.productImage2,
-          width: 60,
-          height: 60,
+          width: 70,
+          height: 70,
           padding: const EdgeInsets.all(TSizes.sm),
           backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.light,
         ),
