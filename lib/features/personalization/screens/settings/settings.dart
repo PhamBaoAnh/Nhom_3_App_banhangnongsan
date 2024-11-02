@@ -13,6 +13,7 @@ import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../authentication/controllers.onboarding/profile_controller.dart';
+import '../../../shop/screens/order/order.dart';
 import '../address/address.dart';
 import '../profile/profile.dart';
 
@@ -43,9 +44,9 @@ class SettingsScreen extends StatelessWidget {
                   const TSectionHeading(title: 'Account Settings', textColor: TColors.black,showActionButton: false,),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
-                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Set shopping delivery address', onTap: () => Get.to(() => const UserAddressScreen())),
-                  TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Set shopping delivery address', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Set shopping delivery address', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Thông tin vận chuyển', onTap: () => Get.to(() => const UserAddressScreen())),
+                  TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Giỏ hàng của tôi', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Đơn hàng của tôi',onTap: () => Get.to(() => const OrderScreen ())),
                   TSettingsMenuTitle(icon: Iconsax.bank, title: 'Bank Account', subTitle: 'Set shopping delivery address', onTap: (){},),
                   TSettingsMenuTitle(icon: Iconsax.discount_shape, title: 'My Coupons', subTitle: 'Set shopping delivery address', onTap: (){},),
                   TSettingsMenuTitle(icon: Iconsax.notification, title: 'Notifications', subTitle: 'Set shopping delivery address', onTap: (){},),
