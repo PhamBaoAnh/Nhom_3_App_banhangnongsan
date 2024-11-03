@@ -17,6 +17,7 @@ class SignupController extends GetxController {
   final username = TextEditingController();
   final password = TextEditingController();
   final phoneNo = TextEditingController();
+  final agree =false.obs;
 
   final userRepo0 = Get.put(userRepo());
   Future<void> createUser(UserModel user) async {

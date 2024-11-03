@@ -15,6 +15,7 @@ class LoginController extends GetxController {
   var isGoogleLoading = false.obs;
   var isFacebookLoading = false.obs;
 
+
   Future<void> login(String email, String password) async {
     try {
       isLoading.value = true;
@@ -32,7 +33,6 @@ class LoginController extends GetxController {
       isGoogleLoading.value = true;
       final auth = AuthenticationRepository.instance;
       await auth.signInWithGoogle();
-
       UserModel userGoogle = UserModel(
           firstName: '',
           lastName: '',
@@ -44,7 +44,6 @@ class LoginController extends GetxController {
       var isLoginGoogle  =await userRepo0.getUserDetail(auth.getUserEmail);
       if(isLoginGoogle == null){
         userRepo0.createUser(userGoogle);
-
       }
 
       await  auth.setInitScreen(auth.firebaseUser);

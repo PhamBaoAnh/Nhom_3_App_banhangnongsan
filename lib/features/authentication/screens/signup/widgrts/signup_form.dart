@@ -16,7 +16,7 @@ class TSignupForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SignupController());
     final formKey = GlobalKey<FormState>();
-
+    final showPassword = false.obs;
     return Form(
         key: formKey,
         child: Column(
@@ -134,29 +134,35 @@ class TSignupForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwSections),
-            TextFormField(
-              controller: controller.password,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
-                }
-                if (value.length <= 6) {
-                  return 'Your password must be more than 6 characters.';
-                }
-                return null; // Email hợp lệ
-              },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: TTexts.password,
-                prefixIcon: Icon(Iconsax.password_check),
-                suffixIcon: Icon(Iconsax.eye_slash),
-                errorStyle: TextStyle(
-                  color: Colors.red,
-                  fontSize: 12,
-                ),
-              ),
-            ),
+            Obx(() => TextFormField(
+                  controller: controller.password,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    if (value.length <= 6) {
+                      return 'Your password must be more than 6 characters.';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  obscureText: showPassword.value,
+                  decoration: InputDecoration(
+                    labelText: TTexts.password,
+                    prefixIcon: const Icon(Iconsax.password_check),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          showPassword.value = !showPassword.value;
+                        },
+                        icon: Icon(showPassword.value
+                            ? Iconsax.eye_slash
+                            : Iconsax.eye)),
+                    errorStyle: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                    ),
+                  ),
+                )),
             const SizedBox(height: TSizes.spaceBtwSections),
             const TTermAndConditionTextBox(),
             const SizedBox(height: TSizes.spaceBtwSections),
@@ -164,7 +170,8 @@ class TSignupForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {
+                    if (formKey.currentState!.validate() &&
+                        controller.agree.value) {
                       final userModel = UserModel(
                           firstName: controller.firstName.text.trim(),
                           lastName: controller.lastName.text.trim(),
@@ -173,6 +180,8 @@ class TSignupForm extends StatelessWidget {
                           password: controller.password.text.trim(),
                           phoneNo: controller.phoneNo.text.trim());
                       SignupController.instance.createUser(userModel);
+                    } else {
+                      Get.snackbar('Warning', 'You must agree to continue.');
                     }
                   },
                   child: const Text(

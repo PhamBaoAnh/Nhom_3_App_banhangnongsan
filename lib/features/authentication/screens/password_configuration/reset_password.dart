@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:project/features/authentication/controllers.onboarding/password_reset_email.dart';
+import 'package:project/features/authentication/screens/login/login.dart';
 
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -13,7 +14,7 @@ class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PasswordResetEmail());
+    final controller =Get.put(PasswordResetEmail());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -44,6 +45,7 @@ class ResetPassword extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
+                      Get.offAll(()=> const LoginScreen());
                     },
                     child: const Text(TTexts.done),
                   ),
@@ -52,7 +54,9 @@ class ResetPassword extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.sendPasswordResetEmail();
+                    },
                     child: const Text(TTexts.resendEmail),
                   ),
                 ),
