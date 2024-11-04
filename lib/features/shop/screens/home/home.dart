@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:project/features/shop/screens/home/widgets/home_categories.dart';
@@ -22,6 +24,8 @@ import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../../../utils/device/device_utility.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../all_products/all_products.dart';
+import '../brand/all_brands.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -33,26 +37,26 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const TPrimaryHeaderContainer(
+            TPrimaryHeaderContainer(
               child: Column(
                 children: [
 
-                  THomeAppBar(),
-                  SizedBox(height: TSizes.spaceBtwSections,),
+                  const THomeAppBar(),
+                  const SizedBox(height: TSizes.spaceBtwSections,),
 
-                  TSearchContainer(text: 'Tìm kiếm'),
-                  SizedBox(height: TSizes.spaceBtwSections,),
+                  const TSearchContainer(text: 'Tìm kiếm'),
+                  const SizedBox(height: TSizes.spaceBtwSections,),
 
 
                   Padding(
-                    padding: EdgeInsets.only(left: TSizes.defaultSpace),
+                    padding: const EdgeInsets.only(left: TSizes.defaultSpace),
                     child: Column(
                       children: [
-                         TSectionHeading(title: 'Danh mục phổ biến', textColor: TColors.white,),
-                         SizedBox(height: TSizes.spaceBtwItems,),
+                         TSectionHeading(title: 'Danh mục phổ biến', onPressed: () => Get.to(() => const AllBrandScreen()), textColor: TColors.white,),
+                         const SizedBox(height: TSizes.spaceBtwItems,),
 
-                         THomeCategories(),
-                        SizedBox(height: TSizes.spaceBtwSections,),
+                         const THomeCategories(),
+                        const SizedBox(height: TSizes.spaceBtwSections,),
                       ],
                     ),
 
@@ -61,7 +65,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             //
-            //
             Padding(
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
@@ -69,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                   const TPromoSlider(banners: [TImages.promoBanner2,TImages.promoBanner2,TImages.promoBanner2,],),
                   const SizedBox(height: TSizes.spaceBtwSections,),
 
-                  TSectionHeading(title: 'Sản phẩm bán chạy', onPressed: (){}, textColor: TColors.dark,  ),
+                  TSectionHeading(title: 'Sản phẩm bán chạy', onPressed: () => Get.to(() => const AllProduct()), textColor: TColors.dark,  ),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
                   TGridLayout(itemCount: 4, itemBuilder: (_, index) => const TProductCardVertical() ),
