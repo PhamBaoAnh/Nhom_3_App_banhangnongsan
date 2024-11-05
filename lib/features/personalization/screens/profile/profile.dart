@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
           child: FutureBuilder<dynamic>(
             future: controller.getUserData(),
             builder: (context, snapshot) {
-              // Check for connection state and handle loading
+
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               }
