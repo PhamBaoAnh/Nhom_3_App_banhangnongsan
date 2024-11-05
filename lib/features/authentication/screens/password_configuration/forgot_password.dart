@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/features/authentication/controllers.onboarding/password_reset_email.dart';
+import 'package:project/features/authentication/models/user_model.dart';
 import 'package:project/features/authentication/screens/password_configuration/reset_password.dart';
+import 'package:project/repository/user_repo/user_repo.dart';
 import 'package:project/utils/constants/sizes.dart';
 
 import '../../../../utils/constants/text_strings.dart';

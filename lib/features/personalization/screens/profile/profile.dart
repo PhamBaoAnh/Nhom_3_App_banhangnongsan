@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -104,15 +105,15 @@ class ProfileScreen extends StatelessWidget {
         const SizedBox(height: TSizes.spaceBtwItems),
         TProfileMenu(
           title: 'Họ & Tên',
-          value: '${userdata.firstName} ${userdata.lastName}',
-          onPressed: () => Get.to(() => const  ChangeProfileScreen()),
+          value: '${userdata.firstName ?? ''} ${userdata.lastName ?? ''}'.trim().isNotEmpty
+              ? '${userdata.firstName} ${userdata.lastName}'
+              :  'Chưa cập nhập',
+          onPressed: () => Get.to(() =>    const ChangeProfileScreen( field: 'hoten',)),
         ),
         TProfileMenu(
           title: 'Username',
-          value: userdata.username,
-          onPressed: () {
-            // TODO: Implement logic for editing username
-          },
+          value: userdata.username.isNotEmpty? userdata.username: 'Chưa cập nhập',
+          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'username',)),
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
         const Divider(),
@@ -125,7 +126,7 @@ class ProfileScreen extends StatelessWidget {
         const SizedBox(height: TSizes.spaceBtwItems),
         TProfileMenu(
           title: 'User ID',
-          value: '1', // Assuming you have an id field in UserModel
+          value: userdata.id,
           icon: Iconsax.copy,
           onPressed: () {},
         ),
@@ -136,27 +137,27 @@ class ProfileScreen extends StatelessWidget {
         ),
         TProfileMenu(
           title: 'Phone Number',
-          value: userdata.phoneNo,
-          onPressed: () {},
+          value: userdata.phoneNo.isNotEmpty? userdata.phoneNo: 'Chưa cập nhập',
+          onPressed: ()=> Get.to(() =>   const  ChangeProfileScreen( field: 'phoneNo')),
         ),
         TProfileMenu(
           title: 'Gender',
-          value: userdata.gender ?? 'defautl',
-          // Assuming gender is a field in UserModel
-          onPressed: () {},
+          value:userdata.gender.isNotEmpty ? userdata.gender:'Chưa cập nhập'
+,
+          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'gender')),
         ),
         TProfileMenu(
           title: 'Date of Birth',
-          value: '21/10/2003', // Assuming dateOfBirth is a field in UserModel
-          onPressed: () {},
+          value: userdata.dateOfBirth.isNotEmpty? userdata.dateOfBirth:'Chưa cập nhập',
+          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'dateOfBirth')),
         ),
         const Divider(),
         const SizedBox(height: TSizes.spaceBtwItems),
         Row(
           children: [
             TextButton(
-              onPressed: () async {
-                await controller.logOut();
+              onPressed: ()  {
+                controller.deleteUser(userdata);
               },
               child: const Text(
                 "Close Account",

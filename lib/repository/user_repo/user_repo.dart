@@ -24,11 +24,8 @@ if(snapshot.docs.isNotEmpty){
   return userData;}
 else {
   return null;
-
-
 }
   }
-
   getAllUser() async {
     final snapshot = await _db.collection('user').get();
 
@@ -36,8 +33,21 @@ else {
     return userData;
   }
 
-  getUpdateUser(UserModel user) async{
-    final snapshot = await _db.collection('user').doc(user.email).update(user.toJson());
-
+  updateUser(UserModel user) async{
+    try {
+      await _db.collection('user').doc(user.id).update(user.toJson());
+    } catch (e) {
+      print('Failed to update user: $e');
+    }
+  }
+  deleteUser(UserModel user) async {
+    try {
+      await _db.collection('user').doc(user.id).delete();
+      Get.snackbar('Success', 'Delete success');
+    }catch (e) {
+      print('Failed to update user: $e');
+    }
   }
 }
+
+

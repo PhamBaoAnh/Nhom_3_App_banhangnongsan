@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:project/features/personalization/screens/settings/settings.dart';
 import 'package:project/utils/device/device_utility.dart';
+import 'package:project/utils/navigation_menu.dart';
 
 import '../../../utils/constants/sizes.dart';
 
@@ -19,7 +21,7 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackArrow;
   final IconData? leadingIcon;
   final List<Widget>? actions;
-  final VoidCallback? leadingOnPressed;  // Corrected from `voiCallback` to `VoidCallback`
+  final VoidCallback? leadingOnPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,14 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
         automaticallyImplyLeading: false,
         leading: showBackArrow
             ? IconButton(
-          onPressed: () => Get.back(),
+          onPressed: ()
+          // => Get.back(),
+          {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NavigationMenu()),
+            );
+          },
           icon: const Icon(Iconsax.arrow_left),
         )
             : leadingIcon != null

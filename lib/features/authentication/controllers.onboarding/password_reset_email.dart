@@ -14,28 +14,31 @@ class PasswordResetEmail extends GetxController {
   static  PasswordResetEmail get instance => Get.find();
   final controllerLogin =Get.put(LoginController());
   late Timer _timer;
+  final auth =AuthenticationRepository.instance;
   final email = TextEditingController();
   Future<void> resendPasswordResetEmail() async {
     String emailToResend = email.text;
     try {
-      await AuthenticationRepository.instance.sendPasswordResetEmail(emailToResend);
+      await auth.sendPasswordResetEmail(emailToResend);
       Get.snackbar('Success', 'Password reset email resent. Please check your email.');
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
   }
   Future<void> sendPasswordResetEmail() async {
-
-    String emailReset =email.text;
+    String emailReset = email.text.trim();
     try {
-      await AuthenticationRepository.instance.sendPasswordResetEmail(emailReset);
+
+      await auth.sendPasswordResetEmail(emailReset);
+
       setTimerForAutoRedirect();
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
   }
 
-   setTimerForAutoRedirect() {
+
+  setTimerForAutoRedirect() {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
       try {
         UserModel user = await userRepo.instance.getUserDetail(email.text); // Chờ kết quả

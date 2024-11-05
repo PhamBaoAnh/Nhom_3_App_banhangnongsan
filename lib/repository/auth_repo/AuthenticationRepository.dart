@@ -92,9 +92,9 @@ class AuthenticationRepository extends GetxController {
     } catch (_) {}
   }
 
-  Future<void> sendPasswordResetEmail(String email1) async {
+  Future<void> sendPasswordResetEmail(String email) async {
     try {
-      await _auth.sendPasswordResetEmail( email: email1);
+      await _auth.sendPasswordResetEmail( email: email);
 
     } on FirebaseException catch (e) {
       Get.snackbar('Error', e.message ?? 'An unknown error occurred');
@@ -107,8 +107,22 @@ class AuthenticationRepository extends GetxController {
     } on FirebaseAuthException catch (e) {
       throw e;
     } catch (_) {}
-  }
 
+    }
+  Future<void> deleteAccount() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        await user.delete();
+        print("Tài khoản đã được xóa thành công.");
+      } else {
+        print("Không có người dùng nào được xác thực.");
+      }
+    } on FirebaseAuthException catch (e) {
+      print("Lỗi khi xóa tài khoản: $e");
+    }
+  }
   Future<void> loginUserWithEmailAndPassword(
       String email, String password) async {
     try {

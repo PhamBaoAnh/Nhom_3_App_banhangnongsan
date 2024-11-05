@@ -34,12 +34,17 @@ class LoginController extends GetxController {
       final auth = AuthenticationRepository.instance;
       await auth.signInWithGoogle();
       UserModel userGoogle = UserModel(
+          id :'',
           firstName: '',
           lastName: '',
           username: '',
+          gender: '',
           email: auth.getUserEmail,
           password: '123456789',
-          phoneNo: '');
+          phoneNo: '',
+        dateOfBirth: '',
+
+      );
 
       var isLoginGoogle  =await userRepo0.getUserDetail(auth.getUserEmail);
       if(isLoginGoogle == null){

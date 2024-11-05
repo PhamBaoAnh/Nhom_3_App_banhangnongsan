@@ -46,11 +46,6 @@ class TSignupForm extends StatelessWidget {
                 Expanded(
                   child: TextFormField(
                     controller: controller.lastName,
-                    validator: (value) {
-                      return (value == null || value.isEmpty)
-                          ? 'Please enter your last name.'
-                          : null;
-                    },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
                       labelText: TTexts.lastName,
@@ -173,6 +168,9 @@ class TSignupForm extends StatelessWidget {
                     if (formKey.currentState!.validate() &&
                         controller.agree.value) {
                       final userModel = UserModel(
+                          id : '',
+                          gender: '',
+                          dateOfBirth: '',
                           firstName: controller.firstName.text.trim(),
                           lastName: controller.lastName.text.trim(),
                           username: controller.username.text.trim(),

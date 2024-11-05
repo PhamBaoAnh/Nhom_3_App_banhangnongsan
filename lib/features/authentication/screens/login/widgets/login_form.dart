@@ -24,7 +24,7 @@ class TLoginForm extends StatelessWidget {
     final loginController = Get.find<LoginController>();
     final storage= GetStorage();
     final showPassword =false.obs;
-    final remember =false.obs;
+    final remember =true.obs;
     loginController.email.text = storage.read('email') ?? '';
     loginController.password.text = storage.read('password') ?? '';
     remember.value = storage.read('remember') ?? false;
