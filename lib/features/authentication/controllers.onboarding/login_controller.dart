@@ -34,6 +34,7 @@ class LoginController extends GetxController {
       final auth = AuthenticationRepository.instance;
       await auth.signInWithGoogle();
       UserModel userGoogle = UserModel(
+          id :'',
           firstName: '',
           lastName: '',
           username: '',
