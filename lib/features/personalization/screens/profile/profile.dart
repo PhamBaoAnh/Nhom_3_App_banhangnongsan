@@ -13,6 +13,7 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
+import 'change_profile/change_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -102,11 +103,9 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
         TProfileMenu(
-          title: 'Name',
+          title: 'Họ & Tên',
           value: '${userdata.firstName} ${userdata.lastName}',
-          onPressed: () {
-            // TODO: Implement logic for editing name
-          },
+          onPressed: () => Get.to(() => const  ChangeProfileScreen()),
         ),
         TProfileMenu(
           title: 'Username',

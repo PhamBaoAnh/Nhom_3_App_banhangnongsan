@@ -43,11 +43,11 @@ class TVerticalImageText extends StatelessWidget {
             ),
 
 
-            const SizedBox(height: TSizes.spaceBtwItems/2,),
+            const SizedBox(height: TSizes.spaceBtwItems/3,),
             SizedBox(
               width: 69,
               child: Text(
-                'Danh mục ',
+                title,
                 style: Theme.of(context).textTheme.labelMedium!.apply(color: Colors.white),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

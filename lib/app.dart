@@ -12,6 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme, // Use the correct reference
       darkTheme: TAppTheme.darkTheme, // You can define your dark theme here
