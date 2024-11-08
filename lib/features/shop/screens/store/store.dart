@@ -18,14 +18,16 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../common/widgets/texts/t_brand_title_with_verified_icon.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../controllers/category_controller.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
-      length: 5,
+      length: categories.length,
       child: Scaffold(
         appBar: TAppBar(
           title: Text(
@@ -84,30 +86,38 @@ class StoreScreen extends StatelessWidget {
                 ),
       
       
-              bottom: const TTabBar(
-
+              bottom: TTabBar(
+                  /*
                   tabs: [
                 Tab(child: Text('Nhật Bản')),
                 Tab(child: Text('Viêt Nam')),
                 Tab(child: Text('Hàn Quốc')),
                 Tab(child: Text('Trung Quốc')),
                 Tab(child: Text('Mỹ'))
-      
-              ]
+
+              ]  */
+                tabs: categories.map((category) => Tab(child: Text(category.name)) ).toList(),
+
+
 
               ),
               ),
             ];
           },
-          body:const TabBarView(
+          body: TabBarView(
               children: [
+
+                ...categories.map((category) => TCategoryTab(category: category)).toList()
+                /*
                 TCategoryTab(),
                 TCategoryTab(),
                 TCategoryTab(),
                 TCategoryTab(),
                 TCategoryTab(),
+                */
+
               ]
-          
+
           ),
         ),
       ),
