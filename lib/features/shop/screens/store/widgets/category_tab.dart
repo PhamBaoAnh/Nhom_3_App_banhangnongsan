@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:project/features/shop/models/category_model.dart';
 
 import '../../../../../common/widgets/brand/brand_show_case.dart';
 import '../../../../../common/widgets/layouts/grid_layout.dart';
@@ -10,7 +11,9 @@ import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
 
 class TCategoryTab extends StatelessWidget {
-  const TCategoryTab ({super.key});
+  const TCategoryTab ({super.key, required this.category});
+
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {

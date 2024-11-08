@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
+import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/image_strings.dart';
+import '../../../controllers/category_controller.dart';
 import '../../sub_category/sub_categories.dart';
+
 class THomeCategories extends StatelessWidget {
   const THomeCategories({
     super.key,
@@ -12,22 +14,34 @@ class THomeCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 6,
+    final categoryController = Get.put(CategoryController());
+
+    return Obx(() {
+      // Kiểm tra xem danh sách danh mục có trống hay không
+      if (categoryController.allCategories.isEmpty) {
+        return const Center(child: Text("Không có danh mục nào",style: TextStyle(color: TColors.white),));
+      }
+
+      // Nếu có danh mục, xây dựng giao diện
+      return SizedBox(
+        height: 80,
+        child: ListView.builder(
+          itemCount: categoryController.allCategories.length,
           scrollDirection: Axis.horizontal,
-          itemBuilder: (_, index){
-            return  Padding(
-              padding: const EdgeInsets.symmetric(),
+          shrinkWrap: true,
+          itemBuilder: (_, index) {
+            final category = categoryController.allCategories[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 7.0), // Căn giữa các phần tử
               child: TVerticalImageText(
-                image: TImages.google,
-                title: 'Danh Mục',
-                onTap: () => Get.to(() => const SubCategoriesScreen ()),),
+                image: TImages.google, // Thay đổi hình ảnh nếu cần
+                title: category.name,
+                onTap: () => Get.to(() => const SubCategoriesScreen()),
+              ),
             );
-          }
-      ),
-    );
+          },
+        ),
+      );
+    });
   }
 }
