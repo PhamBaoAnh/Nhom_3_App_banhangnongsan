@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
-                  const TPromoSlider(banners: [TImages.promoBanner2,TImages.promoBanner2,TImages.promoBanner2,],),
+                  const TPromoSlider(),
                   const SizedBox(height: TSizes.spaceBtwSections,),
 
                   TSectionHeading(title: 'Sản phẩm bán chạy', onPressed: () => Get.to(() => const AllProduct()), textColor: TColors.dark,  ),

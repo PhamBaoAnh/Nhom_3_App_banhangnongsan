@@ -44,4 +44,6 @@ class ProfileController extends GetxController {
     Get.offAll(const LoginScreen());
   }
 
+
+
 }

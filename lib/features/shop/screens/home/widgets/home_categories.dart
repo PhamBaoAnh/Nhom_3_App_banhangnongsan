@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,13 +34,14 @@ class THomeCategories extends StatelessWidget {
           itemBuilder: (_, index) {
             final category = categoryController.allCategories[index];
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 7.0), // Căn giữa các phần tử
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: TVerticalImageText(
-                image: TImages.google, // Thay đổi hình ảnh nếu cần
+                image: category.image,  // Passing the image URL (String)
                 title: category.name,
                 onTap: () => Get.to(() => const SubCategoriesScreen()),
               ),
             );
+
           },
         ),
       );

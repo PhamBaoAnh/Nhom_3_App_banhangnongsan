@@ -39,10 +39,10 @@ class CategoryModel {
   // Phương thức từ CategoryModel -> Map (dùng khi lưu vào Firestore)
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
-      'image': image,
-      'parentId': parentId,
-      'isFeatured': isFeatured,
+      'Name': name,
+      'Image': image,
+      'ParentId': parentId,
+      'IsFeatured': isFeatured,
     };
   }
 }
