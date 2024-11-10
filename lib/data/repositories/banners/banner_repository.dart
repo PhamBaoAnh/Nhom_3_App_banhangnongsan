@@ -1,18 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import '../../features/shop/models/category_model.dart';
+import 'package:project/features/shop/models/banner_model.dart';
+import '../../../features/shop/models/category_model.dart';
 
-class CategoryRepository extends GetxController {
-  static CategoryRepository get instance => Get.find();
+
+class BannerRepository extends GetxController {
+  static BannerRepository  get instance => Get.find();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final String _collectionPath = 'Categories';
+  final String _collectionPath = 'Banners';
 
   // Static getter to access the instance of the CategoryController
 
   // Method to fetch all categories from Firestore
-  Future<List<CategoryModel>> getAllCategories() async {
+  Future<List<BannerModel>> getAllBanners() async {
     try {
       // Fetching data from Firestore
       final snapshot = await _firestore.collection(_collectionPath).get();
@@ -23,13 +25,7 @@ class CategoryRepository extends GetxController {
         return [];
       }
 
-      final list = snapshot.docs.map((doc) => CategoryModel.fromSnapshot(doc)).toList();
-
-      // Check and print the list contents in the terminal
-      print('Fetched Categories:');
-      for (var category in list) {
-        print('Category: ${category.name}'); // Replace 'name' with the actual field in CategoryModel
-      }
+      final list = snapshot.docs.map((doc) => BannerModel.fromSnapshot(doc)).toList();
 
       return list;
 

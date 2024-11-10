@@ -14,14 +14,21 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
+
+import '../../../shop/controllers/category_controller.dart';
 import 'change_profile/change_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
+
+
+
     return Scaffold(
       appBar: const TAppBar(
         showBackArrow: true,
@@ -74,6 +81,7 @@ class ProfileScreen extends StatelessWidget {
   // A helper method to build profile content
   Widget _buildProfileContent(UserModel userdata) {
     final controller = Get.put(ProfileController());
+   final categoryController = Get.put(CategoryController());
 
     return Column(
       children: [
@@ -86,12 +94,17 @@ class ProfileScreen extends StatelessWidget {
               width: 80,
               height: 80,
             ),
+
             TextButton(
-              onPressed: () {
-                // TODO: Implement change profile picture logic
+              onPressed: () async {
+                // Chờ phương thức uploadPicture hoàn thành
+                await categoryController.uploadPicture();
               },
               child: const Text("Change Profile Picture"),
             ),
+
+
+
           ]),
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),

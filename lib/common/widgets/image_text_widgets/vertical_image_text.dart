@@ -10,7 +10,7 @@ class TVerticalImageText extends StatelessWidget {
     required this.image,
     required this.title,
     this.textColor = TColors.white,
-    this.backgroundColor  = TColors.white,
+    this.backgroundColor = TColors.white,
     this.onTap,
   });
 
@@ -33,28 +33,37 @@ class TVerticalImageText extends StatelessWidget {
               height: 56,
               padding: const EdgeInsets.all(TSizes.sm),
               decoration: BoxDecoration(
-                color: backgroundColor ??(dark ? TColors.black :  TColors.white),
+                color: backgroundColor ?? (dark ? TColors.black : TColors.white),
                 borderRadius: BorderRadius.circular(100),
               ),
-
-              child:  Center(
-                child: Image(image: AssetImage(image),fit: BoxFit.cover,color: dark ? TColors.light :  TColors.primary, ),
+              child: Center(
+                // Sử dụng Image.network để tải ảnh từ URL
+                child: Image.network(
+                  image,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;  // Hiển thị ảnh khi tải xong
+                    } else {
+                      return Center(child: CircularProgressIndicator());  // Hiển thị vòng xoay khi tải
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(child: Icon(Icons.error));  // Hiển thị lỗi nếu không tải được ảnh
+                  },
+                ),
               ),
             ),
-
-
-            const SizedBox(height: TSizes.spaceBtwItems/3,),
+            const SizedBox(height: TSizes.spaceBtwItems / 3),
             SizedBox(
               width: 69,
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.labelMedium!.apply(color: Colors.white),
+                style: Theme.of(context).textTheme.labelMedium!.apply(color: textColor),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-
               ),
             )
-
           ],
         ),
       ),
