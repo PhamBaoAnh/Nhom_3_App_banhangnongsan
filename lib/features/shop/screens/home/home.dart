@@ -24,6 +24,7 @@ import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../../../utils/device/device_utility.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../controllers/product/product_controller.dart';
 import '../all_products/all_products.dart';
 import '../brand/all_brands.dart';
 
@@ -32,6 +33,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductController());
+
     return  Scaffold(
 
       body: SingleChildScrollView(
@@ -54,9 +57,8 @@ class HomeScreen extends StatelessWidget {
                       children: [
                          TSectionHeading(title: 'Danh mục phổ biến', onPressed: () => Get.to(() => const AllBrandScreen()), textColor: TColors.white,),
                          const SizedBox(height: TSizes.spaceBtwItems,),
-
                          const THomeCategories(),
-                        const SizedBox(height: TSizes.spaceBtwSections,),
+                         const SizedBox(height: TSizes.spaceBtwSections,),
                       ],
                     ),
 
@@ -75,7 +77,18 @@ class HomeScreen extends StatelessWidget {
                   TSectionHeading(title: 'Sản phẩm bán chạy', onPressed: () => Get.to(() => const AllProduct()), textColor: TColors.dark,  ),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
-                  TGridLayout(itemCount: 4, itemBuilder: (_, index) => const TProductCardVertical() ),
+                  Obx(() {
+                    if (controller.featuredProducts.isEmpty) {
+                      return const Center(child: Text("Không có sản phẩm nào", style: TextStyle(color: TColors.primary)));
+                    }
+                    return TGridLayout(
+                      itemCount: controller.featuredProducts.length,
+                      itemBuilder: (_, index) {
+
+                        return TProductCardVertical(product: controller.featuredProducts[index]);
+                      },
+                    );
+                  })
 
                 ],
               ),

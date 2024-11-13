@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project/utils/constants/enums.dart';
 
 import '../../../../../common/widgets/chips/choice_chip.dart';
@@ -10,35 +11,64 @@ import '../../../../../common/widgets/texts/t_brand_title_with_verified_icon.dar
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
+import '../../../controllers/product/variation_controller.dart';
+import '../../../models/product_model.dart';
+
 class TProductAttributes extends StatelessWidget {
-  const TProductAttributes({super.key});
+  const TProductAttributes({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = THelperFunctions.isDarkMode(context);
+    final controller = Get.put(VariationController());
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
-        const SizedBox(height: TSizes.spaceBtwItems ,),
+        const SizedBox(height: TSizes.spaceBtwItems),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const TSectionHeading(title: 'Khối Lượng', textColor: TColors.dark,showActionButton: false,),
-            const SizedBox(height: TSizes.spaceBtwItems ,),
-            Wrap(
-              spacing: 10,
+          children: product.productAttributes!.map((attribute) {
+            // If the attribute is not selected, set the first value as the default
+            if (controller.selectedAttributes[attribute.name] == null && attribute.values.isNotEmpty) {
+              controller.selectedAttributes[attribute.name] = attribute.values.first;
+            }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TChoiceChip(text: '1 Kg',selected: true, onSelected: (value){},),
-                TChoiceChip(text: '1.5 Kg',selected: false,onSelected: (value){},),
-                TChoiceChip(text: '2 Kg',selected: false,onSelected: (value){},),
-                TChoiceChip(text: '3 Kg',selected: false,onSelected: (value){},),
+                TSectionHeading(
+                  title: attribute.name,
+                  textColor: TColors.dark,
+                  showActionButton: false,
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Obx(() => Wrap(
+                  spacing: 10,
+                  children: attribute.values.map((attributeValue) {
+                    final isSelected = controller.selectedAttributes[attribute.name] == attributeValue;
+                    final available = controller
+                        .getAttributesAvailabilityInVariation(product.productVariations!, attribute.name)
+                        .contains(attributeValue);
+
+                    return TChoiceChip(
+                      text: attributeValue,
+                      selected: isSelected,
+                      onSelected: available
+                          ? (selected) {
+                        if (selected) {
+                          controller.onAttributeSelected(product, attribute.name, attributeValue);
+                        }
+                      }
+                          : null,
+                    );
+                  }).toList(),
+                )),
               ],
-            ),
-
-          ],
-        )
-
+            );
+          }).toList(),
+        ),
       ],
     );
   }

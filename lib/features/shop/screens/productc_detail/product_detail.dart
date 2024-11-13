@@ -14,12 +14,15 @@ import '../../../../common/widgets/icons/t_circular_icon.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/enums.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../models/product_model.dart';
 
 class ProductDetail extends StatelessWidget {
-  const ProductDetail({super.key});
+  const ProductDetail({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class ProductDetail extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const TProductimageSlider(),
+            TProductimageSlider(product: product),
 
             Padding(
                 padding: const EdgeInsets.only(right: TSizes.defaultSpace, left: TSizes.defaultSpace, bottom: TSizes.defaultSpace),
@@ -38,9 +41,9 @@ class ProductDetail extends StatelessWidget {
                  children: [
                    const TRatingAndShare(),
 
-                   const TProductMetaData(),
+                   TProductMetaData(product: product),
 
-                   const TProductAttributes(),
+                    TProductAttributes(product: product,),
                    const SizedBox(height: TSizes.spaceBtwSections ,),
 
                    SizedBox(
