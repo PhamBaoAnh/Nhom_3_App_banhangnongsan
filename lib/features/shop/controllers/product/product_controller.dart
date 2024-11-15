@@ -61,7 +61,7 @@ class ProductController extends GetxController {
       if (smallestPrice == largestPrice) {
         return largestPrice.toStringAsFixed(0);
       } else {
-        return '${smallestPrice.toStringAsFixed(0)} - ${largestPrice.toStringAsFixed(0)}';
+        return '${smallestPrice.toStringAsFixed(0)}.000 - ${largestPrice.toStringAsFixed(0)}';
       }
     }
   }
