@@ -25,16 +25,13 @@ class TProductMetaData extends StatelessWidget {
     final salePercentage = controller.calculatorSalePercentage(product.price, product.salePrice);
     final variationController = Get.put(VariationController());
 
-    // Ensure the selected variation is initialized correctly
-    variationController.initializeVariation(product);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Obx(() => variationController.selectedVariation.value.id.isNotEmpty
-                ? TRoundedContainer(
+            TRoundedContainer(
               radius: TSizes.sm,
               backgroundColor: TColors.secondary.withOpacity(0.8),
               padding: const EdgeInsets.symmetric(horizontal: TSizes.sm, vertical: TSizes.xs),
@@ -42,17 +39,19 @@ class TProductMetaData extends StatelessWidget {
                 '-$salePercentage%',
                 style: Theme.of(context).textTheme.labelLarge!.apply(color: TColors.black),
               ),
-            )
-                : Container()),
+            ),
 
-            const SizedBox(width: TSizes.spaceBtwItems),
+
+
+            /*
             if (product.price > 0)
               Obx(() => Text(
                 '\$${variationController.selectedVariation.value.price}',
                 style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough),
               )),
+            */
             const SizedBox(width: TSizes.spaceBtwItems),
-            Obx(() => TProductPriceText(price: variationController.getVariationPrice(), isLarge: true)),
+            TProductPriceText(price: controller.getProductPrice(product), isLarge: true),
           ],
         ),
 

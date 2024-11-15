@@ -52,6 +52,8 @@ class ProductDetail extends StatelessWidget {
                 children: [
                   const TRatingAndShare(),
                   TProductMetaData(product: product),
+                  const SizedBox(height: TSizes.spaceBtwItems ),
+
                   TProductAttributes(
                     product: product,
                   ),
