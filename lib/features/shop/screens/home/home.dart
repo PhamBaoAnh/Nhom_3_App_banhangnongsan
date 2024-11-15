@@ -85,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                       itemCount: controller.featuredProducts.length,
                       itemBuilder: (_, index) {
 
-                        return TProductCardVertical(product: controller.featuredProducts[index]);
+                        return TProductCardVertical(product: controller.featuredProducts[index],);
                       },
                     );
                   })
