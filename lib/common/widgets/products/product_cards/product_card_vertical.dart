@@ -19,6 +19,7 @@ import '../../images/t_rounded_image.dart';
 import '../../texts/product_price_text.dart';
 import '../../texts/product_title_text.dart';
 import '../../texts/t_brand_title_with_verified_icon.dart';
+import '../favourite/favorite_icon.dart';
 
 
 class TProductCardVertical extends StatelessWidget {
@@ -65,11 +66,11 @@ class TProductCardVertical extends StatelessWidget {
 
                     ),
                   ),
-                  const Positioned(
+                   Positioned(
                       top: 0,
                       right: 0,
-                      child:  TCircularIcon(icon: Iconsax.heart5, color: Colors.red)),
-                ],
+                      child: TFavouriteIcon(productId: product.id,))
+                    ],
               ),
             ), // Make sure to instantiate the widget
 

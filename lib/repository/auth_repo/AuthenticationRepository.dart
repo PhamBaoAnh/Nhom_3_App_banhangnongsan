@@ -9,6 +9,7 @@ import 'package:project/features/authentication/screens/login/login.dart';
 import 'package:project/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:project/features/authentication/screens/signup/verify_email.dart';
 
+import '../../utils/local_storage/storage_utility.dart';
 import '../../utils/navigation_menu.dart';
 import '../exception/SignupWithEmailAndPasswordFailure.dart';
 
@@ -33,13 +34,22 @@ class AuthenticationRepository extends GetxController {
     setInitScreen(_firebaseUser.value);
   }
 
-  setInitScreen(User? user) {
-    user == null
-        ? Get.offAll(() => const OnBoardingScreen())
-        : firebaseUser!.emailVerified
-            ? Get.offAll(() => const NavigationMenu())
-            : Get.offAll(() => VerifyEmailScreen(email: getUserEmail));
+  Future<void> setInitScreen(User? user) async {
+    if (user == null) {
+      // Navigate to OnBoardingScreen if user is null
+      Get.offAll(() => const OnBoardingScreen());
+    } else {
+      if (user.emailVerified) {
+        // Initialize local storage and navigate to NavigationMenu
+        await TLocalStorage.init(user.uid);
+        Get.offAll(() => const NavigationMenu());
+      } else {
+        // Navigate to VerifyEmailScreen if email is not verified
+        Get.offAll(() => VerifyEmailScreen(email: user.email ?? ''));
+      }
+    }
   }
+
 
   Future<void> signInWithGoogle() async {
     try {

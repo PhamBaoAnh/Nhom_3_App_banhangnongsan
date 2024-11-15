@@ -39,5 +39,34 @@ class ProductRepository extends GetxController {
       Get.snackbar('Error', 'Error fetching categories: $e');
       return []; // Return an empty list on error
     }
+     }
+
+  Future<List<ProductModel>> getFavoriteProducts(List<String> productIds) async {
+    try {
+      // Fetching data from Firestore
+      final snapshot = await _firestore.collection(_collectionPath).where(FieldPath.documentId, whereIn: productIds).get();
+
+      if (snapshot.docs.isEmpty) {
+        // Handle case where there are no documents
+        Get.snackbar('No Data', 'No categories found');
+        return [];
+      }
+
+      final list = snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+      print(list);
+      for (var product in list) {
+        print('sanpahm: ${product.productAttributes}'); // Replace 'name' with the actual field in CategoryModel
+      }
+
+
+      return list;
+
+    } catch (e) {
+      // Show error message if fetching categories fails
+      Get.snackbar('Error', 'Error fetching categories: $e');
+      return []; // Return an empty list on error
+    }
   }
+
+
 }
