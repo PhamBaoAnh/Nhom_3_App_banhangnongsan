@@ -89,7 +89,7 @@ class ProductModel {
       isFeatured: data['IsFeatured'],
       brand: data['Brand'] != null ? BrandModel.fromJson(data['Brand']) : null,
       description: data['Description'],
-      categoryId: data['CategoryId'],
+      categoryId: data['CategoryId']?.toString(), // Chuyển đổi thành String
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       productType: data['ProductType'] ?? '',
       productAttributes: data['ProductAttribute'] != null
@@ -104,4 +104,5 @@ class ProductModel {
           : [],
     );
   }
+
 }

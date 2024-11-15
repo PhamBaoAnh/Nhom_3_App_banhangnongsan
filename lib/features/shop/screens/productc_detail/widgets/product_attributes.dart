@@ -22,54 +22,117 @@ class TProductAttributes extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = THelperFunctions.isDarkMode(context);
     final controller = Get.put(VariationController());
+    final dark = THelperFunctions.isDarkMode(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: TSizes.spaceBtwItems),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: product.productAttributes!.map((attribute) {
-            // If the attribute is not selected, set the first value as the default
-            if (controller.selectedAttributes[attribute.name] == null && attribute.values.isNotEmpty) {
-              controller.selectedAttributes[attribute.name] = attribute.values.first;
-            }
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Obx(
+      () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+         if(controller.selectedVariation.value.id.isNotEmpty)
+          TRoundedContainer(
+            padding: const EdgeInsets.all(TSizes.md),
+            backgroundColor: dark ? TColors.darkGrey : TColors.grey,
+            child: Column(
               children: [
-                TSectionHeading(
-                  title: attribute.name,
-                  textColor: TColors.dark,
-                  showActionButton: false,
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Obx(() => Wrap(
-                  spacing: 10,
-                  children: attribute.values.map((attributeValue) {
-                    final isSelected = controller.selectedAttributes[attribute.name] == attributeValue;
-                    final available = controller
-                        .getAttributesAvailabilityInVariation(product.productVariations!, attribute.name)
-                        .contains(attributeValue);
+                Row(
+                  children: [
+                    const TSectionHeading(textColor: TColors.black, title: 'Variation',showActionButton: false,),
+                    const SizedBox(width: TSizes.spaceBtwItems,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const TProductTitleText(title: 'Giá   ', smallSize: true,),
+                            if(controller.selectedVariation.value.salePrice>0)
+                            Text('\$${controller.selectedVariation.value.price}',
+                            style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough),),
 
-                    return TChoiceChip(
-                      text: attributeValue,
-                      selected: isSelected,
-                      onSelected: available
-                          ? (selected) {
-                        if (selected) {
-                          controller.onAttributeSelected(product, attribute.name, attributeValue);
-                        }
-                      }
-                          : null,
-                    );
-                  }).toList(),
-                )),
+                            const SizedBox(width: TSizes.spaceBtwItems,),
+                            TProductPriceText(price: controller.getVariationPrice(), isSmall: true, )
+
+                          ],
+                        ),
+                        Row(
+                          children: [
+                             const TProductTitleText(title: 'Trạng thái   ', smallSize: true,),
+                             Text(controller.variationStockStatus.value,style: Theme.of(context).textTheme.titleMedium,),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
+
+                TProductTitleText(
+                    title: controller.selectedVariation.value.description ?? '',
+                    smallSize: true,
+                    maxLines: 4,
+
+                ),
+
+
+
               ],
-            );
-          }).toList(),
-        ),
-      ],
+            ),
+          ),
+
+
+
+
+
+          const SizedBox(height: TSizes.spaceBtwItems),
+          // Kiểm tra productAttributes có dữ liệu hay không
+          if (product.productAttributes != null && product.productAttributes!.isNotEmpty)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: product.productAttributes!
+                  .map((attribute) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TSectionHeading(
+                    title: attribute.name ?? '',
+                    textColor: TColors.dark,
+                    showActionButton: false,
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  Obx(
+                        () => Wrap(
+                      spacing: 10,
+                      children: attribute.values.map((attributeValue) {
+                        final isSelected =
+                            controller.selectedAttributes[attribute.name] == attributeValue;
+                        final available = controller
+                            .getAttributesAvailabilityInVariation(
+                          product.productVariations!,
+                          attribute.name,
+                        )
+                            .contains(attributeValue);
+
+                        return TChoiceChip(
+                          text: attributeValue,
+                          selected: isSelected,
+                          onSelected: available
+                              ? (selected) {
+                            if (selected && available) {
+                              controller.onAttributeSelected(
+                                product,
+                                attribute.name ?? '',
+                                attributeValue,
+                              );
+                            }
+                          }
+                              : null,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ))
+                  .toList(),
+            ),
+        ],
+      ),
     );
   }
 }

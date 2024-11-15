@@ -92,7 +92,7 @@ class TProductCardVertical extends StatelessWidget {
               children: [
                  Padding(
                   padding: const EdgeInsets.only(left: TSizes.sm),
-                  child: TProductPriceText(price: controller.getProductPrice(product),),
+                  child: TProductPriceText(price: controller.getProductLowesPrice(product),),
                 ),
 
                 Container(

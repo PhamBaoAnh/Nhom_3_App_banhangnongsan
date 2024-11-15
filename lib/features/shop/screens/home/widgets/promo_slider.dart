@@ -24,7 +24,7 @@ class TPromoSlider extends StatelessWidget {
           options: CarouselOptions(
             viewportFraction: 1.1,
             autoPlay: true, // Bật tính năng tự động di chuyển
-            autoPlayInterval: const Duration(seconds: 6), // Thời gian giữa mỗi lần chuyển
+            autoPlayInterval: const Duration(seconds: 5), // Thời gian giữa mỗi lần chuyển
             onPageChanged: (index, _) => controller.updatePageIndicator(index),
           ),
           items: controller.allBanners.map(
