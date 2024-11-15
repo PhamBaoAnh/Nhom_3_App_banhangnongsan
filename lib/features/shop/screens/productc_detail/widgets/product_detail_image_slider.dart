@@ -34,14 +34,12 @@ class TProductimageSlider extends StatelessWidget {
         child: Stack(
           children: [
             SizedBox(
-              height: 450,
+              height: 480,
               child: Padding(
                 padding: const EdgeInsets.all(TSizes.productImageRadius * 4),
-                child: Center(
-                  child: Obx(() {
+                child: Center(child: Obx(() {
                     final image = controller.selectedProductImage.value;
                     return GestureDetector(
-                      onTap: () => controller.showEnlargedImage(image),
                       child: CachedNetworkImage(
                         imageUrl: image,
                         progressIndicatorBuilder: (_, __, downloadProgress) =>
@@ -62,24 +60,25 @@ class TProductimageSlider extends StatelessWidget {
               child: SizedBox(
                 height: 75,
                 child: ListView.separated(
-                  separatorBuilder: (_, __) =>
-                  const SizedBox(width: TSizes.spaceBtwItems),
                   itemCount: images.length,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (_, index) => GestureDetector(
-                    onTap: () {
-                      // Cập nhật selectedProductImage khi nhấn vào hình ảnh
-                      controller.selectedProductImage.value = images[index];
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  separatorBuilder: (_, __) => const SizedBox(width: TSizes.spaceBtwItems),
+                  itemBuilder: (_, index) => Obx(
+                        () {
+                      final imageSelected = controller.selectedProductImage.value == images[index];
+                      return TRoundedImage(
+                        width: 80,
+                        isNetworkImage: true,
+                        imageUrl: images[index],
+                        padding: const EdgeInsets.all(TSizes.sm),
+                        backgroundColor: dark ? TColors.white : TColors.white,
+                        border: Border.all(color: imageSelected  ? TColors.primary : Colors.transparent),
+                        onPressed: ()=> controller.selectedProductImage.value = images[index],
+                       
+                      );
                     },
-                    child: TRoundedImage(
-                      width: 90,
-                      isNetworkImage: true,
-                      backgroundColor: dark ? TColors.white : TColors.white,
-                      border: Border.all(color: TColors.primary),
-                      imageUrl: images[index],
-                    ),
                   ),
                 ),
               ),
