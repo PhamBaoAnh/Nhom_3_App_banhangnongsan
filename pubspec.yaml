@@ -50,7 +50,7 @@ dependencies:
   firebase_database: ^11.1.4
   supabase_flutter: ^2.8.0
   get_storage_pro: ^0.1.9
-
+  lottie: ^2.0.0
 
 
 

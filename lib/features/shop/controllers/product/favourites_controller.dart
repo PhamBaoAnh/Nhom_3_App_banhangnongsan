@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:project/utils/local_storage/storage_utility.dart';
 
+import '../../../../common/widgets/loaders/loaders.dart';
 import '../../../../data/repositories/product/product_repository.dart';
 import '../../models/product_model.dart';
 
@@ -43,15 +44,15 @@ class FavouritesController extends GetxController {
     if (!favorites.containsKey(productId) || !favorites[productId]!) {
       favorites[productId] = true; // Mark as favorite
       saveFavoritesToStorage();
-      Get.snackbar('Thông báo', 'Sản phẩm đã được thêm vào mục yêu thích',
-          snackPosition: SnackPosition.BOTTOM);
+      TLoaders.customToast(message: 'Sản phẩm đã được thêm vào mục yêu thích');
     } else {
+
       favorites.remove(productId); // Remove from favorites
       saveFavoritesToStorage();
-      Get.snackbar('Thông báo', 'Sản phẩm đã được xóa khỏi mục yêu thích',
-          snackPosition: SnackPosition.BOTTOM);
+      TLoaders.customToast(message: 'Sản phẩm đã được xóa khỏi mục yêu thích');
     }
   }
+
 
 
   void saveFavoritesToStorage() {
