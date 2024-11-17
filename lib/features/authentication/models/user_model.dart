@@ -15,12 +15,12 @@ class UserModel {
   UserModel(
       {   required this.id,
         required this.gender,
-      required this.firstName,
-      required this.lastName,
-      required this.username,
-      required this.email,
-      required this.password,
-      required this.phoneNo,
+        required this.firstName,
+        required this.lastName,
+        required this.username,
+        required this.email,
+        required this.password,
+        required this.phoneNo,
         required this.dateOfBirth,});
 
   Map<String, dynamic> toJson() {
