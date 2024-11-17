@@ -19,6 +19,7 @@ class TSortableProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AllProductController());
+    controller.selectSort.value='Name';
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.assignProducts(products);
     });
@@ -31,6 +32,7 @@ class TSortableProducts extends StatelessWidget {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 controller.sortProducts(value!);
               });
+
           },
           items: ['Name', 'Higher Price', 'Lower Price', 'Sale']
               .map((option) => DropdownMenuItem(
