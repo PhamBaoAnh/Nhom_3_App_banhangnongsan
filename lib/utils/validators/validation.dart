@@ -53,4 +53,11 @@ class TValidator {
 
     return null; // Không có lỗi
   }
+
+  static String? validateEmptyText(String fieldName, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return '$fieldName không được để trống';
+    }
+    return null; // Trả về null nếu trường không bị trống
+  }
 }
