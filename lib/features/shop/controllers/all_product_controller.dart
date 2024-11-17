@@ -44,13 +44,12 @@ final RxList <ProductModel> products= <ProductModel>[].obs;
       case 'Name':
         products.sort((a,b)=>a.title.compareTo(b.title));
         break;
-      case 'Higher Price':
+      case 'Lower Price':
         products.sort((a,b)=>a.price.compareTo(b.price));
         break;
-      case 'Lower Price':
+      case 'Higher Price':
         products.sort((a,b)=>b.price.compareTo(a.price));
         break;
-
       case 'Sale':
         products.sort((a,b){
           if(b.salePrice>0) return b.salePrice.compareTo(a.salePrice);
@@ -63,7 +62,7 @@ final RxList <ProductModel> products= <ProductModel>[].obs;
     }
  }
   void assignProducts(List<ProductModel> newProducts) {
-    selectSort.value ='Name';
+    selectSort.value= 'Name';
     products.assignAll(newProducts);
   }
 

@@ -31,7 +31,6 @@ class TSortableProducts extends StatelessWidget {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 controller.sortProducts(value!);
               });
-              value =controller.selectSort.value;
           },
           items: ['Name', 'Higher Price', 'Lower Price', 'Sale']
               .map((option) => DropdownMenuItem(
