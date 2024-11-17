@@ -94,7 +94,6 @@ class ProfileScreen extends StatelessWidget {
               width: 80,
               height: 80,
             ),
-
             TextButton(
               onPressed: () async {
                 // Chờ phương thức uploadPicture hoàn thành
@@ -138,7 +137,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
         TProfileMenu(
-          title: 'User ID',
+          title: userdata.id,
           value: userdata.id,
           icon: Iconsax.copy,
           onPressed: () {},

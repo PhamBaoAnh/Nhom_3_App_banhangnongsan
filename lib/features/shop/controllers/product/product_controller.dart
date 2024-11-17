@@ -19,6 +19,21 @@ class ProductController extends GetxController {
     fetchCategories();  // Gọi fetchCategories để tải dữ liệu sản phẩm
   }
 
+  Future<List<ProductModel>>fetchAllFeaturedProducts() async {
+    try {
+     final products =await productRepository.getFeaturedProducts();
+
+      return products;
+
+    } catch (e) {
+      // Show error message if fetching categories fails
+      Get.snackbar('Error', 'Error fetching categories: $e');
+      return []; // Return an empty list on error
+    }
+  }
+
+
+
   Future<void> fetchCategories() async {
     try {
       isLoading.value = true;

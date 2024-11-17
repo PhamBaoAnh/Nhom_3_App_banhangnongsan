@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:project/features/shop/models/product_atrribute.dart';
 import 'package:project/features/shop/models/product_variation.dart';
 import 'brand_model.dart';
@@ -21,7 +20,6 @@ class ProductModel {
   List<ProductAttributeModel>? productAttributes;
   List<ProductVariationModel>? productVariations;
 
-  // Constructor for ProductModel
   ProductModel({
     required this.id,
     required this.title,
@@ -42,13 +40,13 @@ class ProductModel {
 
   // Static method to create an empty ProductModel
   static ProductModel empty() => ProductModel(
-    id: '',
-    stock: 0,
-    price: 0.0,
-    title: '',
-    thumbnail: '',
-    productType: '',
-  );
+        id: '',
+        stock: 0,
+        price: 0.0,
+        title: '',
+        thumbnail: '',
+        productType: '',
+      );
 
   // Method to convert ProductModel to Map (used when saving to Firestore)
   Map<String, dynamic> toJson() {
@@ -76,7 +74,8 @@ class ProductModel {
   }
 
   // Factory constructor to create a ProductModel from Firestore DocumentSnapshot
-  factory ProductModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  factory ProductModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
     return ProductModel(
       id: document.id,
@@ -89,20 +88,46 @@ class ProductModel {
       isFeatured: data['IsFeatured'],
       brand: data['Brand'] != null ? BrandModel.fromJson(data['Brand']) : null,
       description: data['Description'],
-      categoryId: data['CategoryId']?.toString(), // Chuyển đổi thành String
+      categoryId: data['CategoryId']?.toString(),
+      // Chuyển đổi thành String
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       productType: data['ProductType'] ?? '',
       productAttributes: data['ProductAttribute'] != null
           ? (data['ProductAttribute'] as List)
-          .map((e) => ProductAttributeModel.fromJson(e))
-          .toList()
+              .map((e) => ProductAttributeModel.fromJson(e))
+              .toList()
           : [],
       productVariations: data['ProductVariations'] != null
           ? (data['ProductVariations'] as List)
-          .map((e) => ProductVariationModel.fromJson(e))
-          .toList()
+              .map((e) => ProductVariationModel.fromJson(e))
+              .toList()
           : [],
     );
   }
 
+  factory ProductModel.fromQuerySnapshot(QueryDocumentSnapshot<Object?> document) {
+    final data = document.data() as Map<String, dynamic>;
+
+    return ProductModel(
+      id: document.id,
+      sku: data['SKU'] ?? '',
+      title: data['Title'] ?? '',
+      stock: data['Stock'] ?? 0,
+      isFeatured: data['IsFeatured'] ?? false,
+      price: double.parse((data['Price'] ?? 0.0).toString()),
+      salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
+      thumbnail: data['Thumbnail'] ?? '',
+      categoryId: data['CategoryId'] ?? '',
+      description: data['Description'] ?? '',
+      productType: data['ProductType'] ?? '',
+      brand: BrandModel.fromJson(data['Brand']),
+      images: data['Images'] != null ? List<String>.from(data['Images']) : [],
+      productAttributes: (data['ProductAttributes'] as List<dynamic>)
+          .map((e) => ProductAttributeModel.fromJson(e))
+          .toList(),
+      productVariations: (data['ProductVariations'] as List<dynamic>)
+          .map((e) => ProductVariationModel.fromJson(e))
+          .toList(),
+    );
+  }
 }

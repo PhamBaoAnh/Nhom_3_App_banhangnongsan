@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:project/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:project/features/shop/screens/home/widgets/promo_slider.dart';
@@ -74,7 +74,10 @@ class HomeScreen extends StatelessWidget {
                   const TPromoSlider(),
                   const SizedBox(height: TSizes.spaceBtwSections,),
 
-                  TSectionHeading(title: 'Sản phẩm bán chạy', onPressed: () => Get.to(() => const AllProduct()), textColor: TColors.dark,  ),
+                  TSectionHeading(title: 'Sản phẩm bán chạy', onPressed: () => Get.to(() =>  AllProduct(title: 'Popular Products',query: FirebaseFirestore.instance
+                      .collection('Products')
+                      .where('IsFeatured', isEqualTo: true)
+                      .limit(6),futureMethod:controller.fetchAllFeaturedProducts())), textColor: TColors.dark,  ),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
                   Obx(() {
