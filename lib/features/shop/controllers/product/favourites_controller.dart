@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:project/utils/local_storage/storage_utility.dart';
 
-import '../../../../common/widgets/loaders/loaders.dart';
+
 import '../../../../data/repositories/product/product_repository.dart';
+import '../../../../utils/popups/loaders.dart';
 import '../../models/product_model.dart';
 
 class FavouritesController extends GetxController {

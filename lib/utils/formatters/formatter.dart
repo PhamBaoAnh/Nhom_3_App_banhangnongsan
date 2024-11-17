@@ -11,12 +11,16 @@ class TFormatter {
   }
 
   static String formatPhoneNumber(String phoneNumber) {
+    // Kiểm tra độ dài của số điện thoại
     if (phoneNumber.length == 10) {
-      return '(${phoneNumber.substring(0, 3)}) ${phoneNumber.substring(3, 6)}-${phoneNumber.substring(6)}';
+      return '${phoneNumber.substring(0, 4)} ${phoneNumber.substring(4, 7)} ${phoneNumber.substring(7)}';
+    } else if (phoneNumber.length == 11) { // Xử lý các số có 11 chữ số (đầu số cũ)
+      return '${phoneNumber.substring(0, 4)} ${phoneNumber.substring(4, 7)} ${phoneNumber.substring(7)}';
     } else {
-      return phoneNumber; // Hoặc có thể ném ra một ngoại lệ nếu không đúng định dạng
+      return phoneNumber; // Trả về số gốc nếu không đúng định dạng
     }
   }
+
 
   static String internationalFormatPhoneNumber(String phoneNumber) {
     var digitOnly = phoneNumber.replaceAll(RegExp(r'\D'), '');

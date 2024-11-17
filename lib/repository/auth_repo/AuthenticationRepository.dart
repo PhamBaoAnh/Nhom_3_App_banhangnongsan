@@ -26,8 +26,11 @@ class AuthenticationRepository extends GetxController {
   String get getUserEmail => firebaseUser?.email ?? '';
   bool isLogin = true;
 
+  User? get authUser => _auth.currentUser;
+
   @override
   void onReady() {
+    super.onReady();
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.userChanges());
     FlutterNativeSplash.remove();
