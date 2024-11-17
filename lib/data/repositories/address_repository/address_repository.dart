@@ -11,21 +11,19 @@ class AddressRepository extends GetxController {
   final String _collectionPath = 'Addresses';
   final controller = Get.put(ProfileController());
 
-  final controllerUser = Get.put(ProfileController());
+  final ProfileController controllerUser = Get.put(ProfileController());
 
 
 
   Future<List<AddressModel>> fetchUserAddresses() async {
     try {
-
-
-      final user = AuthenticationRepository.instance.authUser;
+      final user = await controllerUser.getUserData();
 
       if (user == null || user.email == null) {
-        throw 'Người dùng chưa đăng nhập hoặc thông tin không đầy đủ.';
+        throw Exception('Người dùng chưa đăng nhập hoặc thông tin không đầy đủ.');
       }
 
-      final userId = user.uid;
+      final userId = user.id;
       print('User ID: $userId');
 
       final result = await _db.collection('user').doc(userId).collection(_collectionPath).get();
@@ -44,13 +42,19 @@ class AddressRepository extends GetxController {
 
   Future<void> updateSelectedField(String addressId, bool selected) async {
     try {
-      final user = AuthenticationRepository.instance.authUser;
+      final user = await controllerUser.getUserData();
 
-      if (user == null || user.uid.isEmpty) {
+      if (user == null || user.email == null) {
+        throw Exception('Người dùng chưa đăng nhập hoặc thông tin không đầy đủ.');
+      }
+
+      final userId = user.id;
+
+      if (user == null || user.id.isEmpty) {
         throw 'Người dùng chưa đăng nhập hoặc không tìm thấy ID.';
       }
 
-      final userId = user.uid;
+
       await _db
           .collection('user')
           .doc(userId)
@@ -65,13 +69,18 @@ class AddressRepository extends GetxController {
 
   Future<String> addAddress(AddressModel address) async {
     try {
-      final user = AuthenticationRepository.instance.authUser;
+      final user = await controllerUser.getUserData();
 
-      if (user == null || user.uid.isEmpty) {
+      if (user == null || user.email == null) {
+        throw Exception('Người dùng chưa đăng nhập hoặc thông tin không đầy đủ.');
+      }
+
+      final userId = user.id;
+
+      if (user == null || user.id.isEmpty) {
         throw 'Người dùng chưa đăng nhập hoặc không tìm thấy ID.';
       }
 
-      final userId = user.uid;
       final docRef = await _db
           .collection('user')
           .doc(userId)
