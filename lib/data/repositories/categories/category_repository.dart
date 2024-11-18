@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import '../../../features/authentication/controllers.onboarding/profile_controller.dart';
 import '../../../features/shop/models/category_model.dart';
 
 
@@ -11,7 +10,7 @@ class CategoryRepository extends GetxController {
 
   final String _collectionPath = 'Categories';
 
- 
+  // Static getter to access the instance of the CategoryController
 
   // Method to fetch all categories from Firestore
   Future<List<CategoryModel>> getAllCategories() async {

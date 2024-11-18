@@ -28,6 +28,10 @@ class TLocalStorage {
     await _storage.write(key, value);
   }
 
+  Future<void> writeData(String key, dynamic value) async {
+    await _storage.write(key, value);
+  }
+
   // Read a value
   T? readData<T>(String key) {
     return _storage.read<T>(key);

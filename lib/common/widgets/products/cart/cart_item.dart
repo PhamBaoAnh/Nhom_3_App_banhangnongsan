@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../features/shop/models/cart_item_model.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -10,17 +11,19 @@ import '../../texts/t_brand_title_with_verified_icon.dart';
 
 class TCartItem extends StatelessWidget {
   const TCartItem({
-    super.key,
+    super.key, required this.cartItem,
   });
 
+   final CartItemModel cartItem;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         TRoundedImage(
-          imageUrl: TImages.productImage2,
+          imageUrl: cartItem.image ?? '',
           width: 70,
           height: 70,
+          isNetworkImage: true,
           padding: const EdgeInsets.all(TSizes.sm),
           backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.light,
         ),
@@ -32,18 +35,26 @@ class TCartItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TBrandTitleWithVerifidedIcon(title: 'Hà Nội '),
-              const Flexible(child: TProductTitleText(title: 'Cherry', maxLines: 1,)),
+              TBrandTitleWithVerifidedIcon(title: cartItem.brandName ?? ''),
+               Flexible(child: TProductTitleText(title: cartItem.title, maxLines: 1,)),
               Text.rich(
-                  TextSpan(
+                TextSpan(
+                  children: (cartItem.selectedVariation ?? {}).entries.map((e) {
+                    return TextSpan(
                       children: [
-                        TextSpan(text: 'Khối lương ',style: Theme.of(context).textTheme.bodySmall ),
-                        TextSpan(text: '1Kg',style: Theme.of(context).textTheme.bodyLarge ),
-
-                      ]
-                  )
+                        TextSpan(
+                          text: ' ${e.key}',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        TextSpan(
+                          text: ' ${e.value}',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    );
+                  }).toList(), // Convert Iterable<TextSpan> to List<TextSpan>
+                ),
               )
-
 
             ],
           ),
@@ -55,3 +66,4 @@ class TCartItem extends StatelessWidget {
     );
   }
 }
+

@@ -38,7 +38,7 @@ class ProductDetail extends StatelessWidget {
     });
 
     return Scaffold(
-      bottomNavigationBar: const TButtonAddToCart(),
+      bottomNavigationBar:  TButtonAddToCart(product: product),
       body: SingleChildScrollView(
         child: Column(
           children: [

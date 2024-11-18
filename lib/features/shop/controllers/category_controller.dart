@@ -93,8 +93,8 @@ class CategoryController extends GetxController {
 
         // Tạo một đối tượng CategoryModel với thông tin ảnh đã chọn
         CategoryModel newCategory = CategoryModel(
-          id: '5',  // ID có thể tự động tạo nếu cần
-          name: 'Category 5',
+          id: '7',  // ID có thể tự động tạo nếu cần
+          name: 'Category 7',
           image: imageUrl,  // Sử dụng URL ảnh từ Supabase
           parentId: '1',
           isFeatured: true,

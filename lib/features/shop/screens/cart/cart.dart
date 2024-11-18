@@ -8,6 +8,7 @@ import 'package:project/utils/constants/colors.dart';
 import 'package:project/utils/constants/image_strings.dart';
 import 'package:project/utils/constants/sizes.dart';
 
+import '../../../../common/widgets/animation/animation_loader.dart';
 import '../../../../common/widgets/icons/t_circular_icon.dart';
 import '../../../../common/widgets/images/t_rounded_image.dart';
 import '../../../../common/widgets/products/cart/add_remove_button.dart';
@@ -16,6 +17,8 @@ import '../../../../common/widgets/texts/product_price_text.dart';
 import '../../../../common/widgets/texts/product_title_text.dart';
 import '../../../../common/widgets/texts/t_brand_title_with_verified_icon.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../utils/navigation_menu.dart';
+import '../../controllers/product/cart_controller.dart';
 import '../checkout/checkout.dart';
 
 class CartScreen extends StatelessWidget {
@@ -23,24 +26,49 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = CartController.instance;
     return Scaffold(
       appBar: TAppBar( showBackArrow: true, title: Text('Giỏ Hàng', style: Theme.of(context).textTheme.headlineSmall,),),
-      body: const Padding(
-        padding: EdgeInsets.all(TSizes.defaultSpace),
-        child: TCartItems(),
+      body: Obx((){
 
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(TSizes.defaultSpace),
-        child: ElevatedButton(
-          onPressed: () => Get.to(() => const CheckoutScreen()),
-          style: ElevatedButton.styleFrom(
+        final emptyWidget = TAnimationLoaderWidget(
+          text: 'Whoops! Giỏ hàng của bạn đang trống !!',
+          animation: TImages.carAnimation,
+          showAction: true,
+          actionText: 'Đặt hàng ngay nào !',
+          onActionPressed: () => Get.off(()=> const NavigationMenu()),
+        );
+
+        if(controller.cartItems.isEmpty){
+          return emptyWidget;
+        }else {
+          return const SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(TSizes.defaultSpace),
+              child: TCartItems(),
+
+            ),
+          );
+        }
+
+
+      }),
+
+      bottomNavigationBar: Obx(() {
+        return controller.cartItems.isEmpty
+            ? const SizedBox.shrink() // Không hiển thị gì nếu giỏ hàng trống
+            : Padding(
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          child: ElevatedButton(
+            onPressed: () => Get.to(() => const CheckoutScreen()),
+            style: ElevatedButton.styleFrom(
               backgroundColor: TColors.primary,
-              side: const BorderSide(color: TColors.primary)
+              side: const BorderSide(color: TColors.primary),
+            ),
+            child: Text('Check out ${controller.totalCartPrice.value}'),
           ),
-          child: const Text('Check out \500.000 VND' ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
