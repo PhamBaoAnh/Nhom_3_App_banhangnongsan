@@ -43,6 +43,7 @@ class TProductCardVertical extends StatelessWidget {
           boxShadow: [TShadowStyle.verticalProductShadow ],
           borderRadius: BorderRadius.circular(TSizes.productImageRadius),
           color: dark ? TColors.darkerGrey : TColors.white,
+
         ),
         child: Column(
           children: [

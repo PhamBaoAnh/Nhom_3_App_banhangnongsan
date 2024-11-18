@@ -36,7 +36,7 @@ class ProductCardAddToCartButton extends StatelessWidget {
         final productQuantityInCart = cartController.getProductQuantityInCart(product.id);
           return Container(
           decoration:  BoxDecoration(
-              color: productQuantityInCart > 0 ? TColors.primary : TColors.white,
+              color: productQuantityInCart > 0 ? TColors.primary : TColors.primary,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(TSizes.cardRadiusMd),
                 bottomRight: Radius.circular(TSizes.productImageRadius),
@@ -47,7 +47,7 @@ class ProductCardAddToCartButton extends StatelessWidget {
             height: TSizes.iconLg * 1.2,
             child: Center(
               child: productQuantityInCart > 0
-                  ? Text(productQuantityInCart.toString(),style: const TextStyle(color: TColors.white), )
+                  ? Text(productQuantityInCart.toString(),style: TextStyle(color: productQuantityInCart > 0 ? TColors.white : TColors.white), )
                   :  const Icon(Iconsax.add, color: TColors.white,),
             ),
           ),

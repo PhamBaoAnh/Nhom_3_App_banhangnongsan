@@ -3,14 +3,14 @@ class BrandModel {
   String name;
   String image;
   bool? isFeatured;
-  int? productsCount;
+  int? productCount;
 
   BrandModel({
     required this.id,
     required this.name,
     required this.image,
     this.isFeatured,
-    this.productsCount,
+    this.productCount,
   });
 
   // Static method to return an empty instance of BrandModel
@@ -28,7 +28,7 @@ class BrandModel {
       'Name': name,
       'Image': image,
       'IsFeatured': isFeatured,
-      'ProductsCount': productsCount,
+      'ProductCount': productCount,
     };
   }
 
@@ -39,7 +39,7 @@ class BrandModel {
       name: document['Name'] ?? '',
       image: document['Image'] ?? '',
       isFeatured: document['IsFeatured'] ?? false,
-      productsCount: document['ProductsCount'] ?? 0,
+      productCount: document['ProductCount'] ?? 0,
     );
   }
 }
