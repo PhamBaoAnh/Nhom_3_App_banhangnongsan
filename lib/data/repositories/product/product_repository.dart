@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:project/features/shop/models/brand_model.dart';
 import '../../../features/shop/models/category_model.dart';
 import '../../../features/shop/models/product_model.dart';
 
@@ -28,7 +29,23 @@ class ProductRepository extends GetxController {
       return []; // Return an empty list on error
     }
   }
+  Future<List<ProductModel>> getProductsByCategory(String categoryId) async {
+    try {
+      // Lấy dữ liệu từ Firestore
+      final snapshot = await FirebaseFirestore.instance
+          .collection('Products')
+          .where('CategoryId', isEqualTo: categoryId) // Lọc theo CategoryId
+          .get();
+      final products = snapshot.docs
+          .map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
 
+      return products;
+    } catch (e) {
+
+      Get.snackbar('Error', 'Error fetching products: $e');
+      return [];
+    }}
   Future<List<ProductModel>> fetchAllProductsQuery(Query query) async {
     try {
       final querySnapshot = await query.get();
@@ -68,4 +85,30 @@ class ProductRepository extends GetxController {
       return []; // Return an empty list on error
     }
   }
+  Future<List<ProductModel>> getProductsByBrand(Query query,String brandName) async {
+    try {
+      // Fetching products from Firestore where the 'Brand.Name' field matches the given brand name
+      final snapshot = await _firestore
+          .collection(_collectionPath)
+          .where('Brand.Name', isEqualTo: brandName)
+          .get();
+
+      if (snapshot.docs.isEmpty) {
+        return [];
+      }
+
+      // Mapping the documents to ProductModel objects
+      final list = snapshot.docs
+          .map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
+
+      return list;
+    } catch (e) {
+      return []; // Return an empty list on error
+    }
+  }
+
+
+
+
 }

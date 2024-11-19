@@ -1,24 +1,41 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import '../../../../data/repositories/banners/banner_repository.dart';
 import '../../../../data/repositories/product/product_repository.dart';
 import '../../../../utils/constants/enums.dart';
-import '../../models/banner_model.dart';
+
 import '../../models/product_model.dart';
 
 class ProductController extends GetxController {
   static ProductController get instance => Get.find();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final isLoading = false.obs;
   final productRepository = Get.put(ProductRepository());
-
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
+  RxList<ProductModel> featuredProductsByCategory = <ProductModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchCategories();  // Gọi fetchCategories để tải dữ liệu sản phẩm
+    fetchCategories();
   }
 
+  Future<void> getProductsByCategory(String categoryId) async {
+    try {
+      final snapshot = await _firestore
+          .collection('Products')
+          .where('CategoryId', isEqualTo: categoryId) // Query products by CategoryId
+          .get();
+      featuredProducts.assignAll(
+        snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList(),
+      );
+    } catch (e) {
+      throw Exception('Error fetching products by category: $e');
+    }
+  }
   Future<List<ProductModel>>fetchAllFeaturedProducts() async {
     try {
      final products =await productRepository.getFeaturedProducts();
@@ -26,12 +43,11 @@ class ProductController extends GetxController {
       return products;
 
     } catch (e) {
-      // Show error message if fetching categories fails
+
       Get.snackbar('Error', 'Error fetching categories: $e');
       return []; // Return an empty list on error
     }
   }
-
 
 
   Future<void> fetchCategories() async {
@@ -39,8 +55,6 @@ class ProductController extends GetxController {
       isLoading.value = true;
       final products = await productRepository.getFeaturedProducts();
       featuredProducts.assignAll(products);
-
-      // Kiểm tra null trước khi truy cập vào productAttributes
       if (products != null && products.isNotEmpty) {
         for (var product in products) {
           print('danh sách thuộc tính: ${product.productAttributes ?? 'Không có thuộc tính'}');
@@ -106,8 +120,6 @@ class ProductController extends GetxController {
       }
     }
   }
-
-
 
 
   String? calculatorSalePercentage(double originalPrice, double? salePrice){

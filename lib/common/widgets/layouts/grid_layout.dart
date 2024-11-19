@@ -11,7 +11,7 @@ class TGridLayout extends StatelessWidget {
     required this.itemBuilder,
   });
 
-  final int itemCount; // số lượng
+  final int itemCount;
   final double? mainAxisExtent;
   final Widget? Function(BuildContext, int ) itemBuilder;
 

@@ -107,7 +107,6 @@ class ProductModel {
 
   factory ProductModel.fromQuerySnapshot(QueryDocumentSnapshot<Object?> document) {
     final data = document.data() as Map<String, dynamic>;
-
     return ProductModel(
       id: document.id,
       sku: data['SKU'] ?? '',

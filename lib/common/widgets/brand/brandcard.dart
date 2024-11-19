@@ -1,6 +1,11 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project/common/widgets/texts/t_brand_title_with_verified_icon.dart';
+import 'package:project/features/shop/controllers/product/brand_controller.dart';
+import 'package:project/features/shop/controllers/product/product_controller.dart';
+import 'package:project/features/shop/models/brand_model.dart';
 
 
 import '../../../utils/constants/colors.dart';
@@ -21,19 +26,15 @@ class TBrandCard extends StatelessWidget {
   ///   - brand: The brand model to display.
   ///   - showBorder: A flag indicating whether to show a border around the card.
   ///   - onTap: Callback function when the card is tapped.
-  const TBrandCard({
-    super.key,
-    required this.showBorder,
-    this.onTap,
-  });
-
 
   final bool showBorder;
   final void Function()? onTap;
-
+  const TBrandCard({super.key, required this.showBorder, this.onTap, required this.nameBrand});
+  final String nameBrand;
   @override
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
+    final controller =Get.put(BrandController());
 
     return GestureDetector(
       onTap: onTap,
@@ -64,12 +65,32 @@ class TBrandCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TBrandTitleWithVerifidedIcon(title: 'Hà Nội 3', brandTextSize: TextSizes.large),
-                  Text(
-                    '15 products',
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
+                   TBrandTitleWithVerifidedIcon(title: nameBrand, brandTextSize: TextSizes.large),
+                  FutureBuilder<BrandModel?>(
+                    future: controller.getBrandsByName(nameBrand), 
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (!snapshot.hasData || snapshot.data == null) {
+                        return const Text('0 product');
+                      } else {
+
+                        BrandModel brand = snapshot.data!; // Lấy đối tượng BrandModel
+                        return Text(
+                          '${brand.productCount ?? 0} products',
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelMedium,
+                        );
+                      }
+                    },
+                  )
+
+
+
+
                 ],
               ),
             ),

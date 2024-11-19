@@ -40,25 +40,25 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TPrimaryHeaderContainer(
+            const TPrimaryHeaderContainer(
               child: Column(
                 children: [
 
-                  const THomeAppBar(),
-                  const SizedBox(height: TSizes.spaceBtwSections,),
+                  THomeAppBar(),
+                  SizedBox(height: TSizes.spaceBtwSections,),
 
-                  const TSearchContainer(text: 'Tìm kiếm'),
-                  const SizedBox(height: TSizes.spaceBtwSections,),
+                  TSearchContainer(text: 'Tìm kiếm'),
+                  SizedBox(height: TSizes.spaceBtwSections,),
 
 
                   Padding(
-                    padding: const EdgeInsets.only(left: TSizes.defaultSpace),
+                    padding: EdgeInsets.only(left: TSizes.defaultSpace),
                     child: Column(
                       children: [
-                         TSectionHeading(title: 'Danh mục phổ biến', onPressed: () => Get.to(() => const AllBrandScreen()), textColor: TColors.white,),
-                         const SizedBox(height: TSizes.spaceBtwItems,),
-                         const THomeCategories(),
-                         const SizedBox(height: TSizes.spaceBtwSections,),
+                         TSectionHeading(title: 'Danh mục phổ biến', textColor: TColors.white,),
+                         SizedBox(height: TSizes.spaceBtwItems,),
+                         THomeCategories(),
+                         SizedBox(height: TSizes.spaceBtwSections,),
                       ],
                     ),
 

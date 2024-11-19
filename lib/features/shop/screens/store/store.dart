@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/common/widgets/appbar/appbar.dart';
 import 'package:project/common/widgets/icons/t_circular_icon.dart';
 import 'package:project/common/widgets/layouts/grid_layout.dart';
+import 'package:project/features/shop/controllers/product/product_controller.dart';
 import 'package:project/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:project/utils/constants/enums.dart';
 import 'package:project/utils/constants/image_strings.dart';
 import 'package:project/utils/constants/sizes.dart';
 import '../../../../common/widgets/appbar/tabbar.dart';
+import '../../../../common/widgets/brand/brand_products.dart';
 import '../../../../common/widgets/brand/brand_show_case.dart';
 import '../../../../common/widgets/brand/brandcard.dart';
 import '../../../../common/widgets/containers/rounded_container.dart';
@@ -19,12 +23,16 @@ import '../../../../common/widgets/texts/t_brand_title_with_verified_icon.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/helpers/helper_functions.dart';
 import '../../controllers/category_controller.dart';
+import '../brand/all_brands.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final List<String> brands = [
+      'Việt Nam', 'Trung Quốc', 'Nhật Bản', 'Nga'
+    ];
+    final controller =Get.put(ProductController());
     final categories = CategoryController.instance.allCategories;
     return DefaultTabController(
       length: categories.length,
@@ -70,22 +78,30 @@ class StoreScreen extends StatelessWidget {
                       TSectionHeading(
                         title: 'Quốc Gia',
                         showActionButton: true,
-                        onPressed: () {},
+                        onPressed: () => Get.to(() => const AllBrandScreen()),
                         textColor: TColors.black,
                       ),
                       const SizedBox(height: TSizes.spaceBtwItems / 1.5),
-                      
+
                       TGridLayout(
                         itemCount: 4,
                         mainAxisExtent: 80,
                         itemBuilder: (_, index ) {
-                        return const TBrandCard(showBorder: false,);
+                        final brand =brands[index].trim();
+                        return TBrandCard(nameBrand:brand,showBorder: false,onTap: () => Get.to(() =>  BrandProducts(
+                            brandName: brands[index],
+                            title: 'Products Brand',
+                            query: FirebaseFirestore.instance
+                                .collection('Products')
+                                .where('IsFeatured', isEqualTo: true)
+                                .limit(6),
+                            futureMethod: controller.fetchAllFeaturedProducts())));
                       },)
                     ],
                   ),
                 ),
-      
-      
+
+
               bottom: TTabBar(
                   /*
                   tabs: [

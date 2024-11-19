@@ -24,6 +24,20 @@ final RxList <ProductModel> products= <ProductModel>[].obs;
     }
 
   }
+  Future<List<ProductModel>>fetchProductsByBrand(Query? query,String brandName)async{
+    try{
+      if (query == null) return[];
+      final listProducts = await repo.getProductsByBrand(query, brandName);
+      assignProducts(listProducts);
+      sortProducts(selectSort.value);
+      return listProducts;
+    }
+    catch(e){
+      Get.snackbar("Error", 'Error');
+      return [];
+    }
+
+  }
   Future<List<ProductModel>>fetchFeaturedProducts(Query? query)async{
     try{
       if (query == null) return[];

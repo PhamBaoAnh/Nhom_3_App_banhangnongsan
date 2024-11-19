@@ -24,7 +24,7 @@ class TBrandShowcase extends StatelessWidget {
       child: Column(
         children: [
           //
-          const TBrandCard(showBorder: false),
+          const TBrandCard(showBorder: false,nameBrand: 'Việt Nam',),
 
           Row(
             children: images.map((images) => brandTopProductImageWidget(images, context)).toList(),
