@@ -116,20 +116,23 @@ class CartController extends GetxController {
 
   }
 
-   removeFormCartDialog(int index) {
+  removeFormCartDialog(int index) {
     Get.defaultDialog(
       title: "Xóa sản phẩm",
-      middleText: 'Bạn chắc chắc muốn xóa sản phẩm này ?',
-      onConfirm: (){
-        cartItems.removeAt(index);
-        updateCart();
-        TLoaders.customToast(message: 'Sản phẩm đã được xóa vào giỏ hàng!');
-        Get.back();
+      middleText: 'Bạn chắc chắn muốn xóa sản phẩm này?',
+      onConfirm: () {
+        // Xóa phần tử trong giỏ hàng và cập nhật
+        if (index >= 0 && index < cartItems.length) {
+          cartItems.removeAt(index);
+          updateCart();
+        }
+        // Hiển thị thông báo và thoát dialog ngay
+        TLoaders.customToast(message: 'Sản phẩm đã được xóa khỏi giỏ hàng!');
+        Get.back(); // Đảm bảo dialog được đóng ngay lập tức
       },
-      onCancel: () => () =>  Get.back(),
+      onCancel: Get.back, // Gọi trực tiếp hàm Get.back
     );
-   }
-
+  }
 
 
   void updateCart(){

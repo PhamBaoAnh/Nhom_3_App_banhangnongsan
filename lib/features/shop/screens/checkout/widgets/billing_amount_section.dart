@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../utils/constants/sizes.dart';
+import '../../../../../utils/helpers/pricing_calculator.dart';
+import '../../../controllers/product/cart_controller.dart';
 
 class TBillingAmountSection extends StatelessWidget {
   const TBillingAmountSection ({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartController = CartController.instance;
+    final subTotal = cartController.totalCartPrice.value;
+
+
     return Column(
       children: [
         Row(
@@ -14,7 +20,7 @@ class TBillingAmountSection extends StatelessWidget {
           children: [
 
             Text('Tổng Tiền', style: Theme.of(context).textTheme.bodyMedium,),
-            Text('\456.000 VND', style: Theme.of(context).textTheme.bodyMedium,),
+            Text('${cartController.totalCartPrice.value.toStringAsFixed(0)}.000 VND' , style: Theme.of(context).textTheme.bodyMedium,),
 
           ],
         ),
@@ -26,7 +32,7 @@ class TBillingAmountSection extends StatelessWidget {
           children: [
 
             Text('Phí Vận Chuyển', style: Theme.of(context).textTheme.bodyMedium,),
-            Text('\10.000 VND', style: Theme.of(context).textTheme.labelLarge,),
+            Text('${TPricingCalculator.calculateShippingCost(subTotal, 'VN')}.000 VND', style: Theme.of(context).textTheme.labelLarge,),
 
           ],
         ),
@@ -37,7 +43,7 @@ class TBillingAmountSection extends StatelessWidget {
           children: [
 
             Text('Thanh Toán', style: Theme.of(context).textTheme.bodyMedium,),
-            Text('\466.000 VND', style: Theme.of(context).textTheme.titleMedium,),
+            Text('${TPricingCalculator.calculateTotalPrice(subTotal, 'VN')}.000 VND', style: Theme.of(context).textTheme.titleMedium,),
 
           ],
         ),

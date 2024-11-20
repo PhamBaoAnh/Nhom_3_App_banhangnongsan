@@ -65,7 +65,7 @@ class CartScreen extends StatelessWidget {
               backgroundColor: TColors.primary,
               side: const BorderSide(color: TColors.primary),
             ),
-            child: Text('Check out ${controller.totalCartPrice.value}'),
+            child: Text('Check out ${controller.totalCartPrice.value.toStringAsFixed(0)}.000 VND'),
           ),
         );
       }),

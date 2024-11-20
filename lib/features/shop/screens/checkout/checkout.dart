@@ -15,7 +15,11 @@ import '../../../../common/widgets/products/cart/coupon.dart';
 import '../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../utils/helpers/pricing_calculator.dart';
 import '../../../../utils/navigation_menu.dart';
+import '../../../../utils/popups/loaders.dart';
+import '../../controllers/product/cart_controller.dart';
+import '../../controllers/product/order_controller.dart';
 import '../cart/widgets/cart_items.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -24,6 +28,10 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final cartController = CartController.instance;
+    final subTotal = cartController.totalCartPrice.value;
+    final orderController = Get.put(OrderController());
+
     return Scaffold(
       appBar: TAppBar( showBackArrow: true, title: Text('Thanh Toán', style: Theme.of(context).textTheme.headlineSmall,),),
       body: SingleChildScrollView(
@@ -70,17 +78,15 @@ class CheckoutScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: () => Get.to(() => SuccessScreen(
-            image: TImages.successfulPaymentIcon,
-            title: 'Thanh toán thành công',
-            subtitle: 'Đơn hàng của bạn sẽ được vận chuyển sớm',
-            onPressed: () => Get.offAll(() => const NavigationMenu()),
-          )),
-          style: ElevatedButton.styleFrom(
-              backgroundColor: TColors.primary,
-              side: const BorderSide(color: TColors.primary)
-          ),
-          child: const Text('Check out \500.000 VND' ),
+          onPressed: subTotal > 0
+              ? () => orderController.processOrder(subTotal)
+              : () {
+            TLoaders.warningSnackBar(
+              title: 'Giỏ hàng trống',
+              message: 'Hãy thêm sản phẩm vào giỏ hàng ngay nào !!',
+            );
+          },
+          child: Text('Thanh toán ${TPricingCalculator.calculateTotalPrice(subTotal, 'VN')}.000 VND'),
         ),
       ),
 
