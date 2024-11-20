@@ -25,6 +25,8 @@ class BrandProducts extends StatelessWidget {
     return  Scaffold(
       appBar: TAppBar( title: Text(brand.name),showBackArrow: true,),
       body:  SingleChildScrollView(
+
+
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child:    FutureBuilder(future: controller.fetchProductsByBrand(query,brand.name) , builder: (context,snapshot){
