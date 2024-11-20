@@ -59,10 +59,10 @@ class AllBrandScreen extends StatelessWidget {
                         itemCount: brands.length,
                         mainAxisExtent: 80,
                         itemBuilder: (context, index) => TBrandCard(
-                            nameBrand: brands[index].name,
+                            brand:brands[index],
                             showBorder: true,
                             onTap: () => Get.to(() => BrandProducts(
-                                brandName: brands[index].name,
+                                brand: brands[index],
                                 title: 'Popular Products',
                                 query: FirebaseFirestore.instance
                                     .collection('Products')

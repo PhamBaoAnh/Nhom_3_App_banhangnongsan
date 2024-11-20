@@ -108,15 +108,13 @@ import '../images/t_circular_image.dart';
 class TBrandCard extends StatelessWidget {
   final bool showBorder;
   final void Function()? onTap;
-  final String nameBrand;
   final String? category;
-
+  final BrandModel brand;
   const TBrandCard({
     super.key,
     required this.showBorder,
     this.onTap,
-    required this.nameBrand,
-    this.category
+    this.category, required this.brand
   });
 
   @override
@@ -136,10 +134,10 @@ class TBrandCard extends StatelessWidget {
           children: [
             Flexible(
               child: TCircularImage(
-                image: TImages.google,
-                isNetworkImage: false,
+                image: brand.image,
+                isNetworkImage: true,
                 backgroundColor: Colors.transparent,
-                overlayColor: isDark ? TColors.white : TColors.primary,
+
               ),
             ),
             const SizedBox(width: TSizes.spaceBtwItems / 2),
@@ -149,13 +147,13 @@ class TBrandCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TBrandTitleWithVerifidedIcon(
-                    title: nameBrand,
+                    title: brand.name,
                     brandTextSize: TextSizes.large,
                   ),
                   FutureBuilder<dynamic>(
                     future: category == null
-                        ? controller.getBrandsByName(nameBrand)
-                        : controllerProduct.getProductsByCategoryAndBrand(category!, nameBrand),
+                        ? controller.getBrandsByName(brand.name)
+                        : controllerProduct.getProductsByCategoryAndBrand(category!, brand.name),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();

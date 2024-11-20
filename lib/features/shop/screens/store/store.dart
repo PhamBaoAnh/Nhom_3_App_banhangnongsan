@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/common/widgets/appbar/appbar.dart';
 import 'package:project/common/widgets/icons/t_circular_icon.dart';
 import 'package:project/common/widgets/layouts/grid_layout.dart';
+import 'package:project/features/shop/controllers/product/brand_controller.dart';
 import 'package:project/features/shop/controllers/product/product_controller.dart';
 import 'package:project/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:project/utils/constants/enums.dart';
@@ -27,108 +28,120 @@ import '../brand/all_brands.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final List<String> brands = [
-      'Việt Nam', 'Trung Quốc', 'Nhật Bản', 'Nga'
-    ];
-    final controller =Get.put(ProductController());
+    final controller = Get.put(ProductController());
     final categories = CategoryController.instance.allCategories;
-    return DefaultTabController(
-      length: categories.length,
-      child: Scaffold(
-        appBar: TAppBar(
-          title: Text(
-            'Store',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          actions: [
-            TCartCounterIcon(
-              onPressed: () {},
-              iconColor: TColors.black,
-              iconColor2: TColors.white,
-            )
-          ],
-        ),
-        body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                pinned: true,
-                floating: true,
-                backgroundColor: THelperFunctions.isDarkMode(context)
-                    ? TColors.black
-                    : TColors.white,
-                expandedHeight: 440,
-                flexibleSpace: Padding(
-                  padding: const EdgeInsets.all(TSizes.defaultSpace),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      const SizedBox(height: TSizes.spaceBtwItems),
-                      const TSearchContainer(
-                        text: 'Tìm kiếm',
-                        showBorder: true,
-                        showBackground: false,
-                        padding: EdgeInsets.zero,
-                      ),
-                      const SizedBox(height: TSizes.spaceBtwSections),
-                      TSectionHeading(
-                        title: 'Quốc Gia',
-                        showActionButton: true,
-                        onPressed: () => Get.to(() => const AllBrandScreen()),
-                        textColor: TColors.black,
-                      ),
-                      const SizedBox(height: TSizes.spaceBtwItems / 1.5),
+    final brandController = Get.put(BrandController());
 
-                      TGridLayout(
-                        itemCount: 4,
-                        mainAxisExtent: 80,
-                        itemBuilder: (_, index ) {
-                        final brand =brands[index].trim();
-                        return TBrandCard(nameBrand:brand,showBorder: false,onTap: () => Get.to(() =>  BrandProducts(
-                            brandName: brands[index],
-                            title: 'Products Brand',
-                            query: FirebaseFirestore.instance
-                                .collection('Products')
-                                .where('IsFeatured', isEqualTo: true)
-                                .limit(6),
-                            futureMethod: controller.fetchAllFeaturedProducts())));
-                      },)
-                    ],
+    return FutureBuilder(
+        future: brandController.getAllBrands(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          final brands = snapshot.data ?? [];
+          return DefaultTabController(
+              length: categories.length,
+              child: Scaffold(
+                appBar: TAppBar(
+                  title: Text(
+                    'Store',
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
+                  actions: [
+                    TCartCounterIcon(
+                      onPressed: () {},
+                      iconColor: TColors.black,
+                      iconColor2: TColors.white,
+                    )
+                  ],
                 ),
-
-
-              bottom: TTabBar(
-                tabs: categories.map((category) => Tab(child: Text(category.name)) ).toList(),
-
-
-
-              ),
-              ),
-            ];
-          },
-          body: TabBarView(
-              children: [
-
-                ...categories.map((category) => TCategoryTab(category: category))
-                /*
-                TCategoryTab(),
-                TCategoryTab(),
-                TCategoryTab(),
-                TCategoryTab(),
-                TCategoryTab(),
-                */
-
-              ]
-
-          ),
-        ),
-      ),
-    );
+                body: NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) {
+                    return [
+                      SliverAppBar(
+                        automaticallyImplyLeading: false,
+                        pinned: true,
+                        floating: true,
+                        backgroundColor: THelperFunctions.isDarkMode(context)
+                            ? TColors.black
+                            : TColors.white,
+                        expandedHeight: 440,
+                        flexibleSpace: Padding(
+                          padding: const EdgeInsets.all(TSizes.defaultSpace),
+                          child: ListView(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              const SizedBox(height: TSizes.spaceBtwItems),
+                              const TSearchContainer(
+                                text: 'Tìm kiếm',
+                                showBorder: true,
+                                showBackground: false,
+                                padding: EdgeInsets.zero,
+                              ),
+                              const SizedBox(height: TSizes.spaceBtwSections),
+                              TSectionHeading(
+                                title: 'Quốc Gia',
+                                showActionButton: true,
+                                onPressed: () =>
+                                    Get.to(() => const AllBrandScreen()),
+                                textColor: TColors.black,
+                              ),
+                              const SizedBox(
+                                  height: TSizes.spaceBtwItems / 1.5),
+                              TGridLayout(
+                                itemCount: brands.length,
+                                mainAxisExtent: 80,
+                                itemBuilder: (_, index) {
+                                  return TBrandCard(
+                                      brand: brands[index],
+                                      showBorder: false,
+                                      onTap: () => Get.to(
+                                            () => BrandProducts(
+                                                brand: brands[index],
+                                                title: 'Products Brand',
+                                                query: FirebaseFirestore
+                                                    .instance
+                                                    .collection('Products')
+                                                    .where('IsFeatured',
+                                                        isEqualTo: true)
+                                                    .limit(6),
+                                                futureMethod: controller
+                                                    .fetchAllFeaturedProducts()),
+                                          ));
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                        bottom: TTabBar(
+                          tabs: categories
+                              .map(
+                                  (category) => Tab(child: Text(category.name)))
+                              .toList(),
+                        ),
+                      ),
+                    ];
+                  },
+                  body: TabBarView(children: [
+                    ...categories
+                        .map((category) => TCategoryTab(category: category, brand: brands[1],))
+                    /*
+                  TCategoryTab(),
+                  TCategoryTab(),
+                  TCategoryTab(),
+                  TCategoryTab(),
+                  TCategoryTab(),
+                  */
+                  ]),
+                ),
+              ));
+        });
   }
 }
-

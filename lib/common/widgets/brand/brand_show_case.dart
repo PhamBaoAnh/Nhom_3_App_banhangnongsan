@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/features/shop/controllers/product/product_controller.dart';
+import 'package:project/features/shop/models/brand_model.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
@@ -13,9 +14,10 @@ class TBrandShowcase extends StatelessWidget {
   const TBrandShowcase({
     super.key,
     required this.images,
-    required this.categoryId,
+    required this.categoryId, required this.brand,
   });
 
+  final BrandModel brand;
   final String categoryId;
   final List<String> images;
 
@@ -30,7 +32,7 @@ class TBrandShowcase extends StatelessWidget {
       child: Column(
         children: [
           // Use the categoryId inside TBrandCard
-          TBrandCard(showBorder: false, nameBrand: 'Việt Nam', category: categoryId),
+          TBrandCard(showBorder: false, brand: brand, category: categoryId),
 
           Row(
             children: images.map((image) => brandTopProductImageWidget(image, context)).toList(),

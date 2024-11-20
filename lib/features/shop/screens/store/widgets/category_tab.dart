@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:project/features/shop/models/brand_model.dart';
 import 'package:project/features/shop/models/category_model.dart';
 import 'package:project/features/shop/models/product_model.dart';
 
@@ -12,12 +14,13 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../controllers/product/product_controller.dart';
+import '../../all_products/all_products.dart';
 
 class TCategoryTab extends StatelessWidget {
-  const TCategoryTab({super.key, required this.category});
+  const TCategoryTab({super.key, required this.category, required this.brand});
 
   final CategoryModel category;
-
+  final BrandModel brand;
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProductController());
@@ -46,12 +49,15 @@ class TCategoryTab extends StatelessWidget {
                         TImages.productImage1,
                         TImages.productImage1,
                       ],
-                      categoryId: category.id,
+                      categoryId: category.id, brand: brand,
                     ),
                     TSectionHeading(
                       title: 'Quốc Gia',
                       showActionButton: true,
-                      onPressed: () {},
+                      onPressed: () => Get.to(() =>  AllProduct(title: 'Popular Products',query: FirebaseFirestore.instance
+                          .collection('Products')
+                          .where('IsFeatured', isEqualTo: true)
+                          .limit(6),futureMethod:controller.fetchAllFeaturedProducts())),
                       textColor: TColors.black,
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),
