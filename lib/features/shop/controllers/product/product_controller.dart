@@ -23,6 +23,7 @@ class ProductController extends GetxController {
     super.onInit();
     fetchCategories();
   }
+
   Future<int> getProductsByCategoryAndBrand(
       String categoryId, String brandName) async {
     try {

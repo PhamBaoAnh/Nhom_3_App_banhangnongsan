@@ -32,6 +32,7 @@ class StoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProductController());
+
     final categories = CategoryController.instance.allCategories;
     final brandController = Get.put(BrandController());
 
@@ -129,9 +130,11 @@ class StoreScreen extends StatelessWidget {
                       ),
                     ];
                   },
-                  body: TabBarView(children: [
+                  body:
+                  TabBarView(children: [
                     ...categories
-                        .map((category) => TCategoryTab(category: category, brand: brands[1],))
+                        .map((category
+                        ) => TCategoryTab(category: category  ,brand: brands[0]))
                     /*
                   TCategoryTab(),
                   TCategoryTab(),

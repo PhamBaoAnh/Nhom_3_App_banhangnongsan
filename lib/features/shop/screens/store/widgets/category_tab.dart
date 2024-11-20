@@ -23,17 +23,18 @@ class TCategoryTab extends StatelessWidget {
   final BrandModel brand;
   @override
   Widget build(BuildContext context) {
+
     final controller = Get.put(ProductController());
-    return FutureBuilder(
+    return FutureBuilder<List<ProductModel>>(
         future: controller.getProductsByCategory(category.id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return const Text('Waiting');
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else if (!snapshot.hasData || snapshot.data == null) {
             return const Text('0 product');
-          } else {
+          }
             List<ProductModel> list = snapshot.data!;
             return ListView(
               shrinkWrap: true,
@@ -49,7 +50,7 @@ class TCategoryTab extends StatelessWidget {
                         TImages.productImage1,
                         TImages.productImage1,
                       ],
-                      categoryId: category.id, brand: brand,
+                      category: category, brand: brand,
                     ),
                     TSectionHeading(
                       title: 'Quốc Gia',
@@ -71,7 +72,7 @@ class TCategoryTab extends StatelessWidget {
                 )
               ],
             );
-          }
+
         });
   }
 }

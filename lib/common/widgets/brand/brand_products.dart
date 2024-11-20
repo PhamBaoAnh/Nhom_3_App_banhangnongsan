@@ -27,27 +27,25 @@ class BrandProducts extends StatelessWidget {
       body:  SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
-          child: Column(
+          child:    FutureBuilder(future: controller.fetchProductsByBrand(query,brand.name) , builder: (context,snapshot){
+            if (snapshot.connectionState == ConnectionState.waiting) {
+
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No featured products available.'));
+            }
+            final products =snapshot.data!;
+            return Column(
             children: [
                TBrandCard(showBorder: true,brand: brand,),
                const SizedBox(height: TSizes.spaceBtwSections,),
-                FutureBuilder(future: controller.fetchProductsByBrand(query,brand.name) , builder: (context,snapshot){
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
-                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No featured products available.'));
-                  }
-                  final products =snapshot.data!;
-                  return  TSortableProducts(products: products);
-                })
-
-
-            ],
+               TSortableProducts(products: products)]
+                );
+    }
           ),
 
 

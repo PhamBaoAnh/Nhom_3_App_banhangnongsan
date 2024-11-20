@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:project/features/shop/models/brand_model.dart';
 import '../../../features/shop/models/category_model.dart';
+import '../../../features/shop/models/product_atrribute.dart';
 import '../../../features/shop/models/product_model.dart';
+import '../../../features/shop/models/product_variation.dart';
 
 class ProductRepository extends GetxController {
   static ProductRepository get instance => Get.find();
@@ -37,6 +39,48 @@ Future<int> getTotalProductCountByCategoryAndBrand(
       return 0; // Trả về 0 nếu có lỗi
     }
   }
+
+  List<ProductModel> createSampleProducts() {
+    return List.generate(10, (index) {
+      return ProductModel(
+        id: 'product_$index',
+        title: 'Product $index',
+        stock: 100 - index,
+        price: 10.0 + index,
+        salePrice: 8.0 + index,
+        thumbnail: 'https://via.placeholder.com/150',
+        productType: 'Type $index',
+        isFeatured: index % 2 == 0,
+        description: 'Description for product $index',
+        categoryId: 'category_$index',
+        images: [
+          'https://via.placeholder.com/150',
+          'https://via.placeholder.com/200'
+        ],
+        brand: BrandModel(
+          id: 'brand_$index',
+          name: 'Brand $index',
+          image: 'https://via.placeholder.com/100',
+        ),
+        productAttributes: [
+          ProductAttributeModel(name: 'Color', values: ['Red', 'Blue']),
+          ProductAttributeModel(name: 'Size', values: ['S', 'M', 'L'])
+        ],
+        productVariations: [
+          ProductVariationModel(
+            id: 'variation_${index}_1',
+            sku: 'SKU_${index}_1',
+            image: 'https://via.placeholder.com/50',
+            price: 12.0 + index,
+            salePrice: 10.0 + index,
+            stock: 50,
+            attributeValues: {'Color': 'Red', 'Size': 'M'},
+          )
+        ],
+      );
+    });
+  }
+
 
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {
