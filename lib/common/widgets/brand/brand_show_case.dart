@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project/features/shop/controllers/product/product_controller.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
@@ -7,12 +9,16 @@ import '../../../utils/helpers/helper_functions.dart';
 import '../containers/rounded_container.dart';
 import 'brandcard.dart';
 class TBrandShowcase extends StatelessWidget {
+  // Remove `const` here since `categoryId` and `images` are non-constant.
   const TBrandShowcase({
     super.key,
     required this.images,
+    required this.categoryId,
   });
 
+  final String categoryId;
   final List<String> images;
+
   @override
   Widget build(BuildContext context) {
     return TRoundedContainer(
@@ -23,29 +29,70 @@ class TBrandShowcase extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
       child: Column(
         children: [
-          //
-          const TBrandCard(showBorder: false,nameBrand: 'Việt Nam',),
+          // Use the categoryId inside TBrandCard
+          TBrandCard(showBorder: false, nameBrand: 'Việt Nam', category: categoryId),
 
           Row(
-            children: images.map((images) => brandTopProductImageWidget(images, context)).toList(),
+            children: images.map((image) => brandTopProductImageWidget(image, context)).toList(),
           )
-
         ],
       ),
     );
   }
-  Widget brandTopProductImageWidget(String image, context ){
+
+  Widget brandTopProductImageWidget(String image, context) {
     return Expanded(
       child: TRoundedContainer(
-          height: 100,
-          backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
-          margin: const EdgeInsets.only(right: TSizes.sm),
-          padding: const EdgeInsets.all(TSizes.xsm),
-          child:  Image(fit: BoxFit.contain, image: AssetImage(image),)
+        height: 100,
+        backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
+        margin: const EdgeInsets.only(right: TSizes.sm),
+        padding: const EdgeInsets.all(TSizes.xsm),
+        child: Image(fit: BoxFit.contain, image: AssetImage(image)),
       ),
     );
   }
-
-
 }
-
+// class TBrandShowcase extends StatelessWidget {
+//   const TBrandShowcase({
+//     super.key,
+//     required this.images, required this.categoryId,
+//   });
+//   final String categoryId;
+//   final List<String> images;
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     return TRoundedContainer(
+//       showBorder: true,
+//       borderColor: TColors.darkGrey,
+//       backgroundColor: TColors.white,
+//       padding: const EdgeInsets.all(TSizes.sm),
+//       margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
+//       child: Column(
+//         children: [
+//           //
+//           TBrandCard(showBorder: false,nameBrand: 'Việt Nam',category:categoryId),
+//
+//           Row(
+//             children: images.map((images) => brandTopProductImageWidget(images, context)).toList(),
+//           )
+//
+//         ],
+//       ),
+//     );
+//   }
+//   Widget brandTopProductImageWidget(String image, context ){
+//     return Expanded(
+//       child: TRoundedContainer(
+//           height: 100,
+//           backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
+//           margin: const EdgeInsets.only(right: TSizes.sm),
+//           padding: const EdgeInsets.all(TSizes.xsm),
+//           child:  Image(fit: BoxFit.contain, image: AssetImage(image),)
+//       ),
+//     );
+//   }
+//
+//
+// }
+//

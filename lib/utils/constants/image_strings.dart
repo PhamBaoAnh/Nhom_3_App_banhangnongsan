@@ -83,8 +83,8 @@ class TImages {
 
 
   // -- Products
-  static const String productImage1 = "assets/images/products/nike-shoes.png";
-  static const String productImage2 = "assets/images/products/product-1.png";
+  static const String productImage1 = "assets/images/products/product-1.png";
+  static const String productImage2 = "assets/images/products/product-2.png";
   static const String productImage3 = "assets/images/products/product-jacket.png";
   static const String productImage4 = "assets/images/products/product-jeans.png";
   static const String productImage5 = "assets/images/products/product-shirt.png";

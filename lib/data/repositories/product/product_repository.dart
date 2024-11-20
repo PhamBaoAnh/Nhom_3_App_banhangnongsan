@@ -10,6 +10,33 @@ class ProductRepository extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final String _collectionPath = 'Products';
+Future<int> getTotalProductCountByCategoryAndBrand(
+      String categoryId, String brandName) async {
+    try {
+
+      final snapshot = await _firestore
+          .collection(_collectionPath)
+          .where('CategoryId', isEqualTo: categoryId)
+          .where('Brand.Name', isEqualTo: brandName)
+          .get();
+      final totalProductCount = snapshot.docs.fold<int>(
+        0,
+            (sum, doc) {
+          final brandData = doc.data()['Brand']; // Lấy dữ liệu từ trường 'Brand'
+          final productCount = (brandData != null && brandData['ProductCount'] != null)
+              ? brandData['ProductCount'] as int // Ép kiểu về int nếu không null
+              : 0; // Mặc định là 0 nếu dữ liệu không tồn tại
+          return sum + productCount; // Cộng dồn giá trị
+        },
+      );
+
+      return totalProductCount;
+    } catch (e) {
+      // Xử lý lỗi và hiển thị thông báo
+      Get.snackbar('Error', 'Error fetching product count: $e');
+      return 0; // Trả về 0 nếu có lỗi
+    }
+  }
 
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {

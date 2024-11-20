@@ -103,15 +103,6 @@ class StoreScreen extends StatelessWidget {
 
 
               bottom: TTabBar(
-                  /*
-                  tabs: [
-                Tab(child: Text('Nhật Bản')),
-                Tab(child: Text('Viêt Nam')),
-                Tab(child: Text('Hàn Quốc')),
-                Tab(child: Text('Trung Quốc')),
-                Tab(child: Text('Mỹ'))
-
-              ]  */
                 tabs: categories.map((category) => Tab(child: Text(category.name)) ).toList(),
 
 

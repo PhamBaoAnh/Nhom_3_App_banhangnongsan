@@ -14,34 +14,46 @@ class ProductController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final isLoading = false.obs;
   final productRepository = Get.put(ProductRepository());
+  final count= 0.obs;
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
-  RxList<ProductModel> featuredProductsByCategory = <ProductModel>[].obs;
+
 
   @override
   void onInit() {
     super.onInit();
     fetchCategories();
   }
+  Future<int> getProductsByCategoryAndBrand(
+      String categoryId, String brandName) async {
+    try {
+           final count =await  productRepository.getTotalProductCountByCategoryAndBrand(categoryId, brandName);
+return count;
+    } catch (e) {
+      Get.snackbar('Error', 'Error fetching products: $e');
+      return 0;
+    }
+  }
 
-  Future<void> getProductsByCategory(String categoryId) async {
+  Future<List<ProductModel>> getProductsByCategory(String categoryId) async {
     try {
       final snapshot = await _firestore
           .collection('Products')
-          .where('CategoryId', isEqualTo: categoryId) // Query products by CategoryId
+          .where(
+          'CategoryId', isEqualTo: categoryId) // Query products by CategoryId
           .get();
-      featuredProducts.assignAll(
-        snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList(),
-      );
+
+      return snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
+
     } catch (e) {
       throw Exception('Error fetching products by category: $e');
+      return [];
     }
   }
   Future<List<ProductModel>>fetchAllFeaturedProducts() async {
     try {
      final products =await productRepository.getFeaturedProducts();
-
       return products;
-
     } catch (e) {
 
       Get.snackbar('Error', 'Error fetching categories: $e');
