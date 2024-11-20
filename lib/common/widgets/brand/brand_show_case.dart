@@ -9,6 +9,7 @@ import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../containers/rounded_container.dart';
+import '../images/t_rounded_image.dart';
 import 'brandcard.dart';
 class TBrandShowcase extends StatelessWidget {
   const TBrandShowcase({
@@ -33,10 +34,11 @@ class TBrandShowcase extends StatelessWidget {
         children: [
           // Use the categoryId inside TBrandCard
           TBrandCard(showBorder: false, brand: brand, categoryId: category.id),
-
+       images.isNotEmpty?
           Row(
             children: images.map((image) => brandTopProductImageWidget(image, context)).toList(),
-          )
+          ):Text('No data')
+           
         ],
       ),
     );
@@ -49,7 +51,7 @@ class TBrandShowcase extends StatelessWidget {
         backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
         margin: const EdgeInsets.only(right: TSizes.sm),
         padding: const EdgeInsets.all(TSizes.xsm),
-        child: Image(fit: BoxFit.contain, image: AssetImage(image)),
+        child:   TRoundedImage(imageUrl: image,applyImageRadius: true,isNetworkImage: true,),
       ),
     );
   }

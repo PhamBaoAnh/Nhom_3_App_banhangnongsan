@@ -21,44 +21,50 @@ class TCategoryTab extends StatelessWidget {
 
   final CategoryModel category;
   final BrandModel brand;
+
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(ProductController());
     return FutureBuilder<List<ProductModel>>(
-        future: controller.getProductsByCategory(category.id),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Waiting');
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return const Text('0 product');
-          }
-            List<ProductModel> list = snapshot.data!;
-            return ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(TSizes.defaultSpace),
-                  child: Column(children: [
-                    TBrandShowcase(
-                      images: const[
+      future: controller.getProductsByCategory(category.id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text('Waiting');
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data == null) {
+          return const Text('0 product');
+        } else {
+          final List<ProductModel> list = snapshot.data ?? [];
 
-                        TImages.productImage2,
-                        TImages.productImage1,
-                        TImages.productImage1,
-                      ],
-                      category: category, brand: brand,
+          // Extract thumbnails safely
+          final images = list.length >= 3
+              ? [list[0].thumbnail, list[1].thumbnail, list[2].thumbnail]
+              : list.map((product) => product.thumbnail).toList();
+          return ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(TSizes.defaultSpace),
+                child: Column(
+                  children: [
+                    TBrandShowcase(
+                      images: images,
+                      category: category,
+                      brand: brand,
                     ),
                     TSectionHeading(
                       title: 'Quốc Gia',
                       showActionButton: true,
-                      onPressed: () => Get.to(() =>  AllProduct(title: 'Popular Products',query: FirebaseFirestore.instance
-                          .collection('Products')
-                          .where('IsFeatured', isEqualTo: true)
-                          .limit(6),futureMethod:controller.fetchAllFeaturedProducts())),
+                      onPressed: () => Get.to(() => AllProduct(
+                        title: 'Popular Products',
+                        query: FirebaseFirestore.instance
+                            .collection('Products')
+                            .where('IsFeatured', isEqualTo: true)
+                            .limit(6),
+                        futureMethod: controller.fetchAllFeaturedProducts(),
+                      )),
                       textColor: TColors.black,
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),
@@ -67,12 +73,15 @@ class TCategoryTab extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return TProductCardVertical(product: list[index]);
                       },
-                    )
-                  ]),
-                )
-              ],
-            );
-
-        });
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }
+      },
+    );
   }
 }
+

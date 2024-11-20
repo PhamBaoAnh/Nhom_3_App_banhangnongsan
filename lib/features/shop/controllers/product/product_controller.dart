@@ -47,7 +47,6 @@ return count;
           .toList();
 
     } catch (e) {
-      throw Exception('Error fetching products by category: $e');
       return [];
     }
   }
