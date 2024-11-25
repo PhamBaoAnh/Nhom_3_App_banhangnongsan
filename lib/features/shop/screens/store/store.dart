@@ -102,7 +102,7 @@ class StoreScreen extends StatelessWidget {
                                 itemBuilder: (_, index) {
                                   return TBrandCard(
                                       brand: brands[index],
-                                      showBorder: false,
+                                      showBorder: true,
                                       onTap: () => Get.to(
                                             () => BrandProducts(
                                                 brand: brands[index],

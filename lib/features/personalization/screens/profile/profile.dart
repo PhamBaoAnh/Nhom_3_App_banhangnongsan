@@ -27,8 +27,6 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
 
-
-
     return Scaffold(
       appBar: const TAppBar(
         showBackArrow: true,

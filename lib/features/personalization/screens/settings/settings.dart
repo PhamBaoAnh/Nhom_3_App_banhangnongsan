@@ -13,6 +13,7 @@ import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../authentication/controllers.onboarding/profile_controller.dart';
+import '../../../shop/screens/cart/cart.dart';
 import '../../../shop/screens/order/order.dart';
 import '../address/address.dart';
 import '../profile/profile.dart';
@@ -45,21 +46,21 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
                   TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Thông tin vận chuyển', onTap: () => Get.to(() => const UserAddressScreen())),
-                  TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Giỏ hàng của tôi', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Giỏ hàng của tôi', onTap: () => Get.to(() => const CartScreen ())),
                   TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Đơn hàng của tôi',onTap: () => Get.to(() => const OrderScreen ())),
-                  TSettingsMenuTitle(icon: Iconsax.bank, title: 'Bank Account', subTitle: 'Set shopping delivery address', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.discount_shape, title: 'My Coupons', subTitle: 'Set shopping delivery address', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.notification, title: 'Notifications', subTitle: 'Set shopping delivery address', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'Account Privacy', subTitle: 'Set shopping delivery address', onTap: (){},),
+             /*     TSettingsMenuTitle(icon: Iconsax.bank, title: 'Bank Account', subTitle: 'Set shopping delivery address', onTap: (){},),*/
+                  TSettingsMenuTitle(icon: Iconsax.discount_shape, title: 'My Coupons', subTitle: 'Ưu đãi của tôi (chưa triển khai)', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.notification, title: 'Notifications', subTitle: 'Thông báo', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'Account Privacy', subTitle: 'Set shopping delivery address (chưa triển khai)', onTap: (){},),
 
                   const SizedBox(height: TSizes.spaceBtwSections,),
                   const TSectionHeading(title: 'App Settings', textColor: TColors.black,showActionButton: false,),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
-                  TSettingsMenuTitle(icon: Iconsax.document_cloud, title: 'Load data', subTitle: 'Set shopping delivery address', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.location, title: 'Geolocations', subTitle: 'Set shopping delivery address', trailing: Switch(value:true, onChanged: (value) {})),
-                  TSettingsMenuTitle(icon: Iconsax.security_user, title: 'Safe Mode', subTitle: 'Set shopping delivery address', trailing: Switch(value:false, onChanged: (value) {})),
-                  TSettingsMenuTitle(icon: Iconsax.image, title: 'HD Image Quality', subTitle: 'Set shopping delivery address', trailing: Switch(value:false, onChanged: (value) {})),
+                  TSettingsMenuTitle(icon: Iconsax.document_cloud, title: 'Load data', subTitle: 'Set shopping delivery address (chưa triển khai)', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.location, title: 'Geolocations', subTitle: 'Set shopping delivery address (chưa triển khai)', trailing: Switch(value:true, onChanged: (value) {})),
+                  TSettingsMenuTitle(icon: Iconsax.security_user, title: 'Safe Mode', subTitle: 'Set shopping delivery address (chưa triển khai)', trailing: Switch(value:false, onChanged: (value) {})),
+                  TSettingsMenuTitle(icon: Iconsax.image, title: 'HD Image Quality', subTitle: 'Set shopping delivery address (chưa triển khai)', trailing: Switch(value:false, onChanged: (value) {})),
 
                   const SizedBox(height: TSizes.spaceBtwSections,),
                    SizedBox(

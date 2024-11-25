@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../data/repositories/banners/banner_repository.dart';
 import '../models/banner_model.dart';
@@ -35,6 +36,11 @@ class BannerController extends GetxController {
     try {
       isLoading.value = true;
       final banners = await _bannerRepository.getAllBanners();
+
+      // Tải trước các ảnh để tránh tình trạng load chậm
+      await Future.wait(banners.map((banner) =>
+          precacheImage(NetworkImage(banner.imageUrl), Get.context!)));
+
       allBanners.assignAll(banners);
       featuredBanners.assignAll(
         allBanners.where((banner) => banner.active).take(3).toList(),
@@ -45,6 +51,7 @@ class BannerController extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   void startAutoCarousel() {
     // Tạo một timer để tự động thay đổi `carousalCurrentIndex` sau mỗi 3 giây

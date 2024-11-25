@@ -39,6 +39,7 @@ class TSortableProducts extends StatelessWidget {
               value: option, child: Text(option)))
               .toList(),
         ),
+
         const SizedBox(height: TSizes.spaceBtwItems),
         Obx(
               () => TGridLayout(

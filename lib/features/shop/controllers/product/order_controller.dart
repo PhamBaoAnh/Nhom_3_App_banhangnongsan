@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:project/features/shop/controllers/product/vnpay_controller.dart';
 
+import '../../../../common/widgets/animation/animation_loader.dart';
 import '../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../data/repositories/order/order_repository.dart';
 import '../../../../utils/constants/enums.dart';
@@ -57,24 +58,48 @@ class OrderController extends GetxController {
       );
 
       if (checkoutController.selectedPaymentMethod.value.name == 'Thanh toán khi nhận hàng') {
-        TLoaders.customToast(message: 'Thanh toán khi nhận hàng');
+        await orderRepository.saveOrder(order, user.id);
+
+        // Clear the cart after saving the order
+        cartController.clearCart();
+
+        // Navigate to the success screen
+        Get.off(() => SuccessScreen(
+          image: TImages.orderCompletedAnimation,
+          title: 'Thanh toán thành công',
+          subtitle: 'Đơn hàng của bạn sẽ được vận chuyển sớm',
+          onPressed: () => Get.offAll(() => const NavigationMenu()),
+        ));
+
       } else if (checkoutController.selectedPaymentMethod.value.name== 'VNPay') {
 
          await _handleVNPayPayment(order, totalAmount, user.id);
-        /*TLoaders.customToast(message: 'Vnpay');*/
+
       } else {
         throw Exception('Phương thức thanh toán không hợp lệ.');
       }
 
 
 
-/*
-      await orderRepository.saveOrder(order, user.id);
 
-      // Clear the cart after saving the order
-      cartController.clearCart();
 
-      // Navigate to the success screen
+
+
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to process order: $e');
+    }
+  }
+
+  Future<void> _handleVNPayPayment(OrderModel order, double totalAmount, String userId) async {
+    // Call the VNPay payment process
+    final paymentResult = await onPayment(totalAmount);
+
+    print('hello $paymentResult ');
+    // Check the payment result
+    if (paymentResult == '00') {
+      // Payment successful, proceed to save the order
+      // Show a success message and navigate to the success screen
+      TLoaders.customToast(message: 'Thanh toán qua VNPay thành công!');
       Get.off(() => SuccessScreen(
         image: TImages.orderCompletedAnimation,
         title: 'Thanh toán thành công',
@@ -82,43 +107,17 @@ class OrderController extends GetxController {
         onPressed: () => Get.offAll(() => const NavigationMenu()),
       ));
 
- */
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to process order: $e');
+      await orderRepository.saveOrder(order, userId);
+      cartController.clearCart();
+
+    } else if (paymentResult == '24') {
+      TLoaders.customToast(message: 'Hủy Thanh toán thành công');
+    } else {
+      // Payment failed
+      throw Exception('Thanh toán VNPay không thành công.');
     }
   }
 
-  Future<void> _handleVNPayPayment(OrderModel order, double totalAmount, String userId) async {
-    try {
-      // Call the VNPay payment process
-      final paymentResult = await onPayment(totalAmount);
-
-      // Check the payment result
-      if (paymentResult == true) {
-        TLoaders.customToast(message: 'Thanh toán qua VNPay thành công!');
-        // Payment successful, proceed to save the order
-      /*  await orderRepository.saveOrder(order, userId);*/
-      /*  cartController.clearCart();
-
-        // Show a success message and navigate to the success screen
-        TLoaders.customToast(message: 'Thanh toán qua VNPay thành công!');
-        Get.off(() => SuccessScreen(
-          image: TImages.orderCompletedAnimation,
-          title: 'Thanh toán thành công',
-          subtitle: 'Đơn hàng của bạn sẽ được vận chuyển sớm',
-          onPressed: () => Get.offAll(() => const NavigationMenu()),
-        ));
-        */
-      } else {
-        // Payment failed
-        throw Exception('Thanh toán VNPay không thành công.');
-      }
-    } catch (e) {
-      // Handle errors gracefully
-      Get.snackbar('Lỗi', 'Thanh toán qua VNPay thất bại: $e',
-          snackPosition: SnackPosition.BOTTOM);
-    }
-  }
 
 
 

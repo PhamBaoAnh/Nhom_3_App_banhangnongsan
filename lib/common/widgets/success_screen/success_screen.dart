@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../features/authentication/screens/login/login.dart';
 import '../../../utils/constants/image_strings.dart';
@@ -23,10 +24,7 @@ class SuccessScreen extends StatelessWidget {
             padding: TSpacingStyle.paddingWithAppBarHeight * 2,
             child: Column(
               children: [
-                Image(
-                  image:  AssetImage(image),
-                  width:THelperFunctions.screenWidth()*0.6,
-                ),
+                Lottie.asset(image, width: MediaQuery.of(context).size.width * 0.8),
                 const SizedBox(height: TSizes.spaceBtwSections),
 
                 Text(title, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),

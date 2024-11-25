@@ -1,4 +1,10 @@
 
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../features/authentication/controllers.onboarding/profile_controller.dart';
+import '../../features/authentication/models/user_model.dart';
+
 /// This class contains all the App Text in String formats.
 class TTexts {
 
@@ -76,6 +82,7 @@ class TTexts {
 
   // -- Home
   static const String homeAppbarTitle = "Good day for shopping";
+
   static const String homeAppbarSubTitle = "Son dep trai";
 
 

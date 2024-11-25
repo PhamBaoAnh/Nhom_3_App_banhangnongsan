@@ -26,7 +26,7 @@ class AllBrandScreen extends StatelessWidget {
     return Scaffold(
         appBar: const TAppBar(
           showBackArrow: true,
-          title: Text('Brand'),
+          title: Text('Quốc Gia'),
         ),
         body: FutureBuilder(
             future: controllerBrand.getAllBrands(),
@@ -48,7 +48,7 @@ class AllBrandScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(TSizes.defaultSpace),
                   child: Column(children: [
                     const TSectionHeading(
-                      title: 'Brand',
+                      title: 'Quốc Gia',
                       textColor: TColors.black,
                       showActionButton: false,
                     ),

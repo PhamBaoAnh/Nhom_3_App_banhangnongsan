@@ -148,15 +148,6 @@ class AddressController extends GetxController {
 
 
 
-
-
-
-
-
-
-
-
-
   void resetFormFields() {
     name.clear();
     phoneNumber.clear();
