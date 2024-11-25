@@ -1,4 +1,4 @@
-package com.example.project
+package com.biolife.app
 
 import io.flutter.embedding.android.FlutterActivity
 
