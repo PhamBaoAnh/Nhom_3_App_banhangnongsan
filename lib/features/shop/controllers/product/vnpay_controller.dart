@@ -21,6 +21,7 @@ Future<bool> onPayment(double totalAmount) async {
     );
 
     // Hiển thị giao diện thanh toán VNPay
+    await VNPAYFlutter.instance.show(      paymentUrl: paymentUrl,
       onPaymentSuccess: (params) {
         // Xử lý khi thanh toán thành công
         print('Thanh toán thành công: ${params['vnp_ResponseCode']}');
