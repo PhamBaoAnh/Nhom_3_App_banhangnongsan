@@ -85,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                       return const Center(child: Text("Không có sản phẩm nào", style: TextStyle(color: TColors.primary)));
                     }
                     return TGridLayout(
-                      itemCount: controller.featuredProducts.length,
+                      itemCount: 4,
                       itemBuilder: (_, index) {
 
                         return TProductCardVertical(product: controller.featuredProducts[index],);

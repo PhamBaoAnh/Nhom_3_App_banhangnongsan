@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../../data/repositories/banners/banner_repository.dart';
 import '../../../../data/repositories/product/product_repository.dart';
 import '../../../../utils/constants/enums.dart';
@@ -81,13 +82,19 @@ return count;
       isLoading.value = false;
     }
   }
+
   String getProductPrice(ProductModel product) {
     double smallestPrice = double.infinity;
     double largestPrice = 0;
 
+    // Định dạng số dạng 120.000
+    String formatPrice(double price) {
+      return NumberFormat.decimalPattern('vi').format(price);
+    }
+
     if (product.productType == ProductType.single.toString()) {
-      return (product.salePrice > 0 ? product.salePrice : product.price)
-          .toStringAsFixed(0);
+      double priceToReturn = product.salePrice > 0 ? product.salePrice : product.price;
+      return formatPrice(priceToReturn); // Định dạng số
     } else {
       for (var variation in product.productVariations!) {
         double priceToConsider = variation.salePrice > 0.0 ? variation.salePrice : variation.price;
@@ -101,12 +108,14 @@ return count;
       }
 
       if (smallestPrice == largestPrice) {
-        return largestPrice.toStringAsFixed(0);
+        return formatPrice(largestPrice); // Định dạng số
       } else {
-        return '${smallestPrice.toStringAsFixed(0)}.000 - ${largestPrice.toStringAsFixed(0)}';
+        return '${formatPrice(smallestPrice)} - ${formatPrice(largestPrice)}'; // Định dạng cả hai giá trị
       }
     }
   }
+
+
   String getProductLowesPrice(ProductModel product) {
     double smallestPrice = double.infinity;
     double largestPrice = 0;

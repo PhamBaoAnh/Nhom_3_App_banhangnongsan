@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../common/widgets/products/cart/add_remove_button.dart';
 import '../../../../../common/widgets/products/cart/cart_item.dart';
@@ -46,8 +47,9 @@ class TCartItems extends StatelessWidget {
 
                           ],
                         ),
-                         TProductPriceText(price: (item.price * item.quantity).toStringAsFixed(0),)
-                      ],
+                        TProductPriceText(
+                          price: NumberFormat.decimalPattern('vi').format(item.price * item.quantity),
+                        )                      ],
                     ),
 
                 ],

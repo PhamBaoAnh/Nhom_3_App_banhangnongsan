@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/pricing_calculator.dart';
@@ -20,7 +21,7 @@ class TBillingAmountSection extends StatelessWidget {
           children: [
 
             Text('Tổng Tiền', style: Theme.of(context).textTheme.bodyMedium,),
-            Text('${cartController.totalCartPrice.value.toStringAsFixed(0)}.000 VND' , style: Theme.of(context).textTheme.bodyMedium,),
+            Text('${NumberFormat.decimalPattern('vi').format(cartController.totalCartPrice.value)} VND' , style: Theme.of(context).textTheme.bodyMedium,),
 
           ],
         ),
@@ -32,7 +33,11 @@ class TBillingAmountSection extends StatelessWidget {
           children: [
 
             Text('Phí Vận Chuyển', style: Theme.of(context).textTheme.bodyMedium,),
-            Text('${TPricingCalculator.calculateShippingCost(subTotal, 'VN')}.000 VND', style: Theme.of(context).textTheme.labelLarge,),
+            Text(
+              '${NumberFormat.decimalPattern('vi').format(double.parse(TPricingCalculator.calculateShippingCost(subTotal, 'VN')))} VND',
+              style: Theme.of(context).textTheme.labelLarge,
+            )
+
 
           ],
         ),
@@ -43,7 +48,10 @@ class TBillingAmountSection extends StatelessWidget {
           children: [
 
             Text('Thanh Toán', style: Theme.of(context).textTheme.bodyMedium,),
-            Text('${TPricingCalculator.calculateTotalPrice(subTotal, 'VN')}.000 VND', style: Theme.of(context).textTheme.titleMedium,),
+            Text(
+              '${NumberFormat.decimalPattern('vi').format(double.parse(TPricingCalculator.calculateTotalPrice(subTotal, 'VN')))} VND',
+              style: Theme.of(context).textTheme.titleMedium,
+            )
 
           ],
         ),

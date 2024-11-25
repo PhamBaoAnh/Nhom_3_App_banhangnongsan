@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:project/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:project/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:project/features/shop/screens/checkout/widgets/billing_payment_section.dart';
@@ -30,6 +31,7 @@ class CheckoutScreen extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     final cartController = CartController.instance;
     final subTotal = cartController.totalCartPrice.value;
+    final total = TPricingCalculator.calculateTotalPrice(subTotal, 'VN');
     final orderController = Get.put(OrderController());
 
     return Scaffold(
@@ -79,14 +81,23 @@ class CheckoutScreen extends StatelessWidget {
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
           onPressed: subTotal > 0
-              ? () => orderController.processOrder(subTotal)
+              ? () => orderController.processOrder(double.parse(total))
               : () {
             TLoaders.warningSnackBar(
               title: 'Giỏ hàng trống',
               message: 'Hãy thêm sản phẩm vào giỏ hàng ngay nào !!',
             );
           },
-          child: Text('Thanh toán ${TPricingCalculator.calculateTotalPrice(subTotal, 'VN')}.000 VND'),
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(TSizes.md),
+            backgroundColor: TColors.primary,
+            side: const BorderSide(color: TColors.primary),
+          ),
+
+          child: Text(
+            'Thanh toán ${NumberFormat.decimalPattern('vi').format(double.parse(TPricingCalculator.calculateTotalPrice(subTotal, 'VN')))} VND',
+          ),
+
         ),
       ),
 

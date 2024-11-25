@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TProductPriceText extends StatelessWidget {
   const TProductPriceText({
     super.key,
-    this.currencySign = '.000 VND',
+    this.currencySign = ' VND',
     required this.price,
     this.maxLines = 1,
     this.isLarge = false,
@@ -11,7 +12,8 @@ class TProductPriceText extends StatelessWidget {
     this.isSmall = false,
   });
 
-  final String currencySign, price;
+  final String currencySign;
+  final String price; // Vẫn để price là String
   final int maxLines;
   final bool isLarge;
   final bool isSmall;
@@ -19,8 +21,17 @@ class TProductPriceText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Chuyển đổi price từ String sang int và định dạng
+    String formattedPrice;
+    try {
+      final parsedPrice = int.parse(price.replaceAll('.', '')); // Xóa dấu chấm nếu có
+      formattedPrice = NumberFormat.decimalPattern('vi').format(parsedPrice);
+    } catch (e) {
+      formattedPrice = price; // Nếu xảy ra lỗi, giữ nguyên giá trị gốc
+    }
+
     return Text(
-      price + currencySign,
+      '$formattedPrice$currencySign',
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       style: isLarge

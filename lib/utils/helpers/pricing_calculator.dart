@@ -26,6 +26,6 @@ class TPricingCalculator {
   }
 */
   static double getShippingCost(String location) {
-    return 10.00; // Giả sử chi phí vận chuyển là 5.00
+    return 10000; // Giả sử chi phí vận chuyển là 5.00
   }
 }

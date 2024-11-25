@@ -45,7 +45,7 @@ class TProductAttributes extends StatelessWidget {
                           children: [
                             const TProductTitleText(title: 'Giá   ', smallSize: true,),
                             if(controller.selectedVariation.value.salePrice>0)
-                            Text('${controller.selectedVariation.value.price.toStringAsFixed(0)}.000',
+                            Text('${controller.selectedVariation.value.price.toStringAsFixed(0)}',
                             style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough),),
 
                             const SizedBox(width: TSizes.spaceBtwItems,),
