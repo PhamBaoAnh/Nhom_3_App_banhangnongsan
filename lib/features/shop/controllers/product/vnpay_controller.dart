@@ -1,5 +1,3 @@
-
-
 import '../../../../common/widgets/vnpay/vnpay.dart'; // Import thư viện VNPay
 
 Future<bool> onPayment(double totalAmount) async {
@@ -23,8 +21,6 @@ Future<bool> onPayment(double totalAmount) async {
     );
 
     // Hiển thị giao diện thanh toán VNPay
-    await VNPAYFlutter.instance.show(
-      paymentUrl: paymentUrl,
       onPaymentSuccess: (params) {
         // Xử lý khi thanh toán thành công
         print('Thanh toán thành công: ${params['vnp_ResponseCode']}');
@@ -41,12 +37,3 @@ Future<bool> onPayment(double totalAmount) async {
     return false; // Nếu có lỗi, trả về false
   }
 }
-
-
-// Thẻ demo để test VNPay
-
-// Ngân hàng: NCB
-// Số thẻ: 9704198526191432198
-// Tên chủ thẻ:NGUYEN VAN A
-// Ngày phát hành:07/15
-// Mật khẩu OTP:123456
