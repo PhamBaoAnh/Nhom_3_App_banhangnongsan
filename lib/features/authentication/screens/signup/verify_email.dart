@@ -57,9 +57,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: TSizes.spaceBtwSections),
-
-              // Button
+             /*
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -74,6 +72,8 @@ class VerifyEmailScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              */
+
               const SizedBox(height: TSizes.spaceBtwItems),
               SizedBox(
                 width: double.infinity,
