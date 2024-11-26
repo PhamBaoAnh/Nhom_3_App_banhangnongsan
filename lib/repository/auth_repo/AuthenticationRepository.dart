@@ -65,7 +65,7 @@ class AuthenticationRepository extends GetxController {
 
       // Lấy thông tin xác thực từ yêu cầu
       final GoogleSignInAuthentication? googleAuth =
-          await googleUser.authentication;
+      await googleUser.authentication;
 
       // Tạo một chứng chỉ mới
       final credential = GoogleAuthProvider.credential(
@@ -84,11 +84,11 @@ class AuthenticationRepository extends GetxController {
   Future<UserCredential> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult =
-        await FacebookAuth.instance.login(permissions: ['email']);
+    await FacebookAuth.instance.login(permissions: ['email']);
 
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+    FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
@@ -121,7 +121,7 @@ class AuthenticationRepository extends GetxController {
       throw e;
     } catch (_) {}
 
-    }
+  }
   Future<void> deleteAccount() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;

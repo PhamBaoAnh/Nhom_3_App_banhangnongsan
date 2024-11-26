@@ -22,10 +22,10 @@ class SignupController extends GetxController {
 
   final userRepo0 = Get.put(userRepo());
   Future<void> createUser(UserModel user) async {
-
     await AuthenticationRepository.instance
         .createUserWithEmailAndPassword(user.email, user.password);
     await userRepo0.createUser(user);
+    Get.snackbar('Warning', 'You must agree continue.');
     Get.offAll(()=> VerifyEmailScreen(email: user.email));
 
 

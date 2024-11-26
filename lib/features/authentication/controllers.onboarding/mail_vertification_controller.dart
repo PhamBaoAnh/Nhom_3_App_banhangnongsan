@@ -26,11 +26,11 @@ class mail_vertification_controller extends GetxController {
   setTimerForAutoRedirect() {
     _timer=Timer.periodic(const Duration(seconds: 3), (timer){
       FirebaseAuth.instance.currentUser?.reload();
-final user =FirebaseAuth.instance.currentUser;
-if(user!.emailVerified){
-  timer.cancel();
-  AuthenticationRepository.instance.setInitScreen(user);
-}
+    final user =FirebaseAuth.instance.currentUser;
+    if(user!.emailVerified){
+      timer.cancel();
+      AuthenticationRepository.instance.setInitScreen(user);
+    }
 
 
     });

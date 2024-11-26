@@ -6,6 +6,7 @@ import 'package:project/features/authentication/models/user_model.dart';
 class userRepo extends GetxController {
   static userRepo get instance => Get.find();
   final _db = FirebaseFirestore.instance;
+
   createUser(UserModel user) async => await _db
           .collection('user')
           .add(user.toJson())

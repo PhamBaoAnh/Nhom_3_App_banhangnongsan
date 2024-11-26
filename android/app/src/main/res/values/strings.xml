@@ -1,0 +1,11 @@
+<resources>
+    <!-- Facebook App ID -->
+    <string name="app_name">BioLife</string>
+    <string name="facebook_app_id">1088601632641100</string>
+
+    <!-- Facebook Login Protocol Scheme -->
+    <string name="fb_login_protocol_scheme">fb1088601632641100</string>
+
+    <!-- Facebook Client Token (if required) -->
+    <string name="facebook_client_token">288cd36c8c9c4b7e34dffd237e67ebf9</string>
+</resources>

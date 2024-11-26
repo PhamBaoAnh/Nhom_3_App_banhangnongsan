@@ -177,6 +177,7 @@ class TSignupForm extends StatelessWidget {
                           email: controller.email.text.trim(),
                           password: controller.password.text.trim(),
                           phoneNo: controller.phoneNo.text.trim());
+
                       SignupController.instance.createUser(userModel);
                     } else {
                       Get.snackbar('Warning', 'You must agree to continue.');

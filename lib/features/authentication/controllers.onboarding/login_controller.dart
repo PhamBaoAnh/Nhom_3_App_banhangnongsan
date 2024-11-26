@@ -64,13 +64,41 @@ class LoginController extends GetxController {
     try {
       isFacebookLoading.value = true;
       final auth = AuthenticationRepository.instance;
-      auth.signInWithFacebook();
-      auth.setInitScreen(auth.firebaseUser);
+
+      // Facebook Sign-In
+      await auth.signInWithFacebook();
+
+      // Fetch user details
+      final email = auth.getUserEmail;
+      if (email == null || email.isEmpty) {
+        throw Exception('Facebook login failed. Email not retrieved.');
+      }
+
+      // Create UserModel for new users
+      UserModel userFacebook = UserModel(
+        id: '',
+        firstName: '',
+        lastName: '',
+        username: '',
+        gender: '',
+        email: email,
+        password: '123456789',
+        phoneNo: '',
+        dateOfBirth: '',
+      );
+
+      // Check if user exists, else create a new user
+      var isLoginFacebook =  await userRepo0.getUserDetail(auth.getUserEmail);
+      if (isLoginFacebook == null) {
+        await userRepo0.createUser(userFacebook);
+      }
+
+      // Set initialization screen
+      await auth.setInitScreen(auth.firebaseUser);
     } catch (e) {
-      Get.snackbar('Error', e.toString()); // Display error message
+      Get.snackbar('Error', e.toString());
     } finally {
       isFacebookLoading.value = false;
     }
-
   }
 }
