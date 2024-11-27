@@ -62,7 +62,6 @@ class AuthenticationRepository extends GetxController {
         Get.offAll(() => const LoginScreen());
         return;
       }
-
       // Lấy thông tin xác thực từ yêu cầu
       final GoogleSignInAuthentication? googleAuth =
           await googleUser.authentication;

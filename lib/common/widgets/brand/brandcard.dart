@@ -15,13 +15,13 @@ class TBrandCard extends StatelessWidget {
   final VoidCallback? onTap;
   final String? categoryId;
   final BrandModel brand;
-
   const TBrandCard({
     super.key,
     required this.showBorder,
     this.onTap,
     this.categoryId,
     required this.brand,
+
   });
 
   @override

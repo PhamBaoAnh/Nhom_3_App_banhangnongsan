@@ -32,7 +32,6 @@ class BrandProducts extends StatelessWidget {
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child:    FutureBuilder(future: controller.fetchProductsByBrand(query,brand.name) , builder: (context,snapshot){
             if (snapshot.connectionState == ConnectionState.waiting) {
-
               return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
