@@ -100,7 +100,7 @@ class TSocialButtons extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
-                  controller.loginWithFacebook();
+                  controller.loginWithFacebook(); //
                 },
                 icon: controller.isFacebookLoading.value
                     ? const SizedBox(

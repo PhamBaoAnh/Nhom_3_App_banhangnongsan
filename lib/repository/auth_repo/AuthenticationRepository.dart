@@ -9,6 +9,7 @@ import 'package:project/features/authentication/screens/login/login.dart';
 import 'package:project/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:project/features/authentication/screens/signup/verify_email.dart';
 
+import '../../utils/constants/colors.dart';
 import '../../utils/local_storage/storage_utility.dart';
 import '../../utils/navigation_menu.dart';
 import '../exception/SignupWithEmailAndPasswordFailure.dart';
@@ -94,6 +95,7 @@ class AuthenticationRepository extends GetxController {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
+
   Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -141,7 +143,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       setInitScreen(firebaseUser);
-      Get.snackbar('Login Successful', 'You are now logged in');
+      Get.snackbar('Login Successful', 'You are now logged in', colorText: TColors.primary, backgroundColor: TColors.white.withOpacity(0.8));
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       switch (e.code) {
