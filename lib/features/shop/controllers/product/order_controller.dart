@@ -79,12 +79,6 @@ class OrderController extends GetxController {
         throw Exception('Phương thức thanh toán không hợp lệ.');
       }
 
-
-
-
-
-
-
     } catch (e) {
       Get.snackbar('Error', 'Failed to process order: $e');
     }
