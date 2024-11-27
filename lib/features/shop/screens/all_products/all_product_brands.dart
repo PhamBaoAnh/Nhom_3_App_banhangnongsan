@@ -5,19 +5,21 @@ import 'package:get/get.dart';
 import 'package:project/features/shop/controllers/all_product_controller.dart';
 import 'package:project/features/shop/models/product_model.dart';
 import '../../../../common/widgets/appbar/appbar.dart';
+import '../../../../common/widgets/products/sortable/sortbale_brand.dart';
 import '../../../../common/widgets/products/sortable/sortbale_products.dart';
 import '../../../../utils/constants/sizes.dart';
 
-class AllProduct extends StatelessWidget {
+class AllProductBrands extends StatelessWidget {
   final String title;
   final firestore.Query? query;  // Use firestore.Query to refer to Cloud Firestore Query
   final Future<List<ProductModel>>? futureMethod;
-  const AllProduct({super.key, required this.title, this.query, this.futureMethod});
+  const AllProductBrands({super.key, required this.title, this.query, this.futureMethod});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AllProductController());
-    return Scaffold(
+
+     return Scaffold(
       appBar: TAppBar(
         showBackArrow: true,
         title: Text(
@@ -42,11 +44,12 @@ class AllProduct extends StatelessWidget {
                   return const Center(child: Text('No featured products available.'));
                 }
                 final products =snapshot.data!;
-                return  TSortableProducts(products: products);
+                return  TSortableBrands(products: products);
               }
           ),
         ),
       ),
     );
+    }
   }
-}
+

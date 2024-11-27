@@ -9,6 +9,7 @@ import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../containers/rounded_container.dart';
+import '../images/t_rounded_image.dart';
 import 'brandcard.dart';
 class TBrandShowcase extends StatelessWidget {
   const TBrandShowcase({
@@ -49,7 +50,7 @@ class TBrandShowcase extends StatelessWidget {
         backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
         margin: const EdgeInsets.only(right: TSizes.sm),
         padding: const EdgeInsets.all(TSizes.xsm),
-        child: Image(fit: BoxFit.contain, image: AssetImage(image)),
+        child:  TRoundedImage(imageUrl: image,applyImageRadius: true,isNetworkImage: true),
       ),
     );
   }

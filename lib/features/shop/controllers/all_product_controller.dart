@@ -7,9 +7,9 @@ class AllProductController extends GetxController{
   static AllProductController get instance => Get.find();
   final repo =Get.put(ProductRepository());
 
-final RxString selectSort ='Name'.obs;
-final RxList <ProductModel> products= <ProductModel>[].obs;
-
+  final RxString selectSort ='Name'.obs;
+  final RxList <ProductModel> products= <ProductModel>[].obs;
+  final RxString selectBrand ='Việt Nam'.obs;
   Future<List<ProductModel>>fetchProductsQuery(Query? query)async{
     try{
       if (query == null) return[];
@@ -52,7 +52,7 @@ final RxList <ProductModel> products= <ProductModel>[].obs;
     }
 
   }
- void sortProducts(String option){
+  void sortProducts(String option){
     selectSort.value =option;
     switch(option){
       case 'Name':
@@ -71,12 +71,25 @@ final RxList <ProductModel> products= <ProductModel>[].obs;
           else return 1;
         });
         break;
-
       default:     products.sort((a,b)=>a.price.compareTo(b.price));
     }
- }
+  }
+
+
+  void filterBrand(String option) {
+    selectBrand.value = option;
+    final filteredProducts = products
+        .where((product) => product.brand?.name == option)
+        .toList();
+    products.assignAll(filteredProducts);
+  }
+
   void assignProducts(List<ProductModel> newProducts) {
     selectSort.value= 'Name';
+    products.assignAll(newProducts);
+  }
+  void assignProductBrands(List<ProductModel> newProducts) {
+    selectBrand.value= 'Việt Nam';
     products.assignAll(newProducts);
   }
 

@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import '../../../../data/repositories/banners/banner_repository.dart';
+import '../../../../data/repositories/brands/BrandRepository.dart';
 import '../../../../data/repositories/product/product_repository.dart';
 import '../../../../utils/constants/enums.dart';
 
@@ -17,8 +17,6 @@ class ProductController extends GetxController {
   final productRepository = Get.put(ProductRepository());
   final count= 0.obs;
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
-
-
   @override
   void onInit() {
     super.onInit();
@@ -28,11 +26,21 @@ class ProductController extends GetxController {
   Future<int> getProductsByCategoryAndBrand(
       String categoryId, String brandName) async {
     try {
-           final count =await  productRepository.getTotalProductCountByCategoryAndBrand(categoryId, brandName);
-return count;
+      final count =await  productRepository.getTotalProductCountByCategoryAndBrand(categoryId, brandName);
+      return count;
     } catch (e) {
       Get.snackbar('Error', 'Error fetching products: $e');
       return 0;
+    }
+  }
+  Future<List<ProductModel>> getProductByCategoryAndBrand(
+      String categoryId, String brandName) async {
+    try {
+      final list =await  productRepository.getProductByCategoryAndBrand(categoryId, brandName);
+      return list;
+    } catch (e) {
+      Get.snackbar('Error', 'Error fetching products: $e');
+      return [];
     }
   }
 
@@ -48,13 +56,12 @@ return count;
           .toList();
 
     } catch (e) {
-      throw Exception('Error fetching products by category: $e');
       return [];
     }
   }
   Future<List<ProductModel>>fetchAllFeaturedProducts() async {
     try {
-     final products =await productRepository.getFeaturedProducts();
+      final products =await productRepository.getFeaturedProducts();
       return products;
     } catch (e) {
 
@@ -82,19 +89,13 @@ return count;
       isLoading.value = false;
     }
   }
-
   String getProductPrice(ProductModel product) {
     double smallestPrice = double.infinity;
     double largestPrice = 0;
 
-    // Định dạng số dạng 120.000
-    String formatPrice(double price) {
-      return NumberFormat.decimalPattern('vi').format(price);
-    }
-
     if (product.productType == ProductType.single.toString()) {
-      double priceToReturn = product.salePrice > 0 ? product.salePrice : product.price;
-      return formatPrice(priceToReturn); // Định dạng số
+      return (product.salePrice > 0 ? product.salePrice : product.price)
+          .toStringAsFixed(0);
     } else {
       for (var variation in product.productVariations!) {
         double priceToConsider = variation.salePrice > 0.0 ? variation.salePrice : variation.price;
@@ -108,14 +109,12 @@ return count;
       }
 
       if (smallestPrice == largestPrice) {
-        return formatPrice(largestPrice); // Định dạng số
+        return largestPrice.toStringAsFixed(0);
       } else {
-        return '${formatPrice(smallestPrice)} - ${formatPrice(largestPrice)}'; // Định dạng cả hai giá trị
+        return '${smallestPrice.toStringAsFixed(0)}.000 - ${largestPrice.toStringAsFixed(0)}';
       }
     }
   }
-
-
   String getProductLowesPrice(ProductModel product) {
     double smallestPrice = double.infinity;
     double largestPrice = 0;
@@ -153,9 +152,9 @@ return count;
     return percentage.toStringAsFixed(0);
   }
 
-   String getProductStockSatus(int stock){
+  String getProductStockSatus(int stock){
     return stock > 0 ? 'Còn hàng' : 'Hết hàng';
-   }
+  }
 
 
 
