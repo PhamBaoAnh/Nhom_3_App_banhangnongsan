@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:project/utils/constants/enums.dart';
 
 import '../../../../../common/widgets/chips/choice_chip.dart';
@@ -45,8 +46,13 @@ class TProductAttributes extends StatelessWidget {
                           children: [
                             const TProductTitleText(title: 'Giá   ', smallSize: true,),
                             if(controller.selectedVariation.value.salePrice>0)
-                            Text('${controller.selectedVariation.value.price.toStringAsFixed(0)}',
-                            style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough),),
+                              Text(
+                                NumberFormat.decimalPattern('vi').format(
+                                  double.parse(controller.selectedVariation.value.price.toStringAsFixed(0)),
+                                ),
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(decoration: TextDecoration.lineThrough),
+                              ),
+
 
                             const SizedBox(width: TSizes.spaceBtwItems,),
                             TProductPriceText(price: controller.getVariationPrice(), isSmall: true, )
