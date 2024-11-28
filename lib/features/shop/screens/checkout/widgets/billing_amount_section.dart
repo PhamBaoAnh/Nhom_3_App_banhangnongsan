@@ -10,10 +10,10 @@ class TBillingAmountSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final cartController = CartController.instance;
     final subTotal = cartController.totalCartPrice.value;
-
-
+    
     return Column(
       children: [
         Row(
