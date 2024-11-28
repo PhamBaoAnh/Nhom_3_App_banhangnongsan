@@ -31,7 +31,7 @@ class OrderModel {
   String get formattedOrderDate => THelperFunctions.getFormattedDate(orderDate);
 
   String get formatDeliveryDate =>
-      deliveryDate != null ? THelperFunctions.getFormattedDate(deliveryDate!) : '';
+      deliveryDate != null ? THelperFunctions.getFormattedDate(orderDate) : '';
 
   String get orderStatusText => status == OrderStatus.delivered
       ? 'Delivered'
