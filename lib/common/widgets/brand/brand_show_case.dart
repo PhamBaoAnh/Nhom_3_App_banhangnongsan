@@ -46,11 +46,12 @@ class TBrandShowcase extends StatelessWidget {
   Widget brandTopProductImageWidget(String image, context) {
     return Expanded(
       child: TRoundedContainer(
-        height: 100,
+        height: 115,
         backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
         margin: const EdgeInsets.only(right: TSizes.sm),
         padding: const EdgeInsets.all(TSizes.xsm),
-        child:  TRoundedImage(imageUrl: image,applyImageRadius: true,isNetworkImage: true),
+        child:  TRoundedImage(imageUrl: image,applyImageRadius: true,isNetworkImage: true,backgroundColor: TColors.white,),
+
       ),
     );
   }

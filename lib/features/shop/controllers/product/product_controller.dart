@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../../data/repositories/banners/banner_repository.dart';
 import '../../../../data/repositories/brands/BrandRepository.dart';
 import '../../../../data/repositories/product/product_repository.dart';
@@ -113,7 +114,8 @@ class ProductController extends GetxController {
       if (smallestPrice == largestPrice) {
         return largestPrice.toStringAsFixed(0);
       } else {
-        return '${smallestPrice.toStringAsFixed(0)}.000 - ${largestPrice.toStringAsFixed(0)}';
+        return '${NumberFormat.decimalPattern('vi').format(double.parse(smallestPrice.toStringAsFixed(0)))} - ${NumberFormat.decimalPattern('vi').format(double.parse(largestPrice.toStringAsFixed(0)))}';
+
       }
     }
   }

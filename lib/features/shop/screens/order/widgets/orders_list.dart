@@ -11,6 +11,7 @@ import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../../../utils/navigation_menu.dart';
 import '../../../controllers/product/order_controller.dart';
+import '../../history_order/history_order.dart';
 
 class TOrdersListItems extends StatelessWidget {
   const TOrdersListItems({super.key});
@@ -77,7 +78,7 @@ class TOrdersListItems extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
-                                  .apply(color: TColors.primary, fontWeightDelta: 1),
+                                  .apply(color: TColors.black, fontWeightDelta: 1),
                             ),
                             Text(
                               order.address!.name.toString(), // Ngày đặt hàng
@@ -87,7 +88,7 @@ class TOrdersListItems extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {}, // Thêm hành động nếu cần
+                        onPressed: () => Get.to(() => THistoryOrders( orderDetail:orders[index],)), // Thêm hành động nếu cần
                         icon: const Icon(Iconsax.arrow_right_34, size: TSizes.iconSm),
                       ),
                     ],
@@ -113,7 +114,7 @@ class TOrdersListItems extends StatelessWidget {
                                   ),
                                   Text(
                                     order.id, // ID đơn hàng
-                                    style: Theme.of(context).textTheme.titleMedium,
+                                    style: Theme.of(context).textTheme.titleMedium?.apply(color:TColors.black),
                                   ),
                                 ],
                               ),
@@ -134,12 +135,13 @@ class TOrdersListItems extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Ngày vận chuyển',
+                                    'Ngày đặt hàng',
                                     style: Theme.of(context).textTheme.labelMedium,
                                   ),
                                   Text(
                                     order.formatDeliveryDate, // Ngày vận chuyển
-                                    style: Theme.of(context).textTheme.titleMedium,
+                                    style: Theme.of(context).textTheme.titleMedium?.apply(color: TColors.black),
+
                                   ),
                                 ],
                               ),

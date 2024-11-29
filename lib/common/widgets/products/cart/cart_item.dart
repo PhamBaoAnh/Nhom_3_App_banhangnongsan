@@ -21,11 +21,12 @@ class TCartItem extends StatelessWidget {
       children: [
         TRoundedImage(
           imageUrl: cartItem.image ?? '',
-          width: 70,
-          height: 70,
+          width: 85,
+          height: 85,
           isNetworkImage: true,
           padding: const EdgeInsets.all(TSizes.sm),
-          backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.light,
+          backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.darkGrey : TColors.white,
+          border:Border.all(color: TColors.primary.withOpacity(0.5)),
         ),
         const SizedBox(width: TSizes.spaceBtwItems),
 
@@ -35,9 +36,9 @@ class TCartItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TBrandTitleWithVerifidedIcon(title: cartItem.brandName ?? ''),
+               TBrandTitleWithVerifidedIcon(title: cartItem.brandName ?? ''),
                Flexible(child: TProductTitleText(title: cartItem.title, maxLines: 1,)),
-              Text.rich(
+               Text.rich(
                 TextSpan(
                   children: (cartItem.selectedVariation ?? {}).entries.map((e) {
                     return TextSpan(
@@ -54,7 +55,8 @@ class TCartItem extends StatelessWidget {
                     );
                   }).toList(), // Convert Iterable<TextSpan> to List<TextSpan>
                 ),
-              )
+              ),
+
 
             ],
           ),
