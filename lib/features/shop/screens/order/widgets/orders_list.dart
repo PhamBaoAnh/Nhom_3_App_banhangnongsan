@@ -78,7 +78,7 @@ class TOrdersListItems extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
-                                  .apply(color: TColors.primary, fontWeightDelta: 1),
+                                  .apply(color: TColors.black, fontWeightDelta: 1),
                             ),
                             Text(
                               order.address!.name.toString(), // Ngày đặt hàng
@@ -114,7 +114,7 @@ class TOrdersListItems extends StatelessWidget {
                                   ),
                                   Text(
                                     order.id, // ID đơn hàng
-                                    style: Theme.of(context).textTheme.titleMedium?.apply(color: TColors.primary),
+                                    style: Theme.of(context).textTheme.titleMedium?.apply(color:TColors.black),
                                   ),
                                 ],
                               ),
@@ -140,7 +140,7 @@ class TOrdersListItems extends StatelessWidget {
                                   ),
                                   Text(
                                     order.formatDeliveryDate, // Ngày vận chuyển
-                                    style: Theme.of(context).textTheme.titleMedium?.apply(color: TColors.primary),
+                                    style: Theme.of(context).textTheme.titleMedium?.apply(color: TColors.black),
 
                                   ),
                                 ],

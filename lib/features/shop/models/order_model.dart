@@ -33,11 +33,21 @@ class OrderModel {
   String get formatDeliveryDate =>
       deliveryDate != null ? THelperFunctions.getFormattedDate(orderDate) : '';
 
-  String get orderStatusText => status == OrderStatus.delivered
-      ? 'Delivered'
-      : status == OrderStatus.shipped
-      ? 'Đang vận chuyển'
-      : 'Đang chờ xác nhận';
+
+  String get orderStatusText {
+    if (status == OrderStatus.delivered) {
+      return 'Đã vận chuyển';
+    } else if (status == OrderStatus.shipped) {
+      return 'Đang vận chuyển';
+    } else if (status == OrderStatus.cancelled) {
+      return 'Đã hủy';
+    } else if (status == OrderStatus.processing) {
+      return 'Đang chờ xác nhận';
+    } else {
+      return 'Đang chờ xác nhận'; // Default fallback if status is none of the above
+    }
+  }
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -77,4 +87,10 @@ class OrderModel {
       throw StateError('Document does not exist or has no data');
     }
   }
+
+
+
+
+
+
 }

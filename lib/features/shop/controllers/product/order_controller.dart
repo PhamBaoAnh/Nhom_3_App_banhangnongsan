@@ -68,7 +68,10 @@ class OrderController extends GetxController {
           image: TImages.orderCompletedAnimation,
           title: 'Thanh toán thành công',
           subtitle: 'Đơn hàng của bạn sẽ được vận chuyển sớm',
-          onPressed: () => Get.offAll(() => const NavigationMenu()),
+          onPressed: () {
+              Get.back();
+            }
+
         ));
 
       } else if (checkoutController.selectedPaymentMethod.value.name== 'VNPay') {
