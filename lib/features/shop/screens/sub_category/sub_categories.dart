@@ -1,55 +1,58 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
-import 'package:project/utils/constants/image_strings.dart';
+import 'package:get/get.dart';
+import 'package:project/features/shop/controllers/all_product_controller.dart';
+import 'package:project/features/shop/controllers/product/product_controller.dart';
+import 'package:project/features/shop/models/category_model.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
-import '../../../../common/widgets/images/t_rounded_image.dart';
-import '../../../../common/widgets/products/product_cards/product_card_horizontal.dart';
-import '../../../../common/widgets/texts/section_heading.dart';
+
+import '../../../../common/widgets/products/sortable/sortbale_brand.dart';
+import '../../../../common/widgets/products/sortable/sortbale_products.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../models/product_model.dart';
 
 class SubCategoriesScreen extends StatelessWidget {
-  const SubCategoriesScreen({super.key});
-
+  final String title;
+  final firestore.Query? query;  // Use firestore.Query to refer to Cloud Firestore Query
+  final Future<List<ProductModel>>? futureMethod;
+  final String  categoryId ;
+  const SubCategoriesScreen({super.key, required this.title, this.query, this.futureMethod, required this.categoryId});
   @override
   Widget build(BuildContext context) {
+
+    final controllerProduct =Get.put(ProductController());
     return Scaffold(
-      appBar: TAppBar(title: Text('Danh Mục'),showBackArrow: true, ),
+      appBar: TAppBar(
+        showBackArrow: true,
+        title: Text(
+          'Category ${categoryId}',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
-          child: Column(
-            children: [
-              /* const TRoundedImage(width: double.infinity,image: TImages.promoBanner2,applyImageRadius: true,), */
-              const SizedBox(height: TSizes.spaceBtwSections),
+          child: FutureBuilder(
+              future: controllerProduct.getProductsByCategory(categoryId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
 
-             Column(
-               children: [
-                 TSectionHeading(title: 'Danh mục 1',onPressed: (){}, textColor: Colors.black,),
-                 const SizedBox(height: TSizes.spaceBtwSections  ),
-
-
-                 SizedBox(
-                   height: 120,
-                   child: Align(
-
-                     child: ListView.separated(
-                       itemCount: 4,
-                       scrollDirection: Axis.horizontal,
-                       separatorBuilder: (context, index) => const SizedBox(width: TSizes.spaceBtwItems * 3),
-                       itemBuilder: (context, index) => const TProductCardHorizontal(),
-                     ),
-                   ),
-                 ),
-
-
-
-               ],
-             )
-            ],
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No featured products available.'));
+                }
+                final products =snapshot.data!;
+                return  TSortableProducts(products: products);
+              }
           ),
         ),
       ),
-
     );
   }
 }

@@ -24,14 +24,13 @@ class CategoryController extends GetxController {
     super.onInit();
     fetchCategories();
   }
-
   Future<void> fetchCategories() async {
     try {
       isLoading.value = true;
       final categories = await _categoryRepository.getAllCategories();
       allCategories.assignAll(categories);
       featuredCategories.assignAll(allCategories
-          .where((category) => category.isFeatured && category.parentId.isEmpty)
+          .where((category) => category.isFeatured && category.parentId.isNotEmpty)
           .take(8)
           .toList());
     } catch (e) {

@@ -19,7 +19,6 @@ import '../../all_products/all_products.dart';
 
 class TCategoryTab extends StatelessWidget {
   const TCategoryTab({super.key, required this.category, required this.brand});
-
   final CategoryModel category;
   final BrandModel brand;
 
@@ -66,7 +65,7 @@ class TCategoryTab extends StatelessWidget {
                                 .collection('Products')
                                 .where('IsFeatured', isEqualTo: true)
                                 .where('CategoryId', isEqualTo: category.parentId)
-                                .where('Brand.Name', isEqualTo: brand.name).limit(6),
+                                .limit(6),
                             futureMethod: controller.fetchAllFeaturedProducts(),
                           )),
                       textColor: TColors.black,

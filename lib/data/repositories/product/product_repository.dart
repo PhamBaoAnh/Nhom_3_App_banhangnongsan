@@ -15,7 +15,6 @@ class ProductRepository extends GetxController {
   Future<int> getTotalProductCountByCategoryAndBrand(
       String categoryId, String brandName) async {
     try {
-
       final snapshot = await _firestore
           .collection(_collectionPath)
           .where('CategoryId', isEqualTo: categoryId)
@@ -93,16 +92,20 @@ class ProductRepository extends GetxController {
   Future<List<ProductModel>> fetchAllProductsQuery(Query query) async {
     try {
       final querySnapshot = await query.get();
-
       final listProduct = querySnapshot.docs
           .map((doc) => ProductModel.fromQuerySnapshot(doc))
           .toList();
       return listProduct;
+    } on FirebaseException catch (e) {
+      print('Firebase error: ${e.message}');
+      Get.snackbar('Error', 'Firebase error: ${e.message}');
+      return [];
     } catch (e) {
-
-      Get.snackbar('Error', 'Error fetching categories: $e');
-      return []; // Return an empty list on error
+      print('Unknown error: $e');
+      Get.snackbar('Error', 'An unknown error occurred');
+      return [];
     }
+
   }
 
   Future<List<ProductModel>> getFavoriteProducts(

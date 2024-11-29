@@ -22,7 +22,6 @@ class ProductController extends GetxController {
     super.onInit();
     fetchCategories();
   }
-
   Future<int> getProductsByCategoryAndBrand(
       String categoryId, String brandName) async {
     try {
@@ -59,14 +58,17 @@ class ProductController extends GetxController {
       return [];
     }
   }
-  Future<List<ProductModel>>fetchAllFeaturedProducts() async {
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async {
     try {
-      final products =await productRepository.getFeaturedProducts();
-      return products;
-    } catch (e) {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('Products')
+          .where('IsFeatured', isEqualTo: true)
+          .get();
 
-      Get.snackbar('Error', 'Error fetching categories: $e');
-      return []; // Return an empty list on error
+      return snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+    } catch (e) {
+      print("Error fetching products: $e");
+      return [];  // Trả về danh sách rỗng nếu có lỗi
     }
   }
 

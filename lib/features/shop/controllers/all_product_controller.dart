@@ -10,20 +10,7 @@ class AllProductController extends GetxController{
   final RxString selectSort ='Name'.obs;
   final RxList <ProductModel> products= <ProductModel>[].obs;
   final RxString selectBrand ='Việt Nam'.obs;
-  Future<List<ProductModel>>fetchProductsQuery(Query? query)async{
-    try{
-      if (query == null) return[];
-      final listProducts = await repo.fetchAllProductsQuery(query);
-      assignProducts(listProducts);
-      sortProducts(selectSort.value);
-      return listProducts;
-    }
-    catch(e){
-      Get.snackbar("Error", 'Error');
-      return [];
-    }
 
-  }
   Future<List<ProductModel>>fetchProductsByBrand(Query? query,String brandName)async{
     try{
       if (query == null) return[];
@@ -34,6 +21,20 @@ class AllProductController extends GetxController{
     }
     catch(e){
       Get.snackbar("Error", 'Error');
+      return [];
+    }
+
+  }
+  Future<List<ProductModel>>fetchProductsQuery(Query? query)async{
+    try{
+      if (query == null) return[];
+      final listProducts = await repo.fetchAllProductsQuery(query);
+      assignProducts(listProducts);
+      sortProducts(selectSort.value);
+      return listProducts;
+    }
+    catch(e){
+      Get.snackbar("Error", 'dddddddddddddddddddsdd');
       return [];
     }
 
