@@ -8,7 +8,7 @@ enum ProductType { single, variable }
 
 enum ProductVisibility { published, hidden }
 
-enum TextSizes { small, medium, large }
+enum TextSizes { small, medium, large, smallBold }
 
 enum ImageType { asset, network, memory, file }
 

@@ -29,9 +29,9 @@ class TVerticalImageText extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 56,
-              height: 56,
-              padding: const EdgeInsets.all(TSizes.sm),
+              width: 60,
+              height: 60,
+              padding: const EdgeInsets.all(TSizes.xsm),
               decoration: BoxDecoration(
                 color: backgroundColor ?? (dark ? TColors.black : TColors.white),
                 borderRadius: BorderRadius.circular(100),
@@ -45,11 +45,11 @@ class TVerticalImageText extends StatelessWidget {
                     if (loadingProgress == null) {
                       return child;  // Hiển thị ảnh khi tải xong
                     } else {
-                      return Center(child: CircularProgressIndicator());  // Hiển thị vòng xoay khi tải
+                      return const Center(child: CircularProgressIndicator());  // Hiển thị vòng xoay khi tải
                     }
                   },
                   errorBuilder: (context, error, stackTrace) {
-                    return Center(child: Icon(Icons.error));  // Hiển thị lỗi nếu không tải được ảnh
+                    return const Center(child: Icon(Icons.error));  // Hiển thị lỗi nếu không tải được ảnh
                   },
                 ),
               ),
@@ -60,8 +60,9 @@ class TVerticalImageText extends StatelessWidget {
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.labelMedium!.apply(color: textColor),
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             )
           ],

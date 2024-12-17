@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/repository/user_repo/user_repo.dart';
 
+import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 import '../../../../../utils/navigation_menu.dart';
@@ -97,6 +98,10 @@ class TLoginForm extends StatelessWidget {
                     print( controller.password.text.trim());
                     loginController.login(email, password);
                   },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: TColors.primary,
+                side: const BorderSide(color: TColors.primary),
+              ),
               child: const Text(TTexts.signIn),
             ),
           ),
@@ -105,7 +110,12 @@ class TLoginForm extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () => Get.to(() => const SignupScreen()),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: TColors.white,
+                side: const BorderSide(color: TColors.primary),
+              ),
               child: const Text(TTexts.createAccount),
+
             ),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),

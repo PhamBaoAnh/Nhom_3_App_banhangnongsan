@@ -41,7 +41,7 @@ class TOrdersListItems extends StatelessWidget {
         if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
           return TAnimationLoaderWidget(
             text: 'Whoops! Giỏ hàng của bạn đang trống !!',
-            animation: TImages.orderCompletedAnimation,
+            animation: TImages.loadingJuggleAnimation,
             showAction: true,
             actionText: 'Đặt hàng ngay nào !',
             onActionPressed: () => Get.off(() => const NavigationMenu()),

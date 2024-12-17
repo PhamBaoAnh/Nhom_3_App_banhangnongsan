@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/shop/models/brand_model.dart';
 
 import '../../../features/shop/controllers/all_product_controller.dart';
@@ -13,22 +14,21 @@ import '../products/sortable/sortbale_products.dart';
 import 'brandcard.dart';
 
 class BrandProducts extends StatelessWidget {
-  const BrandProducts({super.key,required this.title, this.query, this.futureMethod, required this.brand});
+  const BrandProducts({super.key, required this.brand});
   final BrandModel brand;
-  final String title;
-  final firestore.Query? query;  // Use firestore.Query to refer to Cloud Firestore Query
-  final Future<List<ProductModel>>? futureMethod;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AllProductController());
     return  Scaffold(
-      appBar: TAppBar( title: Text(brand.name),showBackArrow: true,),
+      appBar: TAppBarBack( title: Text(brand.name),showBackArrow: true,),
       body:  SingleChildScrollView(
 
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
-          child:    FutureBuilder(future: controller.fetchProductsByBrand(query,brand.name) , builder: (context,snapshot){
+          child:    FutureBuilder(
+              future: controller.fetchProductsByBrand(brand.name.toString()) ,
+              builder: (context,snapshot){
             if (snapshot.connectionState == ConnectionState.waiting) {
 
               return const Center(child: CircularProgressIndicator());
@@ -46,10 +46,8 @@ class BrandProducts extends StatelessWidget {
                const SizedBox(height: TSizes.spaceBtwSections,),
                TSortableProducts(products: products)]
                 );
-    }
+             }
           ),
-
-
         ),
 
       ),

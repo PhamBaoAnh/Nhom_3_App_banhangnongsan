@@ -22,6 +22,7 @@ import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
 import '../../controllers/product/variation_controller.dart';
 import '../../models/product_model.dart';
+import '../checkout/checkout.dart';
 
 class ProductDetail extends StatelessWidget {
   const ProductDetail({super.key, required this.product});
@@ -59,7 +60,7 @@ class ProductDetail extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => Get.to(() => const CheckoutScreen()),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: TColors.primary,
                         side: const BorderSide(color: TColors.primary),

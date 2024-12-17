@@ -32,14 +32,14 @@ class TTermAndConditionTextBox extends StatelessWidget {
         Text.rich(
           TextSpan(
             children: [
-              TextSpan(text:   '${TTexts.iAgreeTo } ',  style:  Theme.of(context).textTheme.bodySmall),
-              TextSpan(text:   '${TTexts.privacyPolicy } ',  style:  Theme.of(context).textTheme.bodyMedium!.apply(
+              TextSpan(text:   '${TTexts.iAgreeTo } ',  style:  Theme.of(context).textTheme.bodyMedium),
+              TextSpan(text:   ' ${TTexts.privacyPolicy } ',  style:  Theme.of(context).textTheme.bodyMedium!.apply(
                 decoration: TextDecoration.underline,
                 color: dark ? TColors.white : TColors.primary,
                 decorationColor: dark ? TColors.white : TColors.primary,
 
               )),
-              TextSpan(text:  '${ TTexts.and  } ',  style:  Theme.of(context).textTheme.bodySmall),
+              TextSpan(text:  '${ TTexts.and  } ',  style:  Theme.of(context).textTheme.bodyMedium),
               TextSpan(text:   '${TTexts.termsOfUse } ',  style:  Theme.of(context).textTheme.bodyMedium!.apply(
                 decoration: TextDecoration.underline,
                 color: dark ? TColors.white : TColors.primary,

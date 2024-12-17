@@ -19,7 +19,7 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = FavouritesController.instance;
+    final controller = Get.put(FavouritesController());
     return Scaffold(
       appBar: TAppBar(
         title: Text(
@@ -56,7 +56,7 @@ class FavouriteScreen extends StatelessWidget {
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return TAnimationLoaderWidget(
                     text: 'Thêm sản phẩm yêu thích của bạn ngay nào !!',
-                    animation: TImages.pencilAnimation,
+                    animation: TImages.emptyAnimation,
                     showAction: true,
                     actionText: 'Thêm tiếp nào !',
                     onActionPressed: () {

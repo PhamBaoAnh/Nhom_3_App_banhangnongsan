@@ -159,7 +159,7 @@ class AuthenticationRepository extends GetxController {
         default:
           errorMessage = 'User or password is incorrect.';
       }
-      Get.snackbar('Login Failed', errorMessage, backgroundColor: Colors.red);
+      Get.snackbar('Login Failed', errorMessage, colorText: TColors.white, backgroundColor: TColors.primary.withOpacity(0.8));
     } catch (e) {
       print('An unexpected error occurred: $e');
       Get.snackbar('Error', 'Something went wrong. Please try again later.',

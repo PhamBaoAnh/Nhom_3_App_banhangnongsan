@@ -35,7 +35,7 @@ class TBrandCard extends StatelessWidget {
       child: TRoundedContainer(
         showBorder: showBorder,
         backgroundColor: Colors.transparent,
-        padding: const EdgeInsets.all(TSizes.sm),
+        padding: const EdgeInsets.all(TSizes.xs ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -58,7 +58,7 @@ class TBrandCard extends StatelessWidget {
                   // Brand Title with Verified Icon
                   TBrandTitleWithVerifidedIcon(
                     title: brand.name,
-                    brandTextSize: TextSizes.large,
+                    brandTextSize: TextSizes.smallBold,
                   ),
 
                   FutureBuilder<dynamic>(

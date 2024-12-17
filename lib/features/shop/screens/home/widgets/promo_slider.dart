@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../../../../../common/widgets/animation/animation_page_route_transition.dart';
 import '../../../../../common/widgets/containers/circular_container.dart';
 import '../../../../../common/widgets/images/t_rounded_image.dart'; // Thư viện chứa TRoundedImage
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
+import '../../../../../utils/navigation_menu.dart';
 import '../../../controllers/banner_controller.dart';
+import '../../store/store.dart';
 
 class TPromoSlider extends StatelessWidget {
   const TPromoSlider({super.key});
@@ -16,19 +19,8 @@ class TPromoSlider extends StatelessWidget {
     final controller = Get.put(BannerController());
 
     return Obx(() {
-      if (controller.isLoading.value) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-
       if (controller.allBanners.isEmpty) {
-        return const Center(
-          child: Text(
-            "No banners available",
-            style: TextStyle(color: Colors.grey),
-          ),
-        );
+        return const Center(child: CircularProgressIndicator());
       }
 
       return Column(
@@ -50,6 +42,10 @@ class TPromoSlider extends StatelessWidget {
                   imageUrl: banner.imageUrl,
                   isNetworkImage: true, // Xác định ảnh tải từ mạng
                   onPressed: () {
+                    final NavigationController navigationController = Get.find<NavigationController>();
+                    navigationController.selectedIndex.value = 1;
+
+                    Get.to(() => const NavigationMenu()); // Navigate to Home page
                   },
                   borderRadius: 12, // Tùy chỉnh bán kính góc bo
                 );

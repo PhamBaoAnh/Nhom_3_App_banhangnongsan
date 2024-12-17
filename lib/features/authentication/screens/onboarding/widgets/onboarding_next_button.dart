@@ -19,11 +19,19 @@ class OnBoardingNextButton extends StatelessWidget {
     return Positioned(
       right: TSizes.defaultSpace,
       bottom: TDeviceUtils.getBottomNavigationBarHeight(),
-      child: ElevatedButton(
+      child: OutlinedButton(
         onPressed: () => OnBoardingController.instance.nextPage(),
-        style: ElevatedButton.styleFrom(shape: const CircleBorder(), backgroundColor: dark ? TColors.primary : Colors.blue),
+        style: OutlinedButton.styleFrom(
+          shape: const CircleBorder(),
+          side: const BorderSide(
+            color: TColors.primary, // Màu viền// Độ dày viền
+          ),
+          backgroundColor: TColors.primary, // Màu nền
+          foregroundColor: Colors.white,    // Màu của icon/text
+        ),
         child: const Icon(Iconsax.arrow_right_3),
       ),
+
     );
   }
 }

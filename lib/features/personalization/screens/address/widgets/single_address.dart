@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/utils/constants/colors.dart';
 import 'package:project/utils/constants/sizes.dart';
@@ -45,15 +45,6 @@ class TSingleAddress extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
           child: Stack(
             children: [
-              if (isSelected)
-                Positioned(
-                  right: 5,
-                  top: 0,
-                  child: Icon(
-                    Iconsax.tick_circle5,
-                    color: dark ? TColors.light : TColors.primary,
-                  ),
-                ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -76,10 +67,60 @@ class TSingleAddress extends StatelessWidget {
                   ),
                 ],
               ),
+              if (isSelected)
+                Positioned(
+                  right: 20,  // Adjusted position for the check icon
+                  top: 0,      // Adjusted position for the check icon
+                  child: Icon(
+                    Iconsax.tick_circle5,
+                    color: dark ? TColors.light : TColors.primary,
+                  ),
+                ),
+              Positioned(
+                right: -3, // Adjusted position for the trash icon
+                bottom: -3,  // Adjusted position for the trash icon
+                child: IconButton(
+                  icon: const Icon(
+                    Iconsax.trash,
+                    color: TColors.darkerGrey, // Replace with your color
+                  ),
+                  onPressed: () => showConfirmDeleteDialog(context, address.id),
+                  tooltip: "Delete address",
+                ),
+              ),
             ],
           ),
         ),
       );
     });
+  }
+
+  void showConfirmDeleteDialog(BuildContext context, String id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Xác nhận xóa'),
+          content: const Text('Bạn có chắc chắn muốn xóa địa chỉ này không?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Đóng dialog nếu người dùng chọn "Hủy"
+                Navigator.of(context).pop();
+              },
+              child: const Text('Hủy'),
+            ),
+            TextButton(
+              onPressed: () async {
+                // Xóa địa chỉ nếu người dùng chọn "Xóa"
+                await AddressController.instance.deleteAddress(id);
+                Navigator.of(context).pop(); // Đóng dialog sau khi xóa
+              },
+              child: const Text('Xóa'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

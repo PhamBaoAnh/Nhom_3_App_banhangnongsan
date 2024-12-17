@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:project/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:project/features/shop/screens/checkout/widgets/billing_payment_section.dart';
@@ -35,7 +36,7 @@ class CheckoutScreen extends StatelessWidget {
     final orderController = Get.put(OrderController());
 
     return Scaffold(
-      appBar: TAppBar( showBackArrow: true, title: Text('Thanh Toán', style: Theme.of(context).textTheme.headlineSmall,),),
+      appBar: TAppBarBack( showBackArrow: true, title: Text('Thanh Toán', style: Theme.of(context).textTheme.headlineSmall,),),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),

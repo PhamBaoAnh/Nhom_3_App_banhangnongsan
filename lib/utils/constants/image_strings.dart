@@ -5,8 +5,8 @@
 class TImages {
 
   // -- App Logos
-  static const String darkAppLogo = "assets/logos/t-store-splash-logo-black.png";
-  static const String lightAppLogo = "assets/logos/t-store-splash-logo-white.png";
+  static const String darkAppLogo = "assets/logos/big-logo copy.png";
+  static const String lightAppLogo = "assets/logos/big-logo copy.png";
 
   // -- Default Images
   static const String defaultImage = "assets/images/content/default_image.png";
@@ -43,6 +43,7 @@ class TImages {
   static const String acerlogo = "assets/icons/brands/acer_logo.png";
 
   // -- Animations
+  static const String wishList = "assets/images/animations/wishlist.gif";
   static const String creatingProductIllustration = "assets/images/animations/creating-product.gif";
   static const String productsIllustration = "assets/images/animations/sammy-line-workout.gif";
   static const String productsSaleIllustration = "assets/images/animations/sammy-line-sale.png";

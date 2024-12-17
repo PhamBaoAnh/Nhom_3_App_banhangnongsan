@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../features/authentication/screens/login/login.dart';
+import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/text_strings.dart';
@@ -37,9 +38,13 @@ class SuccessScreen extends StatelessWidget {
                 SizedBox(width: double.infinity,
                   child: ElevatedButton(
                       onPressed:  onPressed ,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: TColors.primary,
+                      side: const BorderSide(color: TColors.primary),
+                    ),
                       child: const Text(
                         TTexts.tContinue,
-                      )
+                      ),
                   ),
                 ),
               ],

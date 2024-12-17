@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:project/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:project/features/shop/screens/home/widgets/promo_slider.dart';
+import '../../../../common/widgets/animation/animation_page_route_transition.dart';
 import '../../../../common/widgets/containers/primary_header_container.dart';
 import '../../../../common/widgets/containers/search_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
@@ -62,11 +63,17 @@ class HomeScreen extends StatelessWidget {
                   const TPromoSlider(),
                   const SizedBox(height: TSizes.spaceBtwSections,),
 
-                  TSectionHeading(title: 'Sản phẩm bán chạy', onPressed: () => Get.to(() =>  AllProduct(title: 'Popular Products',query: FirebaseFirestore.instance
-                      .collection('Products')
-                      .where('IsFeatured', isEqualTo: true)
-                      .limit(6),futureMethod:controller.fetchAllFeaturedProducts())), textColor: TColors.dark,  ),
+                  TSectionHeading(
+                    title: 'Sản phẩm bán chạy',
+                    onPressed: () => Navigator.of(context).push(
+                      customPageRoute(
+                        AllProduct(),
+                      ),
+                    ),
+                    textColor: TColors.dark,
+                  ),
                   const SizedBox(height: TSizes.spaceBtwItems,),
+
 
                   Obx(() {
                     if (controller.featuredProducts.isEmpty) {

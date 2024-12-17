@@ -41,6 +41,7 @@ class TProductimageSlider extends StatelessWidget {
                 child: Center(child: Obx(() {
                     final image = controller.selectedProductImage.value;
                     return GestureDetector(
+                      onTap: () => controller.showEnlargedImage(image),
                       child: CachedNetworkImage(
                         imageUrl: image,
                         progressIndicatorBuilder: (_, __, downloadProgress) =>

@@ -18,7 +18,7 @@ class SignupScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(TTexts.signupTitle), // Added title to the AppBar
+        title: const Text(TTexts.signupTitle),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -26,7 +26,7 @@ class SignupScreen extends StatelessWidget {
           child: Column(
             children: [
               // Title
-              Text(TTexts.signupTitle, style: Theme.of(context).textTheme.headlineMedium),
+               /*Text(TTexts.signupTitle, style: Theme.of(context).textTheme.headlineMedium), */
               const SizedBox(height: TSizes.defaultSpace), // Add spacing below the title
 
               const TSignupForm(),

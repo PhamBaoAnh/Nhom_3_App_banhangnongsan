@@ -42,7 +42,8 @@ class LoginController extends GetxController {
           email: auth.getUserEmail,
           password: '123456789',
           phoneNo: '',
-        dateOfBirth: '',
+          dateOfBirth: '',
+          profilePicture: ''
 
       );
 
@@ -85,6 +86,7 @@ class LoginController extends GetxController {
         password: '123456789',
         phoneNo: '',
         dateOfBirth: '',
+        profilePicture: ''
       );
 
       // Check if user exists, else create a new user

@@ -95,4 +95,36 @@ class AddressRepository extends GetxController {
       throw Exception('Không thể thêm địa chỉ mới.');
     }
   }
+
+  Future<void> deleteAddress(String addressId) async {
+    try {
+      final user = await controllerUser.getUserData();
+
+      if (user == null || user.email == null) {
+        throw Exception('Người dùng chưa đăng nhập hoặc thông tin không đầy đủ.');
+      }
+
+      final userId = user.id;
+
+      if (userId.isEmpty) {
+        throw 'Người dùng chưa đăng nhập hoặc không tìm thấy ID.';
+      }
+
+      // Truy cập vào collection của người dùng và xóa địa chỉ với ID cụ thể
+      await _db
+          .collection('user')
+          .doc(userId)
+          .collection(_collectionPath)
+          .doc(addressId) // Lấy tài liệu theo ID địa chỉ
+          .delete();
+
+      print('Đã xóa địa chỉ với ID: $addressId');
+    } catch (e) {
+      print('Lỗi khi xóa địa chỉ: $e');
+      Get.snackbar('Error', 'Lỗi khi xóa địa chỉ: $e');
+      throw Exception('Không thể xóa địa chỉ.');
+    }
+  }
+
+
 }

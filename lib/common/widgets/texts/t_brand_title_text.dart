@@ -7,11 +7,10 @@ class TBrandTitleText extends StatelessWidget {
     super.key,
     this.color,
     required this.title,
-    this.maxLines = 1  ,
+    this.maxLines = 1,
     this.textAlign = TextAlign.center,
     this.brandTextSize = TextSizes.small,
   });
-
 
   final Color? color;
   final String title;
@@ -26,15 +25,18 @@ class TBrandTitleText extends StatelessWidget {
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
-
-      style: brandTextSize == TextSizes.small
-         ? Theme.of(context).textTheme.labelMedium!.apply(color: color)
+      style: brandTextSize == TextSizes.smallBold
+          ? Theme.of(context).textTheme.labelMedium!.apply(
+        color: color,
+        fontWeightDelta: 3, // Applying bold style by increasing weight
+      )
+          : brandTextSize == TextSizes.small
+          ? Theme.of(context).textTheme.labelMedium!.apply(color: color)
           : brandTextSize == TextSizes.medium
-            ? Theme.of(context).textTheme.bodyLarge!.apply(color: color)
+          ? Theme.of(context).textTheme.bodyLarge!.apply(color: color)
           : brandTextSize == TextSizes.large
-            ? Theme.of(context).textTheme.titleLarge!.apply(color: color)
-            : Theme.of(context).textTheme.bodyMedium!.apply(color: color)
-      ,
+          ? Theme.of(context).textTheme.titleLarge!.apply(color: color)
+          : Theme.of(context).textTheme.bodyMedium!.apply(color: color),
     );
   }
 }

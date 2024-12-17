@@ -14,6 +14,7 @@ import '../../../../utils/popups/loaders.dart';
 import '../../../authentication/controllers.onboarding/profile_controller.dart';
 import '../../../personalization/controllers/address_controller.dart';
 import '../../models/order_model.dart';
+import '../../screens/cart/cart.dart';
 import 'cart_controller.dart';
 import 'checkout_controller.dart';
 
@@ -65,13 +66,10 @@ class OrderController extends GetxController {
 
         // Navigate to the success screen
         Get.off(() => SuccessScreen(
-          image: TImages.orderCompletedAnimation,
+          image: TImages.tickCongratulationsConfettiAnimation,
           title: 'Thanh toán thành công',
           subtitle: 'Đơn hàng của bạn sẽ được vận chuyển sớm',
-          onPressed: () {
-              Get.back();
-            }
-
+          onPressed: () => Get.offAll(() => const NavigationMenu()),
         ));
 
       } else if (checkoutController.selectedPaymentMethod.value.name== 'VNPay') {

@@ -13,6 +13,7 @@ import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../authentication/controllers.onboarding/profile_controller.dart';
+import '../../../shop/controllers/home_controller.dart';
 import '../../../shop/screens/cart/cart.dart';
 import '../../../shop/screens/order/order.dart';
 import '../address/address.dart';
@@ -21,6 +22,7 @@ import '../profile/profile.dart';
 class SettingsScreen extends StatelessWidget {
    SettingsScreen({super.key});
   final controller = Get.put(ProfileController());
+   final controller1 = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,12 +48,12 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
                   TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Thông tin vận chuyển', onTap: () => Get.to(() => const UserAddressScreen())),
-                  TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Giỏ hàng của tôi', onTap: () => Get.to(() => const CartScreen ())),
-                  TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Đơn hàng của tôi',onTap: () => Get.to(() => const OrderScreen ())),
+                  TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Giỏ hàng của tôi ', onTap: () => Get.to(() => const CartScreen ())),
+                  TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Đơn hàng của tôi ',onTap: () => Get.to(() => const OrderScreen ())),
              /*     TSettingsMenuTitle(icon: Iconsax.bank, title: 'Bank Account', subTitle: 'Set shopping delivery address', onTap: (){},),*/
                   TSettingsMenuTitle(icon: Iconsax.discount_shape, title: 'My Coupons', subTitle: 'Ưu đãi của tôi (chưa triển khai)', onTap: (){},),
                   TSettingsMenuTitle(icon: Iconsax.notification, title: 'Notifications', subTitle: 'Thông báo', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'Account Privacy', subTitle: 'Set shopping delivery address (chưa triển khai)', onTap: (){},),
+                  /*TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'Account Privacy', subTitle: 'Set shopping delivery address (chưa triển khai)', onTap: (){},), */
 
                   const SizedBox(height: TSizes.spaceBtwSections,),
                   const TSectionHeading(title: 'App Settings', textColor: TColors.black,showActionButton: false,),
@@ -63,12 +65,21 @@ class SettingsScreen extends StatelessWidget {
                   TSettingsMenuTitle(icon: Iconsax.image, title: 'HD Image Quality', subTitle: 'Set shopping delivery address (chưa triển khai)', trailing: Switch(value:false, onChanged: (value) {})),
 
                   const SizedBox(height: TSizes.spaceBtwSections,),
-                   SizedBox(
-                     width: double.infinity,
-                     child: OutlinedButton(onPressed: () async {
-                       await controller.logOut();
-                     }, child: const Text('Đăng Xuất' )),
-                   ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: () async {
+                        await controller.logOut();
+                      },
+                      child: const Text('Đăng Xuất'),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: TColors.white,
+                        side: const BorderSide(color: TColors.primary),
+                      ),
+                    ),
+                  ),
+
+
                   const SizedBox(height: TSizes.spaceBtwSections * 2,),
 
                 ],

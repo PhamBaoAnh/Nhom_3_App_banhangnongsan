@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:project/common/widgets/appbar/appbar.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:project/utils/constants/colors.dart';
 import 'package:project/utils/constants/image_strings.dart';
@@ -29,12 +30,12 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = CartController.instance;
     return Scaffold(
-      appBar: TAppBar( showBackArrow: true, title: Text('Giỏ Hàng', style: Theme.of(context).textTheme.headlineSmall,),),
+      appBar: TAppBarBack( showBackArrow: true, title: Text('Giỏ Hàng', style: Theme.of(context).textTheme.headlineSmall,),),
       body: Obx((){
 
         final emptyWidget = TAnimationLoaderWidget(
           text: 'Whoops! Giỏ hàng của bạn đang trống !!',
-          animation: TImages.carAnimation,
+          animation: TImages.loaderAnimation ,
           showAction: true,
           actionText: 'Đặt hàng ngay nào !',
           onActionPressed: () => Get.off(()=> const NavigationMenu()),

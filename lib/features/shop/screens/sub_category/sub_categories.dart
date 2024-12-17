@@ -18,7 +18,8 @@ class SubCategoriesScreen extends StatelessWidget {
   final firestore.Query? query;  // Use firestore.Query to refer to Cloud Firestore Query
   final Future<List<ProductModel>>? futureMethod;
   final String  categoryId ;
-  const SubCategoriesScreen({super.key, required this.title, this.query, this.futureMethod, required this.categoryId});
+  final String categoryName;
+  const SubCategoriesScreen({super.key, required this.title, this.query, this.futureMethod, required this.categoryId, required this.categoryName});
   @override
   Widget build(BuildContext context) {
 
@@ -27,7 +28,7 @@ class SubCategoriesScreen extends StatelessWidget {
       appBar: TAppBar(
         showBackArrow: true,
         title: Text(
-          'Category ${categoryId}',
+          categoryName,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
@@ -38,17 +39,20 @@ class SubCategoriesScreen extends StatelessWidget {
               future: controllerProduct.getProductsByCategory(categoryId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-
                   return const Center(child: CircularProgressIndicator());
                 }
+
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+
+                if (snapshot.hasData && snapshot.data != null) {
+                  final products = snapshot.data!;
+                  return TSortableProducts(products: products);
+                } else {
                   return const Center(child: Text('No featured products available.'));
                 }
-                final products =snapshot.data!;
-                return  TSortableProducts(products: products);
+
               }
           ),
         ),

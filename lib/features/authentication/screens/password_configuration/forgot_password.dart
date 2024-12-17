@@ -8,6 +8,7 @@ import 'package:project/features/authentication/screens/password_configuration/r
 import 'package:project/repository/user_repo/user_repo.dart';
 import 'package:project/utils/constants/sizes.dart';
 
+import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/text_strings.dart';
 
 class ForgotPassword extends StatelessWidget {
@@ -49,6 +50,10 @@ class ForgotPassword extends StatelessWidget {
                        } else {
                          Get.snackbar('Error', 'Please enter a valid email');
                        }               } ,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: TColors.primary,
+                  side: const BorderSide(color: TColors.white),
+                ),
                   child: const Text(TTexts.submit),
               ),
             ),

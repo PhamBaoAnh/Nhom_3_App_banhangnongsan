@@ -16,6 +16,8 @@ import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 
 import '../../../shop/controllers/category_controller.dart';
+import '../../../shop/controllers/home_controller.dart';
+import '../../controllers/user_controller.dart';
 import 'change_profile/change_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -26,6 +28,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
+
 
     return Scaffold(
       appBar: const TAppBar(
@@ -79,24 +82,39 @@ class ProfileScreen extends StatelessWidget {
   // A helper method to build profile content
   Widget _buildProfileContent(UserModel userdata) {
     final controller = Get.put(ProfileController());
-   final categoryController = Get.put(CategoryController());
-
+    final userController = Get.put(UserController());
+    final HomeController homeController = Get.put(HomeController());
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
           child: Column(children: [
-            const TCircularImage(
-              image: TImages.user,
-              isNetworkImage: false,
-              width: 80,
-              height: 80,
-            ),
+            Obx(() {
+              final networkImage = userController.user.value.profilePicture;
+              final image = (networkImage != null && networkImage.isNotEmpty)
+                  ? networkImage
+                  : TImages.user;
+              return TCircularImage(
+                image: image,
+                isNetworkImage: networkImage != null && networkImage.isNotEmpty,
+                width: 80,
+                height: 80,
+              );
+            }),
             TextButton(
+
               onPressed: () async {
                 // Chờ phương thức uploadPicture hoàn thành
-                await categoryController.uploadPicture();
+                await userController.uploadPicture();
+
               },
+
+               /*
+              onPressed: () {
+                // Gọi hàm seedProducts khi nhấn nút
+                homeController.seedProducts();
+              },
+              */
               child: const Text("Change Profile Picture"),
             ),
 
@@ -163,25 +181,23 @@ class ProfileScreen extends StatelessWidget {
         ),
         const Divider(),
         const SizedBox(height: TSizes.spaceBtwItems),
-        Row(
-          children: [
-            TextButton(
-              onPressed: ()  {
-                controller.deleteUser(userdata);
-              },
-              child: const Text(
-                "Close Account",
-                style: TextStyle(color: Colors.red),
-              ),
+
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.all(TSizes.md),
+              backgroundColor: TColors.primary,
+              side: const BorderSide(color: TColors.primary),
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                "Edit profile",
-                style: TextStyle(color: Colors.green),
-              ),
+            onPressed: ()  {
+              controller.deleteUser(userdata);
+            },
+            child: const Text(
+              'Xóa Tài khoản',
+              style: TextStyle(fontSize: 16),
             ),
-          ],
+          ),
         ),
       ],
     );

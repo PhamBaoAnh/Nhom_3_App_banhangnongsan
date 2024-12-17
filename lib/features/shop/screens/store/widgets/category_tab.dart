@@ -28,13 +28,12 @@ class TCategoryTab extends StatelessWidget {
     return FutureBuilder<List<ProductModel>>(
       future: controller.getProductsByCategory(category.id),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data == null) {
-          return const Text('0 product');
-        } else {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
           final List<ProductModel> listAll = snapshot.data ?? [];
           final list = listAll
               .where((product) => product.brand?.name == brand.name)
@@ -83,7 +82,6 @@ class TCategoryTab extends StatelessWidget {
             ],
           );
         }
-      },
     );
   }
 }

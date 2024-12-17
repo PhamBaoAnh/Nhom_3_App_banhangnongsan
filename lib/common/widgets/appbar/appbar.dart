@@ -5,6 +5,7 @@ import 'package:project/features/personalization/screens/settings/settings.dart'
 import 'package:project/utils/device/device_utility.dart';
 import 'package:project/utils/navigation_menu.dart';
 
+import '../../../features/shop/controllers/all_product_controller.dart';
 import '../../../utils/constants/sizes.dart';
 
 class TAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -27,6 +28,7 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
+
       child: AppBar(
         automaticallyImplyLeading: false,
         leading: showBackArrow

@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:project/features/authentication/controllers.onboarding/password_reset_email.dart';
 import 'package:project/features/authentication/screens/login/login.dart';
 
+import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
@@ -47,6 +48,10 @@ class ResetPassword extends StatelessWidget {
                     onPressed: () {
                       Get.offAll(()=> const LoginScreen());
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: TColors.primary,
+                      side: const BorderSide(color: TColors.white),
+                    ),
                     child: const Text(TTexts.done),
                   ),
                 ),
@@ -57,6 +62,7 @@ class ResetPassword extends StatelessWidget {
                     onPressed: () {
                       controller.sendPasswordResetEmail();
                     },
+
                     child: const Text(TTexts.resendEmail),
                   ),
                 ),

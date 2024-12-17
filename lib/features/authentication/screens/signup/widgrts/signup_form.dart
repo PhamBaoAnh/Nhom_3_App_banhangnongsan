@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/features/authentication/controllers.onboarding/signup_controller.dart';
 import 'package:project/features/authentication/models/user_model.dart';
 import 'package:project/features/authentication/screens/signup/widgrts/term_condition_textbox.dart';
+import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 
@@ -28,7 +29,7 @@ class TSignupForm extends StatelessWidget {
                     controller: controller.firstName,
                     validator: (String? value) {
                       return (value == null || value.isEmpty)
-                          ? 'Please enter your first name.'
+                          ? 'Please enter your name.'
                           : null;
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -46,6 +47,11 @@ class TSignupForm extends StatelessWidget {
                 Expanded(
                   child: TextFormField(
                     controller: controller.lastName,
+                    validator: (String? value) {
+                      return (value == null || value.isEmpty)
+                          ? 'Please enter your name.'
+                          : null;
+                    },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
                       labelText: TTexts.lastName,
@@ -171,6 +177,7 @@ class TSignupForm extends StatelessWidget {
                           id : '',
                           gender: '',
                           dateOfBirth: '',
+                          profilePicture: '',
                           firstName: controller.firstName.text.trim(),
                           lastName: controller.lastName.text.trim(),
                           username: controller.username.text.trim(),
@@ -183,6 +190,10 @@ class TSignupForm extends StatelessWidget {
                       Get.snackbar('Warning', 'You must agree to continue.');
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: TColors.primary,
+                    side: const BorderSide(color: TColors.white),
+                  ),
                   child: const Text(
                     TTexts.createAccount,
                   )),

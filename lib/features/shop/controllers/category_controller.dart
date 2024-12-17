@@ -78,8 +78,9 @@ class CategoryController extends GetxController {
         final File imageFile = File(imagePath);
 
         // Tạo tên file duy nhất cho ảnh
-        final fileName = 'category_images/${DateTime.now().millisecondsSinceEpoch}.jpg';
+        final fileName = 'user_images/${DateTime.now().millisecondsSinceEpoch}.jpg';
 
+        // Upload ảnh lên Supabase Storage
         // Upload ảnh lên Supabase Storage
         final response = await Supabase.instance.client.storage
             .from('category_images')
@@ -90,7 +91,7 @@ class CategoryController extends GetxController {
             .from('category_images')
             .getPublicUrl(fileName);
 
-        // Tạo một đối tượng CategoryModel với thông tin ảnh đã chọn
+
         CategoryModel newCategory = CategoryModel(
           id: '8',  // ID có thể tự động tạo nếu cần
           name: 'Category 7',
@@ -98,6 +99,8 @@ class CategoryController extends GetxController {
           parentId: '1',
           isFeatured: true,
         );
+
+
 
         // Lưu dữ liệu vào Firestore hoặc Supabase (nếu cần)
         // Giả sử bạn đang sử dụng Firestore, bạn có thể lưu thông tin này vào Firestore:

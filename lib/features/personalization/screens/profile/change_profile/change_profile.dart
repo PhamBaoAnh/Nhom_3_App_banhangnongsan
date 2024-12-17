@@ -138,7 +138,7 @@ class ChangeProfileScreen extends StatelessWidget {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your phone.';
                               }
-                              final phoneRegex = RegExp(r'^\+84\d{9,10}$');
+                              final phoneRegex = RegExp(r'^\d{10,11}$');
                               if (!phoneRegex.hasMatch(value)) {
                                 return 'Phone is not valid.';
                               }

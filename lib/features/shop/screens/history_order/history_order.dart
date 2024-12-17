@@ -66,7 +66,7 @@ class THistoryOrders extends StatelessWidget {
 
               ),
 
-
+/*
               const SizedBox(height: TSizes.spaceBtwSections),
               if (orderDetail.orderStatusText == 'Đang chờ xác nhận')
                 SizedBox(
@@ -100,7 +100,7 @@ class THistoryOrders extends StatelessWidget {
                   ),
                 ),
 
-
+*/
 
             ],
           ),

@@ -12,6 +12,7 @@ import '../../../data/repositories/address_repository/address_repository.dart';
 import '../../../utils/popups/loaders.dart';
 import '../models/address_model.dart';
 import '../screens/address/add_new_address.dart';
+import '../screens/address/address.dart';
 
 
 class AddressController extends GetxController {
@@ -51,6 +52,17 @@ class AddressController extends GetxController {
       Get.snackbar('Error', 'Error occurred: $e');
     }
   }
+  Future<void> deleteAddress(String id) async {
+    try {
+
+      await addressRepository.deleteAddress(id);
+      TLoaders.customToast(message: 'Xóa địa chỉ thành công');
+      refreshData.toggle();
+
+    } catch (e) {
+      Get.snackbar('Error', 'Error occurred: $e');
+    }
+  }
 
   Future<void> addNewAddress() async {
     try {
@@ -71,15 +83,12 @@ class AddressController extends GetxController {
 
       await selectAddress(address);
 
-      TLoaders.successSnackBar(
-        title: 'Thành công',
-        message: 'Địa chỉ đã được lưu thành công!',
-      );
+      TLoaders.customToast(message: 'Thêm địa chỉ thành công');
 
       refreshData.toggle();
       resetFormFields();
+      Get.off(() => const UserAddressScreen());
 
-      Get.back(); // Thay vì Navigator.of(Get.context!).pop()
     } catch (e) {
       Get.snackbar('Error', 'Error occurred: $e');
     }

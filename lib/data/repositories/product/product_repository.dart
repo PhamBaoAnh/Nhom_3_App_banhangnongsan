@@ -38,6 +38,97 @@ class ProductRepository extends GetxController {
       return 0; // Trả về 0 nếu có lỗi
     }
   }
+
+
+  Future<List<ProductModel>> getProductByName(String name) async {
+    try {
+      List<ProductModel> products = [];
+
+      // Nếu tên sản phẩm không rỗng, tìm kiếm theo tên sản phẩm
+      if (name.isNotEmpty) {
+        final snapshot = await _firestore
+            .collection(_collectionPath)
+            .orderBy('Title')
+            .startAt([name])
+            .endAt([name + '\uf8ff'])
+            .get();
+
+        products.addAll(snapshot.docs
+            .map((doc) => ProductModel.fromSnapshot(doc))
+            .toList());
+      }
+
+      // Nếu không tìm thấy sản phẩm theo tên (danh sách rỗng), tìm kiếm theo nhãn hiệu
+      if (products.isEmpty && name.isNotEmpty) {
+        final snapshot1 = await _firestore
+            .collection(_collectionPath)
+            .where('Brand.Name', isGreaterThanOrEqualTo: name)
+            .where('Brand.Name', isLessThanOrEqualTo: name + '\uf8ff')
+            .get();
+
+        products.addAll(snapshot1.docs
+            .map((doc) => ProductModel.fromSnapshot(doc))
+            .toList());
+      }
+
+      return products;
+    } catch (e) {
+      print('Error fetching products: $e');
+      Get.snackbar('Error', 'Error fetching products: $e');
+      return [];
+    }
+  }
+
+  Future<List<ProductModel>> getRandomProduct() async {
+    try {
+      final snapshot = await _firestore.collection(_collectionPath).get();
+
+      // Convert Firestore data into a list of ProductModel objects
+      List<ProductModel> products = snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+
+      // Check if there are fewer than 3 products and return all if true
+      if (products.length < 3) {
+        return products;
+      }
+
+
+      Set<String> seenNames = {};
+      List<ProductModel> uniqueProducts = [];
+
+      for (var product in products) {
+        if (!seenNames.contains(product.title)) {
+          seenNames.add(product.title);
+          uniqueProducts.add(product);
+        }
+      }
+
+
+      return uniqueProducts.take(3).toList();
+    } catch (e) {
+      Get.snackbar('Error', 'Error fetching products: $e');
+      return [];
+    }
+  }
+  Future<List<BrandModel>> getRandomBrand() async {
+    try {
+      final snapshot = await _firestore.collection('Brands').get();
+
+      // Convert Firestore documents into a list of BrandModel objects
+      List<BrandModel> brands = snapshot.docs.map((doc) {
+        return BrandModel.fromJson(doc.data());
+      }).toList();
+
+      return brands.take(2).toList(); // Return 3 random brands
+    } catch (e) {
+      Get.snackbar('Error', 'Error fetching brands: $e');
+      return [];
+    }
+  }
+
+
+
+
+
   Future<List<ProductModel>> getProductByCategoryAndBrand(
       String categoryId, String brandName) async {
     try {
@@ -89,6 +180,29 @@ class ProductRepository extends GetxController {
       Get.snackbar('Error', 'Error fetching products: $e');
       return [];
     }}
+
+  Future<List<ProductModel>> getAllProducts() async { // laay taat ca san pham
+    try {
+      // Lấy dữ liệu từ Firestore
+      final snapshot = await FirebaseFirestore.instance
+          .collection('Products')
+          .where('IsFeatured', isEqualTo: true) // Lọc theo IsFeatured
+          .limit(8)
+          .get();
+
+      // Map từng document trong snapshot sang ProductModel
+      final list = snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+      return list;
+
+    } catch (e) {
+      // Hiển thị thông báo lỗi
+      Get.snackbar('Error', 'Error fetching products: $e');
+      return [];
+    }
+  }
+
+
+
   Future<List<ProductModel>> fetchAllProductsQuery(Query query) async {
     try {
       final querySnapshot = await query.get();
@@ -132,28 +246,36 @@ class ProductRepository extends GetxController {
       return []; // Return an empty list on error
     }
   }
-  Future<List<ProductModel>> getProductsByBrand(Query query,String brandName) async {
+  Future<List<ProductModel>> getProductsByBrand(String brandName) async {
     try {
-      // Fetching products from Firestore where the 'Brand.Name' field matches the given brand name
+      // Kiểm tra nếu brandName rỗng
+      if (brandName.isEmpty) {
+        throw ArgumentError("Brand name cannot be empty");
+      }
+
+      // Truy vấn Firestore để lấy sản phẩm với thương hiệu tương ứng
       final snapshot = await _firestore
           .collection(_collectionPath)
           .where('Brand.Name', isEqualTo: brandName)
           .get();
 
+      // Kiểm tra nếu không có sản phẩm nào được tìm thấy
       if (snapshot.docs.isEmpty) {
         return [];
       }
 
-      // Mapping the documents to ProductModel objects
-      final list = snapshot.docs
+      // Chuyển đổi các tài liệu Firestore thành danh sách ProductModel
+      final products = snapshot.docs
           .map((doc) => ProductModel.fromSnapshot(doc))
           .toList();
 
-      return list;
-    } catch (e) {
-      return []; // Return an empty list on error
+      return products;
+    } catch (e, stacktrace) {
+
+      return []; // Trả về danh sách rỗng trong trường hợp lỗi
     }
   }
+
 
 
 

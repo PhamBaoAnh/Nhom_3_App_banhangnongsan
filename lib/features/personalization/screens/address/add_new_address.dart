@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:project/common/widgets/appbar/appbar.dart';
 import 'package:project/utils/validators/validation.dart';
 
+import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../controllers/address_controller.dart';
 
@@ -58,12 +59,13 @@ class AddNewAddressScreen extends StatelessWidget {
                   ),
                   textInputAction: TextInputAction.done,
                 ),
-                const SizedBox(height: TSizes.spaceBtwInputFields),
+                const SizedBox(height: TSizes.spaceBtwSections),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: TColors.primary,
+                      side: const BorderSide(color: TColors.primary),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {

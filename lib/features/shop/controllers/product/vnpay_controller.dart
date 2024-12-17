@@ -10,13 +10,13 @@ Future<String> onPayment(double totalAmount) async {
     final paymentUrl = VNPAYFlutter.instance.generatePaymentUrl(
       url: 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html', // vnpay url
       version: '2.0.1',
-      tmnCode: 'W6YEW49O', // vnpay tmn code, get from vnpay
+      tmnCode: '5WW3CDXU', // vnpay tmn code, get from vnpay
       txnRef: DateTime.now().millisecondsSinceEpoch.toString(),
       orderInfo: 'Thanh toán đơn hàng', // order info
       amount: totalAmount,
       returnUrl: 'xxxxxx', // Return URL
       ipAdress: '192.168.10.10',
-      vnpayHashKey: 'WSBCHHFZBEGYEQNOQHVKLNCGZVHQTHMU', // vnpay hash key
+      vnpayHashKey: 'E3H6Q3TSUPDWB3ADVZN967OLS0QVB5MS', // vnpay hash key
       vnPayHashType: VNPayHashType.HMACSHA512, // hash type
       vnpayExpireDate: DateTime.now().add(const Duration(hours: 1)),
     );

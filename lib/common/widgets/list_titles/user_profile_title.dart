@@ -6,6 +6,7 @@ import 'package:project/repository/auth_repo/AuthenticationRepository.dart';
 
 import '../../../features/authentication/models/user_model.dart';
 import '../../../features/authentication/screens/login/login.dart';
+import '../../../features/personalization/controllers/user_controller.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
 import '../images/t_circular_image.dart';
@@ -18,7 +19,7 @@ class TUserProfileTitle extends StatelessWidget {
 
   final VoidCallback onPressed;
   final controller = Get.put(ProfileController());
-
+  final userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserModel?>(
@@ -38,13 +39,18 @@ class TUserProfileTitle extends StatelessWidget {
             UserModel userdata = snapshot.data!;
 
             return ListTile(
-              leading: const TCircularImage(
-                image: TImages.user,
-                isNetworkImage: false,
-                width: 50,
-                height: 50,
-                padding: 0, // Áp dụng màu phủ
-              ),
+              leading: Obx(() {
+                final networkImage = userController.user.value.profilePicture;
+                final image = (networkImage != null && networkImage.isNotEmpty)
+                    ? networkImage
+                    : TImages.user;
+                return TCircularImage(
+                  image: image,
+                  isNetworkImage: networkImage != null && networkImage.isNotEmpty,
+                  width: 50,
+                  height: 50,
+                );
+              }),
               title: Text(AuthenticationRepository.instance.firebaseUser?.displayName ?? '${userdata.firstName} ${userdata.lastName}',
                   style: Theme.of(context)
                       .textTheme
