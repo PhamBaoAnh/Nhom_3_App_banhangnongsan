@@ -31,10 +31,14 @@ class TProductCardVertical extends StatelessWidget {
     final salePercentage = controller.calculatorSalePercentage(product.price, product.salePrice);
 
     return GestureDetector(
-      onTap: () => Get.to(() => ProductDetail(product: product)),
+      onTap: () => Get.to(
+            () => ProductDetail(product: product),
+        transition: Transition.leftToRightWithFade,
+        duration: const Duration(milliseconds: 600),
+      ),
       child: Container(
         width: 170,
-        height: 300, // Đặt chiều cao cụ thể cho Container
+        height: 300,
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
           boxShadow: [TShadowStyle.verticalProductShadow],
@@ -44,7 +48,7 @@ class TProductCardVertical extends StatelessWidget {
         child: Column(
           children: [
             TRoundedContainer(
-              height: 180, // Đặt chiều cao cụ thể cho TRoundedContainer
+              height: 180,
               padding: const EdgeInsets.all(TSizes.sm),
               backgroundColor: dark ? TColors.dark : TColors.light,
               child: Stack(

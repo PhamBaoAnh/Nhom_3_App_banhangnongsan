@@ -34,7 +34,11 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               children: [
                  TAppBar(title: Text('Account', style: Theme.of(context).textTheme.headlineMedium!.apply(color: TColors.white),),),
-                  TUserProfileTitle(onPressed: () => Get.to(() => const ProfileScreen())),
+                  TUserProfileTitle(onPressed: () => Get.to(
+                        () => const ProfileScreen(),
+                    transition: Transition.leftToRight,
+                    duration: const Duration(milliseconds: 600),
+                  ),),
                   const SizedBox(height: TSizes.spaceBtwSections,),
               ],
             ),
@@ -47,22 +51,23 @@ class SettingsScreen extends StatelessWidget {
                   const TSectionHeading(title: 'Account Settings', textColor: TColors.black,showActionButton: false,),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
-                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Thông tin vận chuyển', onTap: () => Get.to(() => const UserAddressScreen())),
-                  TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Giỏ hàng của tôi ', onTap: () => Get.to(() => const CartScreen ())),
-                  TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Đơn hàng của tôi ',onTap: () => Get.to(() => const OrderScreen ())),
+                  TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'My Address', subTitle: 'Thông tin vận chuyển', onTap: () => Get.to(() => const UserAddressScreen(), transition: Transition.fadeIn, duration: const Duration(milliseconds: 300), )),
+
+                    TSettingsMenuTitle(icon: Iconsax.shopping_cart, title: 'My Cart', subTitle: 'Giỏ hàng của tôi ', onTap: () => Get.to(() => const CartScreen (), transition: Transition.fadeIn, duration: const Duration(milliseconds: 300), )),
+                    TSettingsMenuTitle(icon: Iconsax.bag_tick, title: 'My Orders', subTitle: 'Đơn hàng của tôi ',onTap: () => Get.to(() => const OrderScreen (), transition: Transition.fadeIn, duration: const Duration(milliseconds: 300), )),
              /*     TSettingsMenuTitle(icon: Iconsax.bank, title: 'Bank Account', subTitle: 'Set shopping delivery address', onTap: (){},),*/
-                  TSettingsMenuTitle(icon: Iconsax.discount_shape, title: 'My Coupons', subTitle: 'Ưu đãi của tôi (chưa triển khai)', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.notification, title: 'Notifications', subTitle: 'Thông báo', onTap: (){},),
+                    TSettingsMenuTitle(icon: Iconsax.discount_shape, title: 'My Coupons', subTitle: 'Ưu đãi của tôi', onTap: (){},),
+          /*        TSettingsMenuTitle(icon: Iconsax.notification, title: 'Notifications', subTitle: 'Thông báo', onTap: (){},), */
                   /*TSettingsMenuTitle(icon: Iconsax.safe_home, title: 'Account Privacy', subTitle: 'Set shopping delivery address (chưa triển khai)', onTap: (){},), */
 
                   const SizedBox(height: TSizes.spaceBtwSections,),
                   const TSectionHeading(title: 'App Settings', textColor: TColors.black,showActionButton: false,),
                   const SizedBox(height: TSizes.spaceBtwItems,),
 
-                  TSettingsMenuTitle(icon: Iconsax.document_cloud, title: 'Load data', subTitle: 'Set shopping delivery address (chưa triển khai)', onTap: (){},),
-                  TSettingsMenuTitle(icon: Iconsax.location, title: 'Geolocations', subTitle: 'Set shopping delivery address (chưa triển khai)', trailing: Switch(value:true, onChanged: (value) {})),
-                  TSettingsMenuTitle(icon: Iconsax.security_user, title: 'Safe Mode', subTitle: 'Set shopping delivery address (chưa triển khai)', trailing: Switch(value:false, onChanged: (value) {})),
-                  TSettingsMenuTitle(icon: Iconsax.image, title: 'HD Image Quality', subTitle: 'Set shopping delivery address (chưa triển khai)', trailing: Switch(value:false, onChanged: (value) {})),
+                  TSettingsMenuTitle(icon: Iconsax.document_cloud, title: 'Load data', subTitle: 'Set shopping delivery address ', onTap: (){},),
+                  TSettingsMenuTitle(icon: Iconsax.location, title: 'Geolocations', subTitle: 'Set shopping delivery address ', trailing: Switch(value:true, onChanged: (value) {})),
+                  TSettingsMenuTitle(icon: Iconsax.security_user, title: 'Safe Mode', subTitle: 'Set shopping delivery address', trailing: Switch(value:false, onChanged: (value) {})),
+                  TSettingsMenuTitle(icon: Iconsax.image, title: 'HD Image Quality', subTitle: 'Set shopping delivery address ', trailing: Switch(value:false, onChanged: (value) {})),
 
                   const SizedBox(height: TSizes.spaceBtwSections,),
                   SizedBox(
@@ -71,11 +76,11 @@ class SettingsScreen extends StatelessWidget {
                       onPressed: () async {
                         await controller.logOut();
                       },
-                      child: const Text('Đăng Xuất'),
                       style: OutlinedButton.styleFrom(
                         backgroundColor: TColors.white,
                         side: const BorderSide(color: TColors.primary),
                       ),
+                      child: const Text('Đăng Xuất'),
                     ),
                   ),
 

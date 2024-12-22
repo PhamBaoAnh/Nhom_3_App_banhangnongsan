@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/authentication/controllers.onboarding/profile_controller.dart';
 import 'package:project/features/authentication/models/user_model.dart';
 import 'package:project/features/authentication/screens/login/login.dart';
@@ -136,12 +137,19 @@ class ProfileScreen extends StatelessWidget {
           value: '${userdata.firstName ?? ''} ${userdata.lastName ?? ''}'.trim().isNotEmpty
               ? '${userdata.firstName} ${userdata.lastName}'
               :  'Chưa cập nhập',
-          onPressed: () => Get.to(() =>    const ChangeProfileScreen( field: 'hoten',)),
+          onPressed: () => Get.to(
+                () => const ChangeProfileScreen(field: 'hoten'),
+            transition: Transition.leftToRight, // Hiệu ứng trượt từ phải sang trái
+            duration: const Duration(milliseconds: 600), // Thời gian chuyển đổi
+          ),
+
         ),
         TProfileMenu(
           title: 'Username',
           value: userdata.username.isNotEmpty? userdata.username: 'Chưa cập nhập',
-          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'username',)),
+          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'username',),
+            transition: Transition.leftToRight, // Hiệu ứng trượt từ phải sang trái
+            duration: const Duration(milliseconds: 600),),
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
         const Divider(),
@@ -166,18 +174,24 @@ class ProfileScreen extends StatelessWidget {
         TProfileMenu(
           title: 'Phone Number',
           value: userdata.phoneNo.isNotEmpty? userdata.phoneNo: 'Chưa cập nhập',
-          onPressed: ()=> Get.to(() =>   const  ChangeProfileScreen( field: 'phoneNo')),
+          onPressed: ()=> Get.to(() =>   const  ChangeProfileScreen( field: 'phoneNo'),
+            transition: Transition.leftToRight, // Hiệu ứng trượt từ phải sang trái
+            duration: const Duration(milliseconds: 600),),
         ),
         TProfileMenu(
           title: 'Gender',
           value:userdata.gender.isNotEmpty ? userdata.gender:'Chưa cập nhập'
 ,
-          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'gender')),
+          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'gender'),
+            transition: Transition.leftToRight, // Hiệu ứng trượt từ phải sang trái
+            duration: const Duration(milliseconds: 600),),
         ),
         TProfileMenu(
           title: 'Date of Birth',
           value: userdata.dateOfBirth.isNotEmpty? userdata.dateOfBirth:'Chưa cập nhập',
-          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'dateOfBirth')),
+          onPressed: () => Get.to(() =>   const  ChangeProfileScreen( field: 'dateOfBirth'),
+            transition: Transition.leftToRight, // Hiệu ứng trượt từ phải sang trái
+            duration: const Duration(milliseconds: 600),),
         ),
         const Divider(),
         const SizedBox(height: TSizes.spaceBtwItems),

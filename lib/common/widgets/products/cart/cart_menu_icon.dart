@@ -22,7 +22,14 @@ class TCartCounterIcon extends StatelessWidget {
 
     return Stack(
       children: [
-        IconButton(onPressed: () => Get.to(() => const CartScreen()), icon:  Icon(Iconsax.shopping_bag, color: iconColor,)),
+        IconButton(
+            onPressed: () => Get.to(
+                  () => const CartScreen(),
+              transition: Transition.downToUp,
+              duration: const Duration(milliseconds: 600),
+            ),
+            icon:  Icon(Iconsax.shopping_bag, color: iconColor,)
+        ),
         Positioned(
           right: 0,
           child: Container(

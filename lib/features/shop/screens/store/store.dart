@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:project/common/widgets/appbar/appbar.dart';
 import 'package:project/common/widgets/icons/t_circular_icon.dart';
@@ -25,11 +26,14 @@ import '../../../../utils/helpers/helper_functions.dart';
 import '../../controllers/category_controller.dart';
 import '../brand/all_brands.dart';
 
+import 'package:flutter/services.dart';
+
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     final controller = Get.put(ProductController());
     final categories = CategoryController.instance.allCategories;
     final brandController = Get.put(BrandController());
@@ -91,7 +95,12 @@ class StoreScreen extends StatelessWidget {
                           TSectionHeading(
                             title: 'Quốc Gia',
                             showActionButton: true,
-                            onPressed: () => Get.to(() => const AllBrandScreen()),
+                            onPressed: () => Get.to(
+                                  () => const AllBrandScreen(),
+                              transition: Transition.leftToRightWithFade,
+                              duration: const Duration(milliseconds: 600),
+                            ),
+
                             textColor: TColors.black,
                           ),
                           const SizedBox(height: TSizes.spaceBtwItems / 1.5),
@@ -104,7 +113,10 @@ class StoreScreen extends StatelessWidget {
                                 showBorder: true,
                                 onTap: () => Get.to(
                                       () => BrandProducts(brand: brands[index]),
+                                  transition: Transition.circularReveal,
+                                  duration: const Duration(milliseconds: 300),
                                 ),
+
                               );
                             },
                           ),
@@ -136,3 +148,4 @@ class StoreScreen extends StatelessWidget {
     );
   }
 }
+

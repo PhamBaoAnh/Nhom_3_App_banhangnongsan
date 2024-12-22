@@ -14,7 +14,7 @@
     <application
         android:label="BioLife"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher1">
+        android:icon="@mipmap/ic_launcher">
 
         <!-- Cấu hình Facebook SDK -->
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>

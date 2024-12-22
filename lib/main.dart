@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:project/app.dart';
@@ -17,12 +19,17 @@ Future<void> main() async {
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrYnZpanVhZWR3amh5bWVxZmh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzA3NDAsImV4cCI6MjA0NjgwNjc0MH0.D6GoadsDebtk7C-wFF_DrRPTNUAk7yM-6IjXvuunipc',
   );
 
-
   WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value)=> Get.put(AuthenticationRepository()));
 
   runApp(const App());
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Màu nền của status bar
+      statusBarIconBrightness: Brightness.dark, // Màu icon (dark/light)
+    ),
+  );
 }
 
 

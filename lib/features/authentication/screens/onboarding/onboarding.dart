@@ -25,7 +25,6 @@ class OnBoardingScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-
           PageView(
              controller: controller.pageController,
              onPageChanged: controller.updatePageIndicator,

@@ -58,15 +58,19 @@ class TCategoryTab extends StatelessWidget {
                     TSectionHeading(
                       title: 'Quốc Gia',
                       showActionButton: true,
-                      onPressed: () => Get.to(() => AllProductBrands(
-                            title: 'Popular Products',
-                            query: FirebaseFirestore.instance
-                                .collection('Products')
-                                .where('IsFeatured', isEqualTo: true)
-                                .where('CategoryId', isEqualTo: category.parentId)
-                                .limit(6),
-                            futureMethod: controller.fetchAllFeaturedProducts(),
-                          )),
+                      onPressed: () => Get.to(
+                            () => AllProductBrands(
+                          title: 'Popular Products',
+                          query: FirebaseFirestore.instance
+                              .collection('Products')
+                              .where('IsFeatured', isEqualTo: true)
+                              .where('CategoryId', isEqualTo: category.parentId)
+                              .limit(6),
+                          futureMethod: controller.fetchAllFeaturedProducts(),
+                        ),
+                        transition: Transition.circularReveal,
+                        duration: const Duration(milliseconds: 300),
+                      ),
                       textColor: TColors.black,
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),

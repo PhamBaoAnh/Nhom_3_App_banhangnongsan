@@ -67,9 +67,14 @@ class AllBrandScreen extends StatelessWidget {
                     itemBuilder: (context, index) => TBrandCard(
                       brand: brands[index],
                       showBorder: true,
-                      onTap: () => Get.to(() => BrandProducts(
-                        brand: brands[index],
-                      )),
+                      onTap: () => Get.to(
+                            () => BrandProducts(brand: brands[index]),
+                        transition: Transition.leftToRight,
+                        duration: const Duration(milliseconds: 300),
+
+
+                      ),
+
                     ),
                   ),
                 ],

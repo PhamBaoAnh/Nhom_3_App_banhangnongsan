@@ -35,7 +35,7 @@ class TSearchContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context); // Checks for dark mode
           return GestureDetector(
-              onTap: () => Get.to(() => const SearchScreen()),
+            onTap: () => Get.to(() => const SearchScreen(), transition: Transition.fadeIn),
             // Use GetX for navigation
             child: Padding(
               padding: padding,
@@ -52,7 +52,12 @@ class TSearchContainer extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () => Get.to(() => const SearchScreen() ),
+                      onPressed: () => Get.to(
+                            () => const SearchScreen(),
+                        transition: Transition.fadeIn,
+                        duration: const Duration(milliseconds: 300),
+                      ),
+
                       icon: const Icon(Icons.search_rounded),
                     ),
                     Expanded(

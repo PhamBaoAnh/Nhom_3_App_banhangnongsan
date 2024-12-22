@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import '../../../features/shop/controllers/all_product_controller.dart';
 import '../../../features/shop/models/brand_model.dart';
 import '../../../features/shop/models/product_model.dart';
@@ -31,7 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TAppBar(
+      appBar: TAppBarBack(
         title: Text(
           'Tìm kiếm',
           style: Theme.of(context).textTheme.headlineSmall,
@@ -65,19 +66,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             setState(() {});
                           },
                           onEditingComplete: () {
-                            // Add to previous searches
                             previousSearches.add(searchController.text);
-
-                            // Navigate to search product screen and pass the search query
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TSearchProduct(
-                                  searchQuery: searchController.text,
-                                ),
-                              ),
+                            Get.to(
+                                  () => TSearchProduct(searchQuery: searchController.text),
+                              transition: Transition.fadeIn, 
+                              duration: const Duration(milliseconds: 300),
                             );
                           },
+
                         ),
                       ),
                     ],
@@ -109,26 +105,27 @@ class _SearchScreenState extends State<SearchScreen> {
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           const SizedBox(height: 24),
-                          // Wrap the Row with SingleChildScrollView for horizontal scrolling
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
-                                // FutureBuilder to display random products
                                 FutureBuilder<List<ProductModel>>(
                                   future: controller.randomProducts(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Text("Error: ${snapshot.error}");
-                                    } else if (snapshot.hasData) {
+                                      return Text(
+                                          "Error: ${snapshot.error}");
+                                    } else if (snapshot.hasData &&
+                                        snapshot.data!.isNotEmpty) {
                                       final randomProducts = snapshot.data!;
                                       return Row(
                                         children: randomProducts.map((product) {
-                                          return _searchSuggestionsItem(product.title);
+                                          return _searchSuggestionsItem(
+                                              product.title);
                                         }).toList(),
                                       );
                                     } else {
-                                      return Text("No products found.");
+                                      return const SizedBox.shrink();
                                     }
                                   },
                                 ),
@@ -142,16 +139,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                 future: controller.randomBrands(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasError) {
-                                    return Text("Error: ${snapshot.error}");
-                                  } else if (snapshot.hasData) {
+                                    return Text(
+                                        "Error: ${snapshot.error}");
+                                  } else if (snapshot.hasData &&
+                                      snapshot.data!.isNotEmpty) {
                                     final randomBrands = snapshot.data!;
                                     return Row(
-                                      children:  randomBrands.map((brand) {
-                                        return _searchSuggestionsItem(brand.name);
+                                      children: randomBrands.map((brand) {
+                                        return _searchSuggestionsItem(
+                                            brand.name);
                                       }).toList(),
                                     );
                                   } else {
-                                    return Text("No products found.");
+                                    return const SizedBox.shrink();
                                   }
                                 },
                               ),
@@ -175,16 +175,13 @@ class _SearchScreenState extends State<SearchScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
         onTap: () {
-          // Navigate to the search product screen and pass the previous search query
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TSearchProduct(
-                searchQuery: previousSearches[index],
-              ),
-            ),
+          Get.to(
+                () => TSearchProduct(searchQuery: previousSearches[index]),
+            transition: Transition.rightToLeft,
+            duration: const Duration(milliseconds: 300),
           );
         },
+
         child: Dismissible(
           key: UniqueKey(),
           onDismissed: (DismissDirection dir) {
@@ -238,16 +235,13 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       child: InkWell(
         onTap: () {
-          // Navigate to the search product screen and pass the text as the query
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TSearchProduct(
-                searchQuery: text,
-              ),
-            ),
+          Get.to(
+                () => TSearchProduct(searchQuery: text),
+            transition: Transition.fadeIn, // Hiệu ứng fade
+            duration: const Duration(milliseconds: 300), // Thời gian chuyển
           );
         },
+
         child: Text(
           text,
           style: Theme.of(context).textTheme.labelSmall!.copyWith(

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/authentication/controllers.onboarding/profile_controller.dart';
 import 'package:project/features/authentication/controllers.onboarding/signup_controller.dart';
 import 'package:project/features/authentication/models/user_model.dart';
@@ -26,7 +27,7 @@ class ChangeProfileScreen extends StatelessWidget {
     final controller = Get.put(ProfileController());
     final formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: const TAppBar(
+      appBar: const TAppBarBack(
         showBackArrow: true,
         title: Text('Thay đổi thông tin'),
       ),
