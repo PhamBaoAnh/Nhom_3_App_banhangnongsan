@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:project/features/shop/screens/home/widgets/home_categories.dart';
+import 'package:project/common/widgets/chatbot/messenger.dart';
 import 'package:project/features/shop/screens/home/widgets/promo_slider.dart';
 import '../../../../common/widgets/animation/animation_page_route_transition.dart';
 import '../../../../common/widgets/containers/primary_header_container.dart';
@@ -24,78 +25,94 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProductController());
-    return  Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const TPrimaryHeaderContainer(
-              child: Column(
-                children: [
-                  THomeAppBar(),
-                  SizedBox(height: TSizes.spaceBtwSections,),
 
-                  TSearchContainer(text: 'Tìm kiếm'),
-                  SizedBox(height: TSizes.spaceBtwSections,),
+    return Stack(
+      children: [
+        Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TPrimaryHeaderContainer(
+                  child: Column(
+                    children: [
+                      THomeAppBar(),
+                      SizedBox(height: TSizes.spaceBtwSections,),
 
+                      TSearchContainer(text: 'Tìm kiếm'),
+                      SizedBox(height: TSizes.spaceBtwSections,),
 
-                  Padding(
-                    padding: EdgeInsets.only(left: TSizes.defaultSpace),
-                    child: Column(
-                      children: [
-                         TSectionHeading(title: 'Danh mục phổ biến', textColor: TColors.white,showActionButton: false,),
-                         SizedBox(height: TSizes.spaceBtwItems,),
-                         THomeCategories(),
-                         SizedBox(height: TSizes.spaceBtwSections,),
-                      ],
-                    ),
-
-                  ),
-                ],
-              ),
-            ),
-            //
-            Padding(
-              padding: const EdgeInsets.all(TSizes.defaultSpace),
-              child: Column(
-                children: [
-                  const TPromoSlider(),
-                  const SizedBox(height: TSizes.spaceBtwSections,),
-
-                  TSectionHeading(
-                    title: 'Sản phẩm bán chạy',
-                    onPressed: () => Navigator.of(context).push(
-                      customPageRoute(
-                        AllProduct(),
+                      Padding(
+                        padding: EdgeInsets.only(left: TSizes.defaultSpace),
+                        child: Column(
+                          children: [
+                            TSectionHeading(
+                              title: 'Danh mục phổ biến',
+                              textColor: TColors.white,
+                              showActionButton: false,
+                            ),
+                            SizedBox(height: TSizes.spaceBtwItems,),
+                            THomeCategories(),
+                            SizedBox(height: TSizes.spaceBtwSections,),
+                          ],
+                        ),
                       ),
-                    ),
-                    textColor: TColors.dark,
+                    ],
                   ),
-                  const SizedBox(height: TSizes.spaceBtwItems,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(TSizes.defaultSpace),
+                  child: Column(
+                    children: [
+                      const TPromoSlider(),
+                      const SizedBox(height: TSizes.spaceBtwSections,),
 
+                      TSectionHeading(
+                        title: 'Sản phẩm bán chạy',
+                        onPressed: () => Navigator.of(context).push(
+                          customPageRoute(
+                            AllProduct(),
+                          ),
+                        ),
+                        textColor: TColors.dark,
+                      ),
+                      const SizedBox(height: TSizes.spaceBtwItems,),
 
-                  Obx(() {
-                    if (controller.featuredProducts.isEmpty) {
-                      return const Center(child: Text("Không có sản phẩm nào", style: TextStyle(color: TColors.primary)));
-                    }
-                    return TGridLayout(
-                      itemCount: 4,
-                      itemBuilder: (_, index) {
-
-                        return TProductCardVertical(product: controller.featuredProducts[index],);
-                      },
-                    );
-                  })
-
-                ],
-              ),
-            )
-
-          ],
+                      Obx(() {
+                        if (controller.featuredProducts.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              "Không có sản phẩm nào",
+                              style: TextStyle(color: TColors.primary),
+                            ),
+                          );
+                        }
+                        return TGridLayout(
+                          itemCount: 4,
+                          itemBuilder: (_, index) {
+                            return TProductCardVertical(
+                              product: controller.featuredProducts[index],
+                            );
+                          },
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
+        // Biểu tượng Messenger
+        const Positioned(
+          bottom: 40, // Cách đáy 20px
+          right: 20, // Cách phải 20px
+          child: MessengerIcon(),
+        ),
+      ],
     );
   }
 }
+
 
 
 

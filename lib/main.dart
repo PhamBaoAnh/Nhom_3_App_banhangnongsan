@@ -24,12 +24,6 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value)=> Get.put(AuthenticationRepository()));
 
   runApp(const App());
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // Màu nền của status bar
-      statusBarIconBrightness: Brightness.dark, // Màu icon (dark/light)
-    ),
-  );
 }
 
 
