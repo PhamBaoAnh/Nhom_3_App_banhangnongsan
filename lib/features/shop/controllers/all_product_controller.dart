@@ -7,7 +7,7 @@ import '../models/brand_model.dart';
 
 class AllProductController extends GetxController{
   static AllProductController get instance => Get.find();
-  final repo =Get.put(ProductRepository());
+   ProductRepository repo =Get.put(ProductRepository());
 
   final RxString selectSort ='Name'.obs;
   final RxList <ProductModel> products= <ProductModel>[].obs;
@@ -107,6 +107,21 @@ class AllProductController extends GetxController{
     try {
       // Lấy danh sách sản phẩm từ repo
       final listProducts = await repo.getProductByName(searchQuery);
+
+      // Cập nhật danh sách products
+      products.assignAll(listProducts);
+
+      print('Số lượng sản phẩm sau khi lọc: ${listProducts.length}');
+    } catch (e) {
+      // Thông báo lỗi
+      print('Error: $e');
+      Get.snackbar("Error", "Không thể lọc sản phẩm");
+    }
+  }
+  Future<void> filterProductsSaleMax() async {
+    try {
+      // Lấy danh sách sản phẩm từ repo
+      final listProducts = await repo.getRandomProductMaxSale();
 
       // Cập nhật danh sách products
       products.assignAll(listProducts);

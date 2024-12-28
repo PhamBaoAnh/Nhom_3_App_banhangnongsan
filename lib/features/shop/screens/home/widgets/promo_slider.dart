@@ -41,12 +41,17 @@ class TPromoSlider extends StatelessWidget {
                 return TRoundedImage(
                   imageUrl: banner.imageUrl,
                   isNetworkImage: true, // Xác định ảnh tải từ mạng
-                  onPressed: () {
+                  onPressed: () async {
                     final NavigationController navigationController = Get.find<NavigationController>();
+
+                    // Đảm bảo cập nhật giá trị được thực hiện trước khi chuyển trang
                     navigationController.selectedIndex.value = 1;
 
-                    Get.to(() => const NavigationMenu()); // Navigate to Home page
+                    // Thực hiện chuyển trang với transition mượt mà
+                    await Future.delayed(const Duration(milliseconds: 100));  // Có thể thêm delay nhỏ để giảm độ giật
+                    Get.to(() => const NavigationMenu(), transition: Transition.leftToRight);
                   },
+
                   borderRadius: 12, // Tùy chỉnh bán kính góc bo
                 );
               },

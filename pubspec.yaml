@@ -79,8 +79,20 @@ dependencies:
 
 
 dev_dependencies:
+  mockito: ^5.4.0  # Ensure you're using a valid version
+  build_runner: ^2.4.6
+  fake_cloud_firestore: ^3.1.0
+  test: ^1.21.0  # Use a valid version of the test package
+  get_test: ^4.0.1
+  firebase_core: ^3.7.0
+
   flutter_test:
     sdk: flutter
+
+
+
+
+
 
 
 

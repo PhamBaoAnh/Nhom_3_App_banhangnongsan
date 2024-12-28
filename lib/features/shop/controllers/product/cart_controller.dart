@@ -90,6 +90,7 @@ class CartController extends GetxController {
       brandName: product.brand?.name ?? '',
       selectedVariation: isVariation ? variation.attributeValues : null,
     );
+
   }
 
   void addOneToCart(CartItemModel item){

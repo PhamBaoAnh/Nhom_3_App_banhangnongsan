@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;  // Alias for Cloud Firestore
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/shop/controllers/all_product_controller.dart';
 import 'package:project/features/shop/models/product_model.dart';
 import '../../../../common/widgets/appbar/appbar.dart';
@@ -12,7 +13,7 @@ class AllProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(AllProductController());
     return Scaffold(
-      appBar: TAppBar(
+      appBar: TAppBarBack(
         showBackArrow: true,
         title: Text(
           'Tất cả các sản phẩm',

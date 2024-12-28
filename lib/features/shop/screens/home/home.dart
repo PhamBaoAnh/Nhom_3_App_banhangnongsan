@@ -35,6 +35,8 @@ class HomeScreen extends StatelessWidget {
                 const TPrimaryHeaderContainer(
                   child: Column(
                     children: [
+
+
                       THomeAppBar(),
                       SizedBox(height: TSizes.spaceBtwSections,),
 
@@ -45,12 +47,11 @@ class HomeScreen extends StatelessWidget {
                         padding: EdgeInsets.only(left: TSizes.defaultSpace),
                         child: Column(
                           children: [
-                            TSectionHeading(
-                              title: 'Danh mục phổ biến',
-                              textColor: TColors.white,
-                              showActionButton: false,
-                            ),
+
+                            TSectionHeading(title: 'Danh mục phổ biến', textColor: TColors.white, showActionButton: false),
                             SizedBox(height: TSizes.spaceBtwItems,),
+
+
                             THomeCategories(),
                             SizedBox(height: TSizes.spaceBtwSections,),
                           ],
@@ -63,6 +64,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(TSizes.defaultSpace),
                   child: Column(
                     children: [
+
                       const TPromoSlider(),
                       const SizedBox(height: TSizes.spaceBtwSections,),
 
@@ -104,7 +106,7 @@ class HomeScreen extends StatelessWidget {
         ),
         // Biểu tượng Messenger
         const Positioned(
-          bottom: 40, // Cách đáy 20px
+          bottom: 40, // Cách đáy 40px
           right: 20, // Cách phải 20px
           child: MessengerIcon(),
         ),

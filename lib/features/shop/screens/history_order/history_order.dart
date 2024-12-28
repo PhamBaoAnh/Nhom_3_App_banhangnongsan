@@ -30,7 +30,7 @@ class THistoryOrders extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final dark = THelperFunctions.isDarkMode(context);
-    final controller = Get.put(CanCelOrderController());
+     /*  final controller = Get.put(CanCelOrderController());  */
 
 
     return Scaffold(

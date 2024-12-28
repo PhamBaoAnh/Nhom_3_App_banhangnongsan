@@ -37,16 +37,19 @@ class FavouriteScreen extends StatelessWidget {
           ),
         ],
       ),
+
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: TSizes.defaultSpace),
+          padding: const EdgeInsets.only(left: TSizes.spaceBtwItems),
           child: Obx(
                 () => FutureBuilder(
+
               future: controller.favoriteProducts(),
+
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   // Return a loading state or spinner if needed
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator()); // xoay màn hình
                 }
 
                 if (snapshot.hasError) {

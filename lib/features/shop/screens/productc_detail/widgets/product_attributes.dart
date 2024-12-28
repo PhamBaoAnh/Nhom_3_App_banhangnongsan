@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project/utils/constants/enums.dart';
-
 import '../../../../../common/widgets/chips/choice_chip.dart';
 import '../../../../../common/widgets/containers/rounded_container.dart';
 import '../../../../../common/widgets/texts/product_price_text.dart';
@@ -76,16 +75,9 @@ class TProductAttributes extends StatelessWidget {
                     maxLines: 4,
 
                 ),
-
-
-
               ],
             ),
           ),
-
-
-
-
 
           const SizedBox(height: TSizes.spaceBtwItems),
           // Kiểm tra productAttributes có dữ liệu hay không
