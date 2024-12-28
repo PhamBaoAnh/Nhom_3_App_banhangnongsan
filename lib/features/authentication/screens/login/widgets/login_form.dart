@@ -39,21 +39,40 @@ class TLoginForm extends StatelessWidget {
               prefixIcon: Icon(Iconsax.direct_right),
               labelText: TTexts.email,
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your email.';
+              }
+              // Kiểm tra định dạng email
+              if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
+                return 'Please enter a valid email address.';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
-          Obx(()=>TextFormField(
+          Obx(() => TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             obscureText: !showPassword.value,
             controller: controller.password,
             decoration: InputDecoration(
-                prefixIcon: const Icon(Iconsax.password_check),
-                labelText: TTexts.password,
-                suffixIcon:
-                IconButton(onPressed: (){
-                  showPassword.value=! showPassword.value;
-                }, icon: Icon(showPassword.value ? Iconsax.eye :Iconsax.eye_slash))
+              prefixIcon: const Icon(Iconsax.password_check),
+              labelText: TTexts.password,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  showPassword.value = !showPassword.value;
+                },
+                icon: Icon(showPassword.value ? Iconsax.eye : Iconsax.eye_slash),
+              ),
             ),
-          ),),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password.';
+              }
+              return null;
+            },
+          )),
+
           const SizedBox(height: TSizes.spaceBtwInputFields / 2),
 
           // Remember Me and Forgot Password
@@ -80,8 +99,9 @@ class TLoginForm extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: ()
-                  {
+                onPressed: () {
+                  // Kiểm tra các trường của biểu mẫu
+                  if (_loginformKey.currentState!.validate()) {
                     if (remember.value) {
                       storage.write('email', loginController.email.text);
                       storage.write('password', loginController.password.text);
@@ -94,10 +114,14 @@ class TLoginForm extends StatelessWidget {
 
                     String email = controller.email.text.trim();
                     String password = controller.password.text.trim();
-                    print( controller.email.text.trim());
-                    print( controller.password.text.trim());
+                    print(controller.email.text.trim());
+                    print(controller.password.text.trim());
+
+                    // Gọi hàm đăng nhập sau khi đã xác thực
                     loginController.login(email, password);
-                  },
+                  }
+                },
+
               style: ElevatedButton.styleFrom(
                 backgroundColor: TColors.primary,
                 side: const BorderSide(color: TColors.primary),

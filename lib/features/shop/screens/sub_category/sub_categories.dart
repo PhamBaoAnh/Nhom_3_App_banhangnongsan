@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/shop/controllers/all_product_controller.dart';
 import 'package:project/features/shop/controllers/product/product_controller.dart';
 import 'package:project/features/shop/models/category_model.dart';
@@ -25,7 +26,7 @@ class SubCategoriesScreen extends StatelessWidget {
 
     final controllerProduct =Get.put(ProductController());
     return Scaffold(
-      appBar: TAppBar(
+      appBar: TAppBarBack(
         showBackArrow: true,
         title: Text(
           categoryName,

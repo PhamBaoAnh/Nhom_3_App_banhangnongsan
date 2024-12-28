@@ -23,7 +23,8 @@ class TSectionHeading extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title,
+        Text(
+            title,
             style: Theme.of(context).textTheme.headlineSmall!.apply(color: textColor),
             maxLines: 1,
             overflow: TextOverflow.ellipsis),

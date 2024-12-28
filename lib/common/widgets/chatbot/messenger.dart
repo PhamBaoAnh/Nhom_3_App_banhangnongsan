@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'package:chat_bubbles/bubbles/bubble_normal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../features/shop/controllers/all_product_controller.dart';
 import '../../../utils/constants/colors.dart';
@@ -17,16 +15,14 @@ class MessengerIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
-        // Khi nhấn vào biểu tượng, chuyển đến màn hình ChatScreen với hiệu ứng fadeIn
         Navigator.push(
           context,
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => const ChatScreen(),
+            pageBuilder: (context, animation, secondaryAnimation) =>
+            const ChatScreen(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              // Tạo hiệu ứng fadeIn
               return FadeTransition(
                 opacity: animation,
                 child: child,
@@ -35,10 +31,9 @@ class MessengerIcon extends StatelessWidget {
           ),
         );
       },
-
       child: Image.asset(
-        'assets/logos/chatbot.png',  // Đường dẫn tới hình ảnh trong thư mục assets
-        fit: BoxFit.cover,  // Hình ảnh sẽ phủ kín vùng chứa
+        'assets/logos/chatbot.png',
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -53,28 +48,42 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController controller = TextEditingController();  // Điều khiển văn bản nhập vào
-  GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>(); // Danh sách tin nhắn có hiệu ứng
-  final AllProductController controller_find = Get.put(AllProductController());  // Controller để tìm kiếm sản phẩm
-  List<Message> msgs = [];  // Danh sách tin nhắn
-  bool isTyping = false;  // Biến kiểm tra trạng thái gõ tin nhắn
+  TextEditingController controller = TextEditingController();
+  GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+  final AllProductController controllerFind = Get.put(AllProductController());
+  List<Message> msgs = [];
+  bool isTyping = false;
+  List<String> allSuggestions = [
+    "Sản phẩm bán chạy nhất?",
+    "Địa chỉ cửa hàng ở đâu?",
+    "Bao lâu tôi có thể nhận được hàng?",
+  ];
+  List<String> filteredSuggestions = [];
 
   @override
   void initState() {
     super.initState();
-    // Khởi tạo tin nhắn chào
+    filteredSuggestions = allSuggestions;
     msgs.addAll([
       Message(false, "Xin chào! Tôi là BioLifeBot, tôi có thể giúp gì cho bạn?"),
       Message(false, "Hãy hỏi tôi bất cứ điều gì về dịch vụ của chúng tôi."),
     ]);
   }
 
+  void filterSuggestions(String input) {
+    setState(() {
+      filteredSuggestions = allSuggestions
+          .where((suggestion) =>
+          suggestion.toLowerCase().contains(input.toLowerCase()))
+          .toList();
+    });
+  }
+
   void sendMsg() async {
     String text = controller.text;
     String apiKey = "AIzaSyBw7v03j6AxrIH_XDFj9GSuV3hrfjscKgc";
-    String response = ""; // Biến lưu phản hồi
+    String response = "";
 
-    // Xóa nội dung trong controller
     controller.clear();
 
     if (text.isNotEmpty) {
@@ -85,50 +94,54 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     }
 
-
-    bool containsAddressQuestion = text.contains("Địa chỉ của cửa hàng") || text.contains("địa chỉ") || text.contains("địa chỉ của bạn");
-
-
-    bool containsPhoneQuestion = text.contains("số điện thoại") || text.contains("phone");
-
-
-    bool containsStoreInfoQuestion = text.contains("Thông tin") || text.contains("cửa hàng");
-
-    // Phản hồi mặc định cho các câu hỏi
-    if (containsAddressQuestion) {
-      response = "Đây là thông tin địa chỉ của chúng tôi: Số 12, đường Chùa Bộc, Quận Đống Đa, Hà Nội.";
-    } else if (containsPhoneQuestion) {
+    if (text.contains("Địa chỉ cửa hàng ở đâu?") || text.contains("địa chỉ")) {
+      response =
+      "Đây là thông tin địa chỉ của chúng tôi: Số 12, đường Chùa Bộc, Quận Đống Đa, Hà Nội.";
+    } else if (text.contains("Bao lâu tôi có thể nhận được hàng?")) {
+      response =
+      "Sớm nhất 1-2 ngày bạn sẽ nhận được hàng, cửa hàng sẽ liên hệ với bạn khi đơn hàng đến nơi";
+    } else if (text.contains("số điện thoại") || text.contains("phone")) {
       response = "Số điện thoại liên hệ của chúng tôi là: 0123456789";
-    } else if (containsStoreInfoQuestion) {
-      response = "Thông tin cửa hàng \n"
-                  " + Website:  BioLife.com.vn \n"
-                  " + Địa chỉ: Số 12, đường Chùa Bộc, Quận Đống Đa, Hà Nội \n"
-                  " + Số điện thoại: 0123456789 \n";
+    } else if (text.contains("Sản phẩm bán chạy nhất?")) {
+      await controllerFind.filterProductsSaleMax();
+      if (controllerFind.products.isNotEmpty) {
+        // Cập nhật response với thông tin sản phẩm bán chạy nhất
+        response = "Trên đây là các sản phẩm bán chạy nhất của hàng chúng tôi !!!";
+        for (var productData in controllerFind.products) {
+          String productInfo =
+              "- Sản phẩm: ${productData.title}\n"
+              "- Giá: ${NumberFormat("#,##0", "vi_VN").format(productData.salePrice)} VND.\n"
+              "- Nhà cung cấp: ${productData.brand!.name}\n"
+              "- Mô tả: ${productData.description ?? 'Không có mô tả.'}\n";
+
+          setState(() {
+            msgs.add(Message(false, productInfo));
+            listKey.currentState?.insertItem(msgs.length - 1);
+          });
+        }
+      } else {
+        response = "Hiện tại không có sản phẩm bán chạy nhất để hiển thị.";
+      }
     }
 
-    // Nếu có phản hồi mặc định, gửi tin nhắn này và dừng gọi API
     if (response.isNotEmpty) {
       setState(() {
         isTyping = false;
         msgs.add(Message(false, response));
         listKey.currentState?.insertItem(msgs.length - 1);
       });
-      return; // Dừng xử lý phần API nếu đã có phản hồi mặc định
+      return;
     }
 
-    // Kiểm tra các sản phẩm
-    await controller_find.filterProducts(text);
-
-    if (controller_find.products.isNotEmpty) {
-      // Duyệt qua tất cả các sản phẩm
-      for (var productData in controller_find.products) {
+    await controllerFind.filterProducts(text);
+    if (controllerFind.products.isNotEmpty) {
+      for (var productData in controllerFind.products) {
         String productInfo =
-            "Thông tin sản phẩm: \n"
-            "- Sản phẩm: ${productData.title}\n"
-            "- Giá: ${NumberFormat("#,##0", "vi_VN").format(productData.salePrice)} VND.\n"
+            "Thông tin sản phẩm:\n- Sản phẩm: ${productData.title}\n"
+            "- Giá: ${NumberFormat("#,##0", "vi_VN").format(
+            productData.salePrice)} VND.\n"
             "- Nhà cung cấp: ${productData.brand!.name}\n"
-            "- Mô tả: ${productData.description ?? 'Không có mô tả.'}\n";
-
+            "- Mô tả: ${productData.description ?? 'Không có mô tả.'}";
         setState(() {
           msgs.add(Message(false, productInfo));
           listKey.currentState?.insertItem(msgs.length - 1);
@@ -136,8 +149,7 @@ class _ChatScreenState extends State<ChatScreen> {
       }
     }
 
-    // Nếu không có sản phẩm, gọi API
-    if (controller_find.products.isEmpty && text.isNotEmpty) {
+    if (controllerFind.products.isEmpty && text.isNotEmpty) {
       try {
         var apiResponse = await http.post(
           Uri.parse(
@@ -156,7 +168,8 @@ class _ChatScreenState extends State<ChatScreen> {
         if (apiResponse.statusCode == 200) {
           var json = jsonDecode(apiResponse.body);
 
-          if (json != null && json["candidates"] != null && json["candidates"].isNotEmpty) {
+          if (json != null && json["candidates"] != null &&
+              json["candidates"].isNotEmpty) {
             setState(() {
               isTyping = false;
               msgs.add(Message(
@@ -175,7 +188,8 @@ class _ChatScreenState extends State<ChatScreen> {
             isTyping = false;
           });
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Lỗi API: ${apiResponse.statusCode} - ${apiResponse.body}"),
+            content: Text(
+                "Lỗi API: ${apiResponse.statusCode} - ${apiResponse.body}"),
           ));
         }
       } catch (e) {
@@ -193,15 +207,14 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BioLifeBot"),  // Tiêu đề màn hình chat
+        title: const Text("BioLifeBot"),
       ),
       body: Column(
         children: [
-          const SizedBox(height: 8),
           Expanded(
             child: AnimatedList(
-              key: listKey,  // Danh sách tin nhắn có hiệu ứng hoạt hình
-              initialItemCount: msgs.length + (isTyping ? 1 : 0),  // Số lượng tin nhắn ban đầu
+              key: listKey,
+              initialItemCount: msgs.length + (isTyping ? 1 : 0),
               itemBuilder: (context, index, animation) {
                 if (isTyping && index == msgs.length) {
                   return SizeTransition(
@@ -210,12 +223,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       padding: EdgeInsets.only(left: 16, top: 4),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("Typing..."),  // Hiển thị khi đang gõ
+                        child: Text("Typing..."),
                       ),
                     ),
                   );
                 }
-
                 return SizeTransition(
                   sizeFactor: animation,
                   child: Padding(
@@ -232,44 +244,64 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
           ),
-          // Giao diện gửi tin nhắn
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              spacing: 5.0,
+              runSpacing: 1.0,
+              children: filteredSuggestions.map((question) => ActionChip(
+                label: Text(
+                  question,
+                  style: const TextStyle(fontSize: 12, color: Colors.black),
+                ),
+                onPressed: () {
+                  controller.text = question;
+                  sendMsg();
+                },
+              )).toList(),
+            ),
+          ),
+
           Row(
             children: [
+
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 20.0),
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextField(
-                      controller: controller,  // Điều khiển ô nhập liệu
-                      textCapitalization: TextCapitalization.sentences,  // Viết hoa chữ cái đầu câu
+                      controller: controller,
+                      textCapitalization: TextCapitalization.sentences,
+                      onChanged: filterSuggestions,
                       onSubmitted: (value) {
-                        sendMsg();  // Gửi tin nhắn khi nhấn Enter
+                        sendMsg();
                       },
-                      textInputAction: TextInputAction.send,  // Hành động khi nhấn phím Enter
+                      textInputAction: TextInputAction.send,
                       showCursor: true,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Nhập văn bản",  // Gợi ý văn bản
+                        hintText: "Nhập văn bản",
                       ),
                     ),
                   ),
                 ),
               ),
               InkWell(
-                onTap: sendMsg,  // Gửi tin nhắn khi nhấn nút gửi
+                onTap: sendMsg,
                 child: Container(
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
-                    color: TColors.primary,  // Màu nền của nút gửi
+                    color: TColors.primary,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: const Icon(
-                    Icons.send,  // Biểu tượng gửi
+                    Icons.send,
                     color: Colors.white,
                   ),
                 ),
@@ -282,7 +314,3 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-
-
-
-

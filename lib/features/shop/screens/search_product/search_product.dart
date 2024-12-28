@@ -81,8 +81,7 @@ class _TSearchProductState extends State<TSearchProduct> {
                     return Obx(
                           () => controller.products.isEmpty
                           ? const Center(
-                        child: Text(
-                          'Không có sản phẩm',
+                        child: Text('Không có sản phẩm',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       )

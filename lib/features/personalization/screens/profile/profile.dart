@@ -32,15 +32,20 @@ class ProfileScreen extends StatelessWidget {
 
 
     return Scaffold(
+
       appBar: const TAppBar(
         showBackArrow: true,
         title: Text('Profile'),
       ),
+
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: FutureBuilder<dynamic>(
+
             future: controller.getUserData(),
+
             builder: (context, snapshot) {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -82,9 +87,11 @@ class ProfileScreen extends StatelessWidget {
 
   // A helper method to build profile content
   Widget _buildProfileContent(UserModel userdata) {
+
     final controller = Get.put(ProfileController());
     final userController = Get.put(UserController());
     final HomeController homeController = Get.put(HomeController());
+
     return Column(
       children: [
         SizedBox(
@@ -161,7 +168,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
         TProfileMenu(
-          title: userdata.id,
+          title: 'UserID',
           value: userdata.id,
           icon: Iconsax.copy,
           onPressed: () {},

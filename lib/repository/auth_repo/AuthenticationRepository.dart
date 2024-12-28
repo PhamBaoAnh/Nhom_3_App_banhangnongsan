@@ -143,7 +143,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       setInitScreen(firebaseUser);
-      Get.snackbar('Login Successful', 'You are now logged in', colorText: TColors.primary, backgroundColor: TColors.white.withOpacity(0.8));
+      Get.snackbar('Đăng nhập thành công', 'You are now logged in', colorText: TColors.primary, backgroundColor: TColors.white.withOpacity(0.8));
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       switch (e.code) {
@@ -159,7 +159,7 @@ class AuthenticationRepository extends GetxController {
         default:
           errorMessage = 'User or password is incorrect.';
       }
-      Get.snackbar('Login Failed', errorMessage, colorText: TColors.white, backgroundColor: TColors.primary.withOpacity(0.8));
+      Get.snackbar('Tài khoản không tồn tại', errorMessage, colorText: TColors.white, backgroundColor: TColors.primary.withOpacity(0.8));
     } catch (e) {
       print('An unexpected error occurred: $e');
       Get.snackbar('Error', 'Something went wrong. Please try again later.',

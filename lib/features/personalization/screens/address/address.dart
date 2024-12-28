@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/common/widgets/appbar/appbar.dart';
+import 'package:project/common/widgets/appbar/appbar_back.dart';
 import 'package:project/features/personalization/screens/address/widgets/single_address.dart';
 import 'package:project/utils/constants/colors.dart';
 
@@ -26,7 +27,7 @@ class UserAddressScreen extends StatelessWidget {
           onPressed: () => Get.to(() => const  AddNewAddressScreen()),
            child: const Icon(Iconsax.add, color: TColors.white,),
       ),
-      appBar: TAppBar(
+      appBar: TAppBarBack(
         showBackArrow: true,
         title: Text('Địa chỉ',style: Theme.of(context).textTheme.headlineSmall,),
       ),

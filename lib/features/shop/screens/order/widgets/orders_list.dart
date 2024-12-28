@@ -48,7 +48,7 @@ class TOrdersListItems extends StatelessWidget {
           );
         }
 
-        final orders = snapshot.data! ;
+        final  orders= snapshot.data! ;
 
         return ListView.separated(
           shrinkWrap: true,
@@ -88,7 +88,14 @@ class TOrdersListItems extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        onPressed: () => Get.to(() => THistoryOrders( orderDetail:orders[index],)), // Thêm hành động nếu cần
+                        onPressed: () {
+                          Get.to(
+                                () => THistoryOrders(orderDetail: orders[index]),
+                            transition: Transition.leftToRight,  // Chuyển từ trái sang phải
+                            duration: const Duration(milliseconds: 300), // Thời gian chuyển trang (tùy chỉnh)
+                          );
+                        },
+                        // Thêm hành động nếu cần
                         icon: const Icon(Iconsax.arrow_right_34, size: TSizes.iconSm),
                       ),
                     ],

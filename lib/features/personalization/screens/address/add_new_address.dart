@@ -29,6 +29,7 @@ class AddNewAddressScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 TextFormField(
                   controller: controller.name,
                   validator: (value) => TValidator.validateEmptyText('Họ & Tên', value),
@@ -38,7 +39,9 @@ class AddNewAddressScreen extends StatelessWidget {
                   ),
                   textInputAction: TextInputAction.next,
                 ),
+
                 const SizedBox(height: TSizes.spaceBtwInputFields),
+
                 TextFormField(
                   controller: controller.phoneNumber,
                   validator: TValidator.validatePhoneNumber,
@@ -49,7 +52,9 @@ class AddNewAddressScreen extends StatelessWidget {
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
                 ),
+
                 const SizedBox(height: TSizes.spaceBtwInputFields),
+
                 TextFormField(
                   controller: controller.address1,
                   validator: (value) => TValidator.validateEmptyText('Địa Chỉ', value),
