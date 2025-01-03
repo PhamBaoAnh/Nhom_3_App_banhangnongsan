@@ -1,4 +1,4 @@
-# Đề tài: App bán nông sản nhập khẩu
+![Screenshot_20241223_023628](https://github.com/user-attachments/assets/82e2cd8b-842c-40b2-8469-010b2cf5325e)# Đề tài: App bán nông sản nhập khẩu
 
  **Giới thiệu**
  <br>
@@ -15,5 +15,5 @@
 | Phạm Bảo Anh     | 24A4042424   |         | [PhamBaoAnh](https://github.com/PhamBaoAnh) |
 
 
-**Chức năng chính** 
-
+**Link ảnh** 
+https://drive.google.com/drive/folders/1G4CfLzsJCjgOqnV0DRNuwbKzBbhus3Q1?usp=drive_link
