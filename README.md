@@ -1,4 +1,4 @@
-![Screenshot_20241223_023628](https://github.com/user-attachments/assets/82e2cd8b-842c-40b2-8469-010b2cf5325e)# Đề tài: App bán nông sản nhập khẩu
+# Đề tài: App bán nông sản nhập khẩu
 
  **Giới thiệu**
  <br>
